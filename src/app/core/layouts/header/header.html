@@ -1,1 +1,29 @@
-<p>{{ appName }}</p>
+<div class="header-container">
+  <button routerLink="/" class="header-logo-button">H<span class="header-app-name">ive</span></button>
+  <div class="header-search-field">
+    <input
+      class="header-search-input"
+      type="text"
+      name="Search"
+      [placeholder]="searchPlaceholder"
+      [(ngModel)]="searchInput"
+    />
+    @if (searchInput) {
+      <button matIconButton class="clear-button" aria-label="Clear" (click)="searchInput = ''">
+        <mat-icon>close</mat-icon>
+      </button>
+    }
+  </div>
+  @if (isAuthorized()) {
+    <button matIconButton="tonal" aria-label="User menu button">
+      <mat-icon>person</mat-icon>
+    </button>
+  } @else {
+    <div class="header-buttons-container">
+      <button matIconButton aria-label="Menu button">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <button matButton="filled" aria-label="Sign In button">Sign In</button>
+    </div>
+  }
+</div>
