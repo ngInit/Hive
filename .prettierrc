@@ -17,10 +17,10 @@
     },
     {
       "files": [
-        "*.css"
+        "*.scss"
       ],
       "options": {
-        "parser": "css"
+        "parser": "scss"
       }
     },
     {
