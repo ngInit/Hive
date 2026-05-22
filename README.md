@@ -1,59 +1,67 @@
-# Hive
+# 🎧 Hive 🎧
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.12.
+&#160;&#160;&#160;&#160; Hive is a music streaming service clone where the user can search for tracks and artists, listen to music, build playlists, and maintain a favorites library.
+The application uses the Jamendo API v3.0, which provides access to over 500,000+ freely licensed tracks, along with metadata for artists, albums, and audio streaming links.
 
-## Development server
+## 📚 Technology Stack
+<p>
+    <img src="https://raw.githubusercontent.com/ngInit/ngInit/ec0fcb7041549fd2edb085c89cf567afd14d5258/ICONS/Angular_R.svg" alt="Angular" width="40" height="40"/>
+    <img src="https://raw.githubusercontent.com/ngInit/ngInit/ec0fcb7041549fd2edb085c89cf567afd14d5258/ICONS/TS_R.svg" alt="TypeScript" width="40" height="40"/>
+    <img src="https://raw.githubusercontent.com/ngInit/ngInit/ec0fcb7041549fd2edb085c89cf567afd14d5258/ICONS/HTML_R.svg" alt="HTML" width="40" height="40"/>
+    <img src="https://raw.githubusercontent.com/ngInit/ngInit/ec0fcb7041549fd2edb085c89cf567afd14d5258/ICONS/CSS_R.svg" alt="CSS" width="40" height="40"/>
+    &#160;&#160;&#160;&#160;
+    <img src="https://raw.githubusercontent.com/ngInit/ngInit/ec0fcb7041549fd2edb085c89cf567afd14d5258/ICONS/NPM_R.svg" alt="NPM" width="40" height="40" />
+    <img src="https://raw.githubusercontent.com/ngInit/ngInit/ec0fcb7041549fd2edb085c89cf567afd14d5258/ICONS/NodeJS_R.svg" alt="Node.js" width="40" height="40" />
+    <img src="https://raw.githubusercontent.com/ngInit/ngInit/ec0fcb7041549fd2edb085c89cf567afd14d5258/ICONS/ESLint_R.svg" alt="ESLint" width="40" height="40" />
+    <img src="https://raw.githubusercontent.com/ngInit/ngInit/ec0fcb7041549fd2edb085c89cf567afd14d5258/ICONS/Prettier_R.svg" alt="Prettier" width="40" height="40" />
+</p>
 
-To start a local development server, run:
+  - ### Additional features:
+    - Angular Material
+    - Angular Signals
+    - Angular Router
+    - Reactive Forms
+    - HttpClient
+    - RxJS
+    - Firebase (Authentication, Firestore)
+    - Angular Testing Utilities (Jasmine / Karma)
 
-```bash
-ng serve
-```
+## 📚 Tools
+<p>
+    <img src="https://raw.githubusercontent.com/ngInit/ngInit/ec0fcb7041549fd2edb085c89cf567afd14d5258/ICONS/MacOS_R.svg" alt="MacOS" width="40" height="40" />
+    <img src="https://raw.githubusercontent.com/ngInit/ngInit/ec0fcb7041549fd2edb085c89cf567afd14d5258/ICONS/Windows_R.svg" alt="Windows" width="40" height="40" />
+    <img src="https://raw.githubusercontent.com/ngInit/ngInit/ec0fcb7041549fd2edb085c89cf567afd14d5258/ICONS/Figma_R.svg" alt="Figma" width="40" height="40"/>
+    <img src="https://raw.githubusercontent.com/ngInit/ngInit/ec0fcb7041549fd2edb085c89cf567afd14d5258/ICONS/WebStorm_R.svg" alt="WebStorm" width="40" height="40" />
+    <img src="https://raw.githubusercontent.com/ngInit/ngInit/ec0fcb7041549fd2edb085c89cf567afd14d5258/ICONS/VSCode_R.svg" alt="VSCode" width="40" height="40" />
+    <img src="https://raw.githubusercontent.com/ngInit/ngInit/ec0fcb7041549fd2edb085c89cf567afd14d5258/ICONS/GitHub_R.svg" alt="GitHub" width="40" height="40"/>
+</p>
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## 🥷 Team Members
+- Aleksei — [ngInit](https://github.com/nginit)
 
-## Code scaffolding
+## 🎚️ Local Setup
+  - <img src="https://raw.githubusercontent.com/ngInit/ngInit/ec0fcb7041549fd2edb085c89cf567afd14d5258/ICONS/NPM_R.svg" alt="NPM" width="32" height="32"/>10.9.7
+  - <img src="https://raw.githubusercontent.com/ngInit/ngInit/ec0fcb7041549fd2edb085c89cf567afd14d5258/ICONS/NodeJS_R.svg" alt="Node.JS" width="32" height="32"/>LTS v22.22.2
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+  - ### 💾 Installation
+     ```bash
+     git clone https://github.com/ngInit/Hive.git
+     cd Hive
+     npm install
+     ```
 
-```bash
-ng generate component component-name
-```
+  - ### 🏹 Local starts
+     ```bash
+     npm start
+     ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+  - 🔗 Open by link: [Open in browser](http://localhost:4200)
 
-```bash
-ng generate --help
-```
+  - ### Additional Scripts
+    - `npm run test` — Run unit tests
+    - `npm run lint` — Run ESLint
+    - `npm run format` — Run Prettier (check mode)
+    - `npm run build` — Build the project
 
-## Building
 
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## 🌎 Deployment [link]()
