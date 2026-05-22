@@ -1,0 +1,86 @@
+@use "@angular/material" as mat;
+
+:host {
+  display: block;
+  width: -webkit-fill-available;
+  height: fit-content;
+  padding: 16px;
+
+  .header-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 8px;
+  }
+
+  .header-logo-button {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: center;
+    width: 100px;
+    height: 40px;
+    font: var(--mat-sys-headline-medium);
+    color: var(--mat-sys-error-container);
+    border: none;
+    background: none;
+    outline: 1px solid var(--mat-sys-outline-variant);
+    border-radius: var(--mat-sys-corner-full);
+    cursor: pointer;
+  }
+
+  .header-app-name {
+    font: var(--mat-sys-title-large);
+    color: var(--mat-sys-inverse-surface);
+  }
+
+  .header-search-field {
+    position: relative;
+    display: flex;
+    width: 400px;
+    height: 40px;
+  }
+
+  .header-search-input {
+    width: 100%;
+    height: -webkit-fill-available;
+    padding: 0 40px 0 16px;
+    border: none;
+    border-radius: var(--mat-sys-corner-full);
+
+    &:focus {
+      background-color: transparent;
+      outline: 1px solid var(--mat-sys-outline-variant);
+    }
+  }
+
+  .clear-button {
+    position: absolute;
+    right: 0;
+  }
+
+  .header-buttons-container {
+    display: flex;
+    flex-direction: row;
+    column-gap: 16px;
+    align-items: center;
+  }
+
+  @include mat.button-overrides(
+    (
+      filled-container-color: var(--mat-sys-inverse-surface),
+    )
+  );
+
+  button[matIconButton="tonal"] {
+    color: var(--mat-sys-on-tertiary-container);
+    background-color: var(--mat-sys-tertiary-container);
+  }
+
+  button[matButton] {
+    width: 72px;
+    font: var(--mat-sys-body-small);
+    white-space: nowrap;
+  }
+}
