@@ -1,4 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { MatCardModule } from '@angular/material/card';
+import { MatButton } from '@angular/material/button';
+
 interface AboutAuthor {
   name: string;
   role: string;
@@ -13,7 +16,7 @@ interface AboutAuthor {
 
 @Component({
   selector: 'hive-about-page',
-  imports: [],
+  imports: [MatCardModule, MatButton],
   templateUrl: './about-page.html',
   styleUrl: './about-page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

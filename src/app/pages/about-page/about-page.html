@@ -1,1 +1,57 @@
-<p>{{ title }}</p>
+<div class="about-header">
+  <h1 class="about-head-text">About Hive</h1>
+  <p class="about-head-description">{{ projectDescription }}</p>
+</div>
+<div class="about-authors-container">
+  <h2 class="authors-head-text">Meet the Team</h2>
+  <div class="authors-cards-container">
+    <div class="authors-cards">
+      @for (author of aboutAuthors; track $index) {
+        <mat-card class="author-card" appearance="outlined">
+          <mat-card-header>
+            <img mat-card-avatar src="{{ author.avatar }}" alt="Author avatar" />
+            <mat-card-title>{{ author.name }}</mat-card-title>
+            <mat-card-subtitle> {{ author.role }} </mat-card-subtitle>
+          </mat-card-header>
+          <img mat-card-image class="author-photo" src="{{ author.photo }}" alt="Author photo" />
+          <mat-card-content>
+            <p>{{ author.description }}</p>
+          </mat-card-content>
+          <mat-card-actions align="end">
+            <a
+              href="{{ author.socials.github }}"
+              matButton
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub Link"
+              >GitHub</a
+            >
+            <a
+              href="{{ author.socials.rss_profile }}"
+              matButton
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="RSS Profile Link"
+              >RSS Profile</a
+            >
+          </mat-card-actions>
+        </mat-card>
+      }
+    </div>
+  </div>
+</div>
+<div class="about-footer">
+  <p class="author-afterwords">
+    Built with care by Y2K team from
+    <a
+      class="about-rss-link"
+      href="https://rs.school"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="RS School Link"
+    >
+      <img src="./assets/logos/RSS-Logo.svg" alt="RS School Logo" width="40" height="40" />
+      School
+    </a>
+  </p>
+</div>
