@@ -1,0 +1,81 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  row-gap: 36px;
+  width: 100%;
+
+  .about-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    row-gap: 16px;
+    text-align: center;
+
+    .about-head-text {
+      font: var(--mat-sys-display-large);
+    }
+
+    .about-head-description {
+      max-width: 1200px;
+      font: var(--mat-sys-headline-small);
+    }
+  }
+
+  .about-authors-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 32px;
+    width: 100%;
+
+    .authors-head-text {
+      font: var(--mat-sys-headline-small);
+    }
+
+    .authors-cards-container {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .authors-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, auto));
+      justify-content: center;
+      gap: 32px;
+      width: 100%;
+    }
+
+    .author-card {
+      max-width: 400px;
+    }
+
+    .author-photo {
+      height: 200px;
+      object-fit: cover;
+    }
+  }
+
+  .author-afterwords {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    column-gap: 4px;
+  }
+
+  .about-rss-link {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 4px;
+    width: fit-content;
+    text-decoration: none;
+    color: var(--mat-sys-primary);
+  }
+}
