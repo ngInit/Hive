@@ -1,1 +1,16 @@
-<p>{{ title }}</p>
+<div routerLink="/" class="track-card-wrapper">
+  <div class="track-card-top">
+    <div class="track-card-cover">
+      <img class="track-cover" src="{{ track.track_cover }}" alt="Track cover" width="200" height="200" />
+    </div>
+    <mat-icon class="track-card-icon">{{ playIcon }}</mat-icon>
+    <div class="track-card-information">
+      <p class="track-duration">{{ track.track_duration }}</p>
+      <p class="track-plays">{{ track.track_plays }}</p>
+    </div>
+  </div>
+  <div class="track-card-bottom">
+    <p routerLink="/" aria-label="Page of the artist {{ track.artist_name }}">{{ track.artist_name }}</p>
+    <p routerLink="/" aria-label="Page of the track {{ track.track_name }}">{{ track.track_name }}</p>
+  </div>
+</div>
