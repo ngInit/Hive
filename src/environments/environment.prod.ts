@@ -9,4 +9,5 @@ export const environment = {
     apiKey: '...',
   },
   enableMockData: false,
+  mockDelayMs: 300,
 };
