@@ -20,8 +20,10 @@
       "@core": ["./src/app/core"],
       "@pages/*": ["./src/app/pages/*"],
       "@pages": ["./src/app/pages"],
-      "@assets/*": ["./src/assets/*"],
-      "@assets": ["./src/assets"]
+      "@assets/*": ["./public/assets/*"],
+      "@assets": ["./public/assets"],
+      "@env/*": ["./src/environments/*"],
+      "@env": ["./src/environments"]
     }
   },
   "include": ["src/**/*.ts"],
