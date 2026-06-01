@@ -1,0 +1,68 @@
+@use "@angular/material" as mat;
+
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+  row-gap: 32px;
+  width: 100%;
+
+  * {
+    margin: 0;
+    user-select: none;
+  }
+
+  .error-top-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 1rem;
+
+    .error-title {
+      font: var(--mat-sys-display-large);
+      transform-origin: 20px 12px;
+      animation: title 1.8s ease-in-out infinite;
+    }
+
+    .error-description {
+      font: var(--mat-sys-title-large);
+    }
+
+    @keyframes title {
+      0% {
+        transform: rotate(45deg);
+      }
+      50% {
+        transform: rotate(65deg);
+      }
+      100% {
+        transform: rotate(45deg);
+      }
+    }
+  }
+
+  mat-icon {
+    width: fit-content;
+    height: fit-content;
+    font-size: 8rem;
+  }
+
+  .error-bottom-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 46px;
+
+    .error-tip {
+      font: var(--mat-sys-body-large);
+    }
+
+    @include mat.button-overrides(
+      (
+        filled-container-color: var(--mat-sys-on-background),
+      )
+    );
+  }
+}

@@ -1,0 +1,35 @@
+<div class="carousel-header">
+  @if (needControls()) {
+    <div class="carousel-controls">
+      <button
+        matIconButton
+        class="carousel-control"
+        type="button"
+        aria-label="Prev tracks"
+        [disabled]="!canScrollPrev()"
+        (click)="scrollPrev()"
+      >
+        <mat-icon>chevron_left</mat-icon>
+      </button>
+
+      <button
+        matIconButton
+        class="carousel-control"
+        type="button"
+        aria-label="Next tracks"
+        [disabled]="!canScrollNext()"
+        (click)="scrollNext()"
+      >
+        <mat-icon>chevron_right</mat-icon>
+      </button>
+    </div>
+  }
+</div>
+
+@if (isLoading()) {
+  <div class="carousel-loading">Loading...</div>
+} @else {
+  <div #viewport class="carousel-viewport" (scroll)="updateScrollState()">
+    <ng-content />
+  </div>
+}
