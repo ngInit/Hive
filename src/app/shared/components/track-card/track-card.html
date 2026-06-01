@@ -5,8 +5,11 @@
     </div>
     <mat-icon class="track-card-icon">{{ playIcon }}</mat-icon>
     <div class="track-card-information">
-      <p class="track-duration">{{ track().duration }}</p>
-      <p class="track-plays">{{ track().stats?.rate_listened_total }}</p>
+      <p class="track-duration">{{ track().duration | trackDurationShort }}</p>
+      <p class="track-plays">
+        <mat-icon class="plays-icon">play_arrow</mat-icon>
+        {{ track().stats?.rate_listened_total | trackPlaysShort }}
+      </p>
     </div>
   </div>
   <div class="track-card-bottom">
