@@ -5,7 +5,7 @@ import { MainLayout } from '@core/layouts/main-layout/main-layout';
   selector: 'hive-root',
   imports: [MainLayout],
   templateUrl: './app.html',
-  styleUrl: './app.css',
+  styleUrl: './app.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class App {

@@ -64,4 +64,4 @@ The application uses the Jamendo API v3.0, which provides access to over 500,000
     - `npm run build` — Build the project
 
 
-## 🌎 Deployment [link]()
+## 🌎 Deployment [link](https://hive-eta-fawn.vercel.app/)
