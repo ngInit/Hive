@@ -1,0 +1,25 @@
+@use "@angular/material" as mat;
+
+:host {
+  display: block;
+  width: 100%;
+
+  ::ng-deep .mdc-evolution-chip-set__chips {
+    column-gap: 4px;
+  }
+
+  .tag-chip {
+    text-transform: capitalize;
+  }
+
+  ::ng-deep .mdc-evolution-chip__action--primary {
+    cursor: pointer;
+  }
+
+  @include mat.chips-overrides(
+    (
+      outline-width: 0,
+      elevated-container-color: rgb(255 255 255 / 0.05),
+    )
+  );
+}

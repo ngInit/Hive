@@ -1,0 +1,5 @@
+<mat-chip-set aria-label="Tags filter">
+  @for (tag of tags; track $index) {
+    <mat-chip class="tag-chip" aria-label="Filter by {{ tag }} tag">{{ tag }}</mat-chip>
+  }
+</mat-chip-set>
