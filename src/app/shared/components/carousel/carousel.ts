@@ -24,7 +24,7 @@ export class Carousel {
   private readonly destroyRef = inject(DestroyRef);
   private readonly defaultScrollStep = 200;
 
-  isLoading = input(false);
+  isLoading = input(true);
 
   readonly needControls = signal(false);
   readonly canScrollNext = signal(false);
