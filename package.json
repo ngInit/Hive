@@ -1,6 +1,6 @@
 {
   "name": "hive",
-  "version": "0.0.0",
+  "version": "0.2.0",
   "description": "Hive is a music streaming service clone where the user can search for tracks and artists",
   "scripts": {
     "ng": "ng",
@@ -12,7 +12,8 @@
     "lint:fix": "eslint . --fix",
     "format:check": "prettier . --check",
     "format:fix": "prettier . --write",
-    "prepare": "husky"
+    "prepare": "husky",
+    "deploy": "vercel --prod"
   },
   "lint-staged": {
     "*.{ts,js}": [

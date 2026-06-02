@@ -4,6 +4,7 @@
   min-height: 100vh;
 
   .main-layout-container {
+    display: flex;
     flex-grow: 1;
     padding: 8px 24px;
   }

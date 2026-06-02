@@ -1,1 +1,5 @@
-/* You can add global styles to this file, and also import other style files */
+html {
+  -webkit-font-smoothing: antialiased;
+  scroll-behavior: smooth;
+  scrollbar-color: rgb(220 220 220 / 0.5) transparent;
+}
