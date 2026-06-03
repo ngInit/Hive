@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import { Router } from '@angular/router';
+import { AuthService } from '@core/services/auth.service';
 
 @Component({
   selector: 'hive-user-page',
@@ -10,10 +11,12 @@ import { Router } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserPage {
-  title = 'User page... Will be later =)))';
+  private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
+  title = 'User page... Will be later =)))';
 
   async signOut() {
+    this.authService.logOut();
     await this.router.navigate(['/']);
   }
 }
