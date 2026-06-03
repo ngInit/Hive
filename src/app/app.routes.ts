@@ -8,6 +8,10 @@ export const routes: Routes = [
     title: 'Hive',
   },
   {
+    path: 'user',
+    loadComponent: () => import('@pages/user-page/user-page').then((page) => page.UserPage),
+  },
+  {
     path: 'about',
     loadComponent: () => import('@pages/about-page/about-page').then((page) => page.AboutPage),
     title: 'About',
