@@ -7,4 +7,9 @@ export const routes: Routes = [
     component: LandingPage,
     title: 'Hive',
   },
+  {
+    path: '**',
+    loadComponent: () => import('@pages/error-page/error-page').then((page) => page.ErrorPage),
+    title: 'Error',
+  },
 ];
