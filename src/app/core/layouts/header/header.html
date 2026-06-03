@@ -14,8 +14,8 @@
       </button>
     }
   </div>
-  @if (isAuthorized()) {
-    <button matIconButton="tonal" aria-label="User menu button">
+  @if (authService.isAuthenticated()) {
+    <button routerLink="/user" matIconButton="tonal" aria-label="User menu button">
       <mat-icon>person</mat-icon>
     </button>
   } @else {
@@ -23,7 +23,7 @@
       <button matIconButton aria-label="Menu button">
         <mat-icon>more_vert</mat-icon>
       </button>
-      <button matButton="filled" aria-label="Sign In button">Sign In</button>
+      <button matButton="filled" aria-label="Sign In button" (click)="signIn()">Sign In</button>
     </div>
   }
 </div>

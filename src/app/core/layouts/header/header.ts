@@ -1,8 +1,9 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
+import { AuthService } from '@core/services/auth.service';
 
 @Component({
   selector: 'hive-header',
@@ -12,7 +13,11 @@ import { MatIcon } from '@angular/material/icon';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Header {
-  readonly isAuthorized = input.required<boolean>();
+  protected readonly authService = inject(AuthService);
   protected searchPlaceholder = 'Find a song and more...';
   protected searchInput = '';
+
+  signIn(): void {
+    this.authService.logIn();
+  }
 }
