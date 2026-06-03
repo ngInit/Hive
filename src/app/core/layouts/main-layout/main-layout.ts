@@ -11,6 +11,5 @@ import { Footer } from '@core/layouts/footer/footer';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MainLayout {
-  userAuthorization = false;
   title = input.required<string>();
 }
