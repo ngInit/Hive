@@ -1,18 +1,22 @@
-name: Refactor
+name: 🛠️Refactor
 description: Improve code structure without changing user-visible behavior
-title: "[Refactor]: "
+title: "Refactor "
 labels: ["refactor"]
+projects: ["ngInit/2"]
+assignees:
+  - ngInit
+type: refactor
 body:
   - type: markdown
     attributes:
       value: |
-        User-visible behavior should **not** change. If it does, use Fix or Feature instead.
+        Describe what you would like to change
 
   - type: textarea
     id: motivation
     attributes:
       label: Why refactor
-      placeholder: "Duplication in repositories, hard to test PlayerService"
+      placeholder: "The service is in the wrong directory"
     validations:
       required: true
 
@@ -20,28 +24,6 @@ body:
     id: target
     attributes:
       label: What to change
-      placeholder: "src/app/core/repositories/, albums.service.ts"
+      placeholder: "albums.service.ts is now in src/app/core/services/"
     validations:
       required: true
-
-  - type: textarea
-    id: approach
-    attributes:
-      label: Approach (brief)
-      placeholder: "Extract shared base repository, unify API response type"
-
-  - type: textarea
-    id: risks
-    attributes:
-      label: Risks and how to verify
-      placeholder: "Player regression — run lint, build, manual scenario X"
-
-  - type: checkboxes
-    id: verification
-    attributes:
-      label: Verification after merge
-      options:
-        - label: "`npm run lint:check` and `npm run format:check`"
-        - label: "`npm run build`"
-        - label: "`npm test` (if applicable)"
-        - label: Manual UI check
