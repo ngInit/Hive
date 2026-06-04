@@ -1,0 +1,29 @@
+name: 🗂️ Chore
+description: Infrastructure, dependencies, CI, tooling — not product features or bug fixes
+title: "Chore "
+labels: ["chore"]
+projects: ["ngInit/2"]
+assignees:
+  - ngInit
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: What to do
+      placeholder: "Upgrade Angular 21 → 22, add build job to CI"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      options:
+        - dependencies
+        - CI / GitHub Actions
+        - Husky / lint-staged
+        - build / deploy (Vercel)
+        - configuration (eslint, prettier, tsconfig)
+        - other
+    validations:
+      required: true

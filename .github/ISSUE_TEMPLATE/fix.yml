@@ -1,0 +1,31 @@
+name: 🧷 Fix
+description: Report a fix in the application
+title: "Fix "
+labels: ["fix"]
+projects: ["ngInit/2"]
+assignees:
+  - ngInit
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Describe the fix that you would like to make.
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      placeholder: "Player does not switch track when clicking Next"
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps
+      placeholder: |
+        1. No call to `nextTrack()`
+        2. Disabled button
+        3. ...
+    validations:
+      required: true

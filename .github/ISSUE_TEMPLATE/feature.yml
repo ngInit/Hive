@@ -1,0 +1,28 @@
+name: ✨ Feature
+description: New functionality for Hive
+title: "Create "
+labels: ["feature"]
+projects: ["ngInit/2"]
+assignees:
+  - ngInit
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Describe what you would like to implement
+
+  - type: textarea
+    id: header
+    attributes:
+      label: Need to create
+      placeholder: "Create a NAME service"
+    validations:
+      required: true
+
+  - type: textarea
+    id: tasks
+    attributes:
+      label: Tasks
+      placeholder: "- Add class... \n- Add func..."
+    validations:
+      required: true

@@ -1,0 +1,33 @@
+name: 📋 Documentation
+description: README, code comments, wiki or any notes
+title: "Docs "
+labels: ["documentation"]
+projects: ["ngInit/2"]
+assignees:
+  - ngInit
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Documentation for developers or end users (when applicable).
+
+  - type: dropdown
+    id: doc_type
+    attributes:
+      label: Documentation type
+      options:
+        - README
+        - Architecture (app/core/shared layers)
+        - Development notes
+        - Meeting notes
+        - Code comments
+        - other
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed
+    attributes:
+      label: What to add or change
+    validations:
+      required: true

@@ -1,0 +1,28 @@
+name: 🛠️Refactor
+description: Improve code structure without changing user-visible behavior
+title: "Refactor "
+labels: ["refactor"]
+projects: ["ngInit/2"]
+assignees:
+  - ngInit
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Describe what you would like to change
+
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Why refactor
+      placeholder: "The service is in the wrong directory"
+    validations:
+      required: true
+
+  - type: textarea
+    id: target
+    attributes:
+      label: What to change
+      placeholder: "albums.service.ts is now in src/app/core/services/"
+    validations:
+      required: true
