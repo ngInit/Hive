@@ -5,7 +5,6 @@ labels: ["refactor"]
 projects: ["ngInit/2"]
 assignees:
   - ngInit
-type: refactor
 body:
   - type: markdown
     attributes:
