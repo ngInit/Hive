@@ -15,15 +15,16 @@
     }
   </div>
   @if (authService.isAuthenticated()) {
-    <button routerLink="/user" matIconButton="tonal" aria-label="User menu button">
+    <button matIconButton="tonal" aria-label="User menu button" (click)="openPopup()">
       <mat-icon>person</mat-icon>
     </button>
   } @else {
     <div class="header-buttons-container">
-      <button matIconButton aria-label="Menu button">
+      <button matIconButton aria-label="Menu button" (click)="openPopup()">
         <mat-icon>more_vert</mat-icon>
       </button>
       <button matButton="filled" aria-label="Sign In button" (click)="signIn()">Sign In</button>
     </div>
   }
 </div>
+<hive-popup [(open)]="isPopupOpened" [userStatus]="authService.isAuthenticated()" (signOut)="signOut()" />
