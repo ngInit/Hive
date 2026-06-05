@@ -1,1 +1,9 @@
-<p>{{ title }}</p>
+<mat-action-list class="popup-list">
+  @if (!userStatus()) {
+    <button class="popup-list-item" routerLink="/about" mat-list-item>About</button>
+  } @else {
+    <button class="popup-list-item" routerLink="/user" mat-list-item>Profile</button>
+    <button class="popup-list-item" routerLink="/about" mat-list-item>About</button>
+    <button class="popup-list-item" mat-list-item (click)="setSignOut()">Sign out</button>
+  }
+</mat-action-list>
