@@ -1,6 +1,7 @@
 @use "@angular/material" as mat;
 
 :host {
+  position: relative;
   display: block;
   width: -webkit-fill-available;
   height: fit-content;
