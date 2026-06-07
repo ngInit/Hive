@@ -9,6 +9,9 @@ export default defineConfig([
   globalIgnores(["dist"]),
   {
     files: ["**/*.ts"],
+    rules: {
+      "@typescript-eslint/no-extraneous-class": ["error", { allowWithDecorator: true }],
+    },
     extends: [
       js.configs.recommended,
       tseslint.configs.strictTypeChecked,
