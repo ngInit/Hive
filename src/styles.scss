@@ -2,4 +2,26 @@ html {
   -webkit-font-smoothing: antialiased;
   scroll-behavior: smooth;
   scrollbar-color: rgb(220 220 220 / 0.5) transparent;
+  overflow-y: scroll;
+}
+
+::view-transition-new(main-content) {
+  animation: 100ms ease-in both rotate-in;
+}
+::view-transition-old(main-content) {
+  animation: 100ms ease-out both rotate-out;
+}
+
+@keyframes rotate-in {
+  from {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+}
+
+@keyframes rotate-out {
+  to {
+    opacity: 0;
+    transform: translateX(-24px);
+  }
 }
