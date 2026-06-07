@@ -16,7 +16,6 @@ import { Popup } from '@components/popup/popup';
 export class Header {
   private readonly router = inject(Router);
   protected readonly authService = inject(AuthService);
-  protected searchPlaceholder = 'Find a song and more...';
   protected searchInput = '';
 
   isPopupOpened = signal(false);

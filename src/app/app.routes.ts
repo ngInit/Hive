@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { LandingPage } from '@pages/landing-page/landing-page';
-import { authGuard, userName } from '@core/guards/auth-guard';
+import { authGuard } from '@core/guards/auth-guard';
 
 export const routes: Routes = [
   {
@@ -11,9 +11,9 @@ export const routes: Routes = [
   {
     path: 'user',
     loadComponent: () => import('@pages/user-page/user-page').then((page) => page.UserPage),
-    title: userName,
+    title: 'Profile',
     canActivate: [authGuard],
-    data: { pageTitle: userName },
+    data: { pageTitle: 'Profile' },
   },
   {
     path: 'about',

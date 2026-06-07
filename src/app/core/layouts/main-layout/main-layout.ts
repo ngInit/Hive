@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Header } from '@core/layouts/header/header';
 import { RouterOutlet } from '@angular/router';
 import { Footer } from '@core/layouts/footer/footer';
@@ -10,6 +10,4 @@ import { Footer } from '@core/layouts/footer/footer';
   styleUrl: './main-layout.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MainLayout {
-  title = input.required<string>();
-}
+export class MainLayout {}
