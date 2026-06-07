@@ -9,6 +9,4 @@ import { Carousel } from '@components/carousel/carousel';
   styleUrl: './landing-page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LandingPage {
-  title = 'landing-page works!';
-}
+export class LandingPage {}
