@@ -8,7 +8,9 @@
       <p class="track-duration">{{ track().duration | trackDurationShort }}</p>
       <p class="track-plays">
         <mat-icon class="plays-icon">play_arrow</mat-icon>
-        {{ track().stats?.rate_listened_total | trackPlaysShort }}
+        @if (track().stats; as stats) {
+          {{ stats.rate_listened_total | trackPlaysShort }}
+        }
       </p>
     </div>
   </div>
