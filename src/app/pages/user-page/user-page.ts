@@ -14,11 +14,8 @@ export class UserPage {
   private readonly authService = inject(AuthService);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
-  private readonly pageTitle = String(this.route.snapshot.data['pageTitle']);
-  private readonly pageId = String(this.route.snapshot.paramMap.get('id'));
-  headerText = `User page... and will be later =)))`;
-  subtitle = `Page title is ${this.pageTitle}`;
-  idTitle = `Page id is ${this.pageId}`;
+  protected readonly pageTitle = String(this.route.snapshot.data['pageTitle']);
+  protected readonly pageId = String(this.route.snapshot.paramMap.get('id'));
 
   async signOut() {
     this.authService.logOut();
