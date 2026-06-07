@@ -1,13 +1,14 @@
 :host {
   display: flex;
   flex-direction: column;
-  width: 80%;
+  width: 100%;
   min-width: 0;
   margin: 0 auto;
 
   .carousel-header {
     display: flex;
-    justify-content: flex-end;
+    align-items: center;
+    justify-content: space-between;
     height: 40px;
     margin-bottom: 16px;
   }

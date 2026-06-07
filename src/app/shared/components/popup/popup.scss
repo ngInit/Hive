@@ -1,0 +1,32 @@
+@use "@angular/material" as mat;
+
+:host {
+  position: absolute;
+  display: none;
+  top: 74px;
+  right: 112px;
+  width: 130px;
+  height: fit-content;
+  border-radius: var(--mat-sys-corner-medium);
+  background-color: #3b3b3b;
+  overflow: hidden;
+  z-index: 1;
+
+  .popup-list {
+    padding: 0;
+  }
+
+  @include mat.list-overrides(
+    (
+      list-item-focus-state-layer-opacity: 0,
+    )
+  );
+}
+
+:host(.user) {
+  right: 20px;
+}
+
+:host(.opened) {
+  display: block;
+}

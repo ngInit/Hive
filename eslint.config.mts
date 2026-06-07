@@ -6,9 +6,14 @@ import angular from "angular-eslint";
 import { defineConfig, globalIgnores } from "eslint/config";
 
 export default defineConfig([
-  globalIgnores(["dist"]),
+  globalIgnores(["dist", ".angular", "coverage", "out-tsc"]),
   {
     files: ["**/*.ts"],
+    rules: {
+      "@typescript-eslint/no-extraneous-class": ["error", { allowWithDecorator: true }],
+      "@angular-eslint/component-selector": ["error", { type: "element", prefix: "hive", style: "kebab-case" }],
+      "@angular-eslint/directive-selector": ["error", { type: "attribute", prefix: "hive", style: "camelCase" }],
+    },
     extends: [
       js.configs.recommended,
       tseslint.configs.strictTypeChecked,
@@ -18,7 +23,7 @@ export default defineConfig([
     ],
     languageOptions: {
       parserOptions: {
-        project: ["./tsconfig.app.json", "./tsconfig.spec.json"],
+        projectService: true,
       },
       ecmaVersion: 2022,
       globals: globals.browser,
@@ -29,7 +34,7 @@ export default defineConfig([
     processor: angular.processInlineTemplates,
   },
   {
-    files: ["**/*.html"],
+    files: ["src/**/*.html"],
     extends: [...angular.configs.templateRecommended, ...angular.configs.templateAccessibility, eslintConfigPrettier],
   },
 ]);

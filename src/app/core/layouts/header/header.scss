@@ -1,6 +1,7 @@
 @use "@angular/material" as mat;
 
 :host {
+  position: relative;
   display: block;
   width: -webkit-fill-available;
   height: fit-content;
@@ -74,8 +75,8 @@
   );
 
   button[matIconButton="tonal"] {
-    color: var(--mat-sys-on-tertiary-container);
-    background-color: var(--mat-sys-tertiary-container);
+    color: var(--mat-sys-surface);
+    background-color: var(--mat-sys-inverse-surface);
   }
 
   button[matButton] {
