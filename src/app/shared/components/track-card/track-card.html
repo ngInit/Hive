@@ -1,9 +1,15 @@
-<div routerLink="/" class="track-card-wrapper">
-  <div class="track-card-top">
+<div class="track-card-wrapper">
+  <button class="track-card-top" (click)="playTrack()">
     <div class="track-card-cover">
-      <img class="track-cover" src="{{ track().image }}" alt="Track cover" width="200" height="200" />
+      <img
+        class="track-cover"
+        src="{{ track().image || 'https://picsum.photos/id/39/200.webp?blur=2' }}"
+        alt="Track cover"
+        width="200"
+        height="200"
+      />
     </div>
-    <mat-icon class="track-card-icon">{{ playIcon }}</mat-icon>
+    <mat-icon class="track-card-icon">{{ isPlaying() ? "pause_circle_outline" : "play_circle_outline" }}</mat-icon>
     <div class="track-card-information">
       <p class="track-duration">{{ track().duration | trackDurationShort }}</p>
       <p class="track-plays">
@@ -13,7 +19,7 @@
         }
       </p>
     </div>
-  </div>
+  </button>
   <div class="track-card-bottom">
     <p routerLink="/" aria-label="Page of the artist {{ track().artist_name }}">{{ track().artist_name }}</p>
     <p routerLink="/" aria-label="Page of the track {{ track().name }}">{{ track().name }}</p>
