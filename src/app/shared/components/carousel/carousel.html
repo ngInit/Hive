@@ -29,6 +29,8 @@
 
 @if (isLoading()) {
   <div class="carousel-loading">Loading...</div>
+} @else if (isEmpty()) {
+  <div class="carousel-empty">No news</div>
 } @else {
   <div #viewport class="carousel-viewport" (scroll)="updateScrollState()">
     <ng-content />
