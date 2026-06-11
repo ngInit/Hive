@@ -1,7 +1,13 @@
 <div class="track-card-wrapper">
   <button class="track-card-top" (click)="playTrack()">
     <div class="track-card-cover">
-      <img class="track-cover" src="{{ track().image }}" alt="Track cover" width="200" height="200" />
+      <img
+        class="track-cover"
+        src="{{ track().image || 'https://picsum.photos/id/39/200.webp?blur=2' }}"
+        alt="Track cover"
+        width="200"
+        height="200"
+      />
     </div>
     <mat-icon class="track-card-icon">{{ playIcon }}</mat-icon>
     <div class="track-card-information">
