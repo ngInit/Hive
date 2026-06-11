@@ -5,6 +5,9 @@
     [isLoading]="this.tracksService.tracks.isLoading()"
     [isEmpty]="this.popularTracksEmpty()"
   >
+    @for (track of popularTracks(); track track.id) {
+      <hive-track-card [track]="track" />
+    }
   </hive-carousel>
   <hive-carousel carouselTitle="New releases" />
   <hive-carousel carouselTitle="New albums" />

@@ -2,11 +2,12 @@ import { ChangeDetectionStrategy, Component, inject, signal, effect, computed } 
 import { TagsPanel } from '@components/tags-panel/tags-panel';
 import { Carousel } from '@components/carousel/carousel';
 import { Track } from '@core/models/track.model';
+import { TrackCard } from '@components/track-card/track-card';
 import { TracksService } from '@core/services/tracks.service';
 
 @Component({
   selector: 'hive-landing-page',
-  imports: [TagsPanel, Carousel],
+  imports: [TagsPanel, Carousel, TrackCard],
   templateUrl: './landing-page.html',
   styleUrl: './landing-page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
