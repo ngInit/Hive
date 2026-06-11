@@ -14,8 +14,6 @@ import { PlayerService } from '@core/services/player.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TrackCard {
-  playIcon = 'play_circle_outline';
-  pauseIcon = 'pause_circle_outline';
   private readonly playerService = inject(PlayerService);
   readonly track = input.required<Track>();
   readonly isPlaying = computed(

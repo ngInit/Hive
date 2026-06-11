@@ -9,7 +9,7 @@
         height="200"
       />
     </div>
-    <mat-icon class="track-card-icon">{{ playIcon }}</mat-icon>
+    <mat-icon class="track-card-icon">{{ isPlaying() ? "pause_circle_outline" : "play_circle_outline" }}</mat-icon>
     <div class="track-card-information">
       <p class="track-duration">{{ track().duration | trackDurationShort }}</p>
       <p class="track-plays">
