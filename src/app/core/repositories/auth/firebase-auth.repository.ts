@@ -4,10 +4,10 @@ import { environment } from '@env/environment';
 import { FirebaseApp, initializeApp } from 'firebase/app';
 import { Auth, getAuth } from 'firebase/auth';
 import { Firestore, getFirestore, doc, setDoc } from 'firebase/firestore';
-import { SignUpData } from '@core/models/auth.model';
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signOut as firebaseSignOut,
   updateProfile as updateFirebaseProfile,
   onAuthStateChanged,
 } from 'firebase/auth';
@@ -75,6 +75,17 @@ export class FirebaseAuthRepository implements AuthRepository {
       const credential = await signInWithEmailAndPassword(auth, data.email, data.password);
       const user = credential.user;
       return this.getAuthData(user);
+    } catch (error) {
+      throwFirebaseAuthError(error);
+    }
+  }
+
+  async signOut(data: UserAuth): Promise<void> {
+    if (data.uid !== auth.currentUser?.uid) {
+      throw new Error('User is not authorized to sign out');
+    }
+    try {
+      await firebaseSignOut(auth);
     } catch (error) {
       throwFirebaseAuthError(error);
     }
