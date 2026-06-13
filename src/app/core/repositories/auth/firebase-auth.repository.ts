@@ -1,11 +1,15 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { AuthRepository } from '@core/repositories/auth/auth.repository';
 import { environment } from '@env/environment';
 import { FirebaseApp, initializeApp } from 'firebase/app';
 import { Auth, getAuth } from 'firebase/auth';
 import { Firestore, getFirestore, doc, setDoc } from 'firebase/firestore';
-import { createUserWithEmailAndPassword, updateProfile as updateFirebaseProfile } from 'firebase/auth';
 import { SignUpData } from '@core/models/auth.model';
+import {
+  createUserWithEmailAndPassword,
+  updateProfile as updateFirebaseProfile,
+  onAuthStateChanged,
+} from 'firebase/auth';
 import { UserAuth, userConverter } from '@core/models/user.model';
 import { throwFirebaseAuthError } from '@core/errors/firebase-auth.error';
 
@@ -21,6 +25,20 @@ interface fbData {
 
 @Injectable()
 export class FirebaseAuthRepository implements AuthRepository {
+  readonly currentUser = signal<UserAuth | null>(null);
+  readonly isAuthReady = signal(false);
+  constructor() {
+    onAuthStateChanged(auth, (user) => {
+      try {
+        this.currentUser.set(user ? this.getAuthData(user) : null);
+      } catch {
+        this.currentUser.set(null);
+      } finally {
+        this.isAuthReady.set(true);
+      }
+    });
+  }
+
   private getAuthData(firebaseUser: fbData): UserAuth {
     if (!firebaseUser.email) {
       throw new Error("Email doesn't exist");
