@@ -10,5 +10,5 @@ export interface AuthRepository {
   signIn(data: SignInData): Promise<UserAuth>;
   signOut(data: UserAuth): Promise<void>;
   signUp(data: SignUpData): Promise<UserAuth>;
-  updateProfile(data: UpdateData): Promise<UserAuth>;
+  updateProfile(uid: string, data: UpdateData): Promise<UserAuth>;
 }

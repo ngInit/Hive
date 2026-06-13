@@ -167,9 +167,12 @@ export class MockAuthRepository implements AuthRepository {
     this.clearUserSession();
   }
 
-  async updateProfile(data: UpdateData): Promise<UserAuth> {
+  async updateProfile(uid: string, data: UpdateData): Promise<UserAuth> {
     await delay(DEFAULT_DELAY);
     const currentSession: UserAuth = this.getUserBySession();
+    if (uid !== currentSession.uid) {
+      throw new Error('Invalid user session');
+    }
     if (!data.email && !data.nickname && !data.password) {
       throw new Error('No changes');
     }
