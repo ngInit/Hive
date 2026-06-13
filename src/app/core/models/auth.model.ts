@@ -3,14 +3,14 @@ export interface SignInData {
   password: string;
 }
 
-export interface RegistrationData {
+export interface SignUpData {
   nickname: string;
   email: string;
   password: string;
   repeatPassword: string;
 }
 
-export interface UpdateProfileData {
+export interface UpdateData {
   nickname?: string;
   email?: string;
   password?: string;
