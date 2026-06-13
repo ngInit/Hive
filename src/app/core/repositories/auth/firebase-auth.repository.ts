@@ -7,9 +7,11 @@ import { Firestore, getFirestore, doc, setDoc } from 'firebase/firestore';
 import { SignUpData } from '@core/models/auth.model';
 import {
   createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
   updateProfile as updateFirebaseProfile,
   onAuthStateChanged,
 } from 'firebase/auth';
+import { SignInData, SignUpData } from '@core/models/auth.model';
 import { UserAuth, userConverter } from '@core/models/user.model';
 import { throwFirebaseAuthError } from '@core/errors/firebase-auth.error';
 
@@ -63,6 +65,16 @@ export class FirebaseAuthRepository implements AuthRepository {
       await this.saveToFirestore(userAuth);
       this.currentUser.set(userAuth);
       return userAuth;
+    } catch (error) {
+      throwFirebaseAuthError(error);
+    }
+  }
+
+  async signIn(data: SignInData): Promise<UserAuth> {
+    try {
+      const credential = await signInWithEmailAndPassword(auth, data.email, data.password);
+      const user = credential.user;
+      return this.getAuthData(user);
     } catch (error) {
       throwFirebaseAuthError(error);
     }
