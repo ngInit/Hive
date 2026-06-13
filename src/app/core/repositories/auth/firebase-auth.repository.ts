@@ -32,6 +32,10 @@ export class FirebaseAuthRepository implements AuthRepository {
     };
   }
 
+  private async saveToFirestore(user: UserAuth): Promise<void> {
+    await setDoc(doc(db, 'users', user.uid).withConverter(userConverter), user);
+  }
+
   async signUp(data: SignUpData): Promise<UserAuth> {
     try {
       const credential = await createUserWithEmailAndPassword(auth, data.email, data.password);
