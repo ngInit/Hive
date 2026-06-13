@@ -59,6 +59,10 @@ export class FirebaseAuthRepository implements AuthRepository {
       const credential = await createUserWithEmailAndPassword(auth, data.email, data.password);
       await updateFirebaseProfile(credential.user, { displayName: data.nickname });
       await credential.user.reload();
+      const userAuth = this.getAuthData(credential.user);
+      await this.saveToFirestore(userAuth);
+      this.currentUser.set(userAuth);
+      return userAuth;
     } catch (error) {
       throwFirebaseAuthError(error);
     }
