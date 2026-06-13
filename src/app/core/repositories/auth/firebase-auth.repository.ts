@@ -9,9 +9,11 @@ import {
   signInWithEmailAndPassword,
   signOut as firebaseSignOut,
   updateProfile as updateFirebaseProfile,
+  updatePassword,
+  updateEmail,
   onAuthStateChanged,
 } from 'firebase/auth';
-import { SignInData, SignUpData } from '@core/models/auth.model';
+import { SignInData, SignUpData, UpdateData } from '@core/models/auth.model';
 import { UserAuth, userConverter } from '@core/models/user.model';
 import { throwFirebaseAuthError } from '@core/errors/firebase-auth.error';
 
@@ -86,6 +88,39 @@ export class FirebaseAuthRepository implements AuthRepository {
     }
     try {
       await firebaseSignOut(auth);
+    } catch (error) {
+      throwFirebaseAuthError(error);
+    }
+  }
+
+  async updateProfile(uid: string, data: UpdateData): Promise<UserAuth> {
+    const user = auth.currentUser;
+    if (!user) {
+      throw new Error('User not found');
+    }
+    if (uid !== user.uid) {
+      throw new Error('User is not authorized to update this profile');
+    }
+    if (!data.email && !data.nickname && !data.password) {
+      throw new Error('No changes');
+    }
+    try {
+      if (data.nickname) {
+        await updateFirebaseProfile(user, { displayName: data.nickname });
+      }
+      if (data.email && user.email !== data.email) {
+        await updateEmail(user, data.email);
+      }
+      if (data.password) {
+        await updatePassword(user, data.password);
+      }
+      await user.reload();
+      const updatedUser = this.getAuthData(user);
+      this.currentUser.set(updatedUser);
+      if (data.nickname || data.email) {
+        await this.saveToFirestore(updatedUser);
+      }
+      return updatedUser;
     } catch (error) {
       throwFirebaseAuthError(error);
     }
