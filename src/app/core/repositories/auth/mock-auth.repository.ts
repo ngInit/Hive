@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { MockUserAuth, UserAuth } from '@core/models/user.model';
 import { SignInData, SignUpData, UpdateData } from '@core/models/auth.model';
 import { AuthRepository } from '@core/repositories/auth/auth.repository';
@@ -26,8 +26,19 @@ const mockUsers: MockUserAuth[] = [
 @Injectable()
 export class MockAuthRepository implements AuthRepository {
   private readonly mockAuthUsers: MockUserAuth[] = mockUsers;
+  readonly currentUser = signal<UserAuth | null>(this.loadUserSession());
+  readonly isAuthReady = signal(true);
   constructor() {
     this.mockAuthUsers = this.loadUsers();
+  }
+
+  private loadUserSession(): UserAuth | null {
+    try {
+      const storage: string | null = localStorage.getItem(MOCK_USER_SESSION_KEY);
+      return storage ? (JSON.parse(storage) as UserAuth) : null;
+    } catch {
+      return null;
+    }
   }
 
   private loadUsers(): MockUserAuth[] {
