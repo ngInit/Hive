@@ -148,6 +148,7 @@ export class MockAuthRepository implements AuthRepository {
     }
     const user: UserAuth = this.addUser(data);
     this.saveUserSession(user);
+    this.currentUser.set(user);
     return user;
   }
 
@@ -155,6 +156,7 @@ export class MockAuthRepository implements AuthRepository {
     await delay(DEFAULT_DELAY);
     const user: UserAuth = this.getUserByEmailAndPassword(data);
     this.saveUserSession(user);
+    this.currentUser.set(user);
     return user;
   }
 
@@ -164,6 +166,7 @@ export class MockAuthRepository implements AuthRepository {
     if (currentSession.uid !== data.uid) {
       throw new Error('Invalid user session');
     }
+    this.currentUser.set(null);
     this.clearUserSession();
   }
 
@@ -182,6 +185,8 @@ export class MockAuthRepository implements AuthRepository {
     if (data.nickname && currentSession.nickname !== data.nickname && this.isNicknameExists(data.nickname)) {
       throw new Error(`The nickname ${data.nickname} is not allowed`);
     }
-    return this.updateUser(data, currentSession);
+    const updatedUser = this.updateUser(data, currentSession);
+    this.currentUser.set(updatedUser);
+    return updatedUser;
   }
 }
