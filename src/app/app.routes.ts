@@ -11,7 +11,8 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        loadComponent: () => import('@pages/sign-page/sign-page').then((page) => page.SignPage),
+        redirectTo: '/',
+        pathMatch: 'prefix',
       },
     ],
   },
