@@ -1,13 +1,11 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { MainLayout } from '@core/layouts/main-layout/main-layout';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'hive-root',
-  imports: [MainLayout],
+  imports: [RouterOutlet],
   templateUrl: './app.html',
   styleUrl: './app.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class App {
-  title = 'Hive';
-}
+export class App {}
