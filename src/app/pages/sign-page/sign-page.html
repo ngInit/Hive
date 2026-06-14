@@ -1,0 +1,50 @@
+<div class="sign-page">
+  <div class="sign-forms">
+    <form class="sign-form" [formGroup]="signInForm" (ngSubmit)="signIn()">
+      @let email = signInForm.controls.email;
+      @let password = signInForm.controls.password;
+      <h2 class="sign-form-title">Sign In</h2>
+      <mat-form-field class="sign-form-field">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" />
+        @if (email.hasError("required")) {
+          <mat-error>Email is <strong>required</strong></mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field class="sign-form-field">
+        <mat-label>Password</mat-label>
+        <input matInput formControlName="password" type="password" />
+        @if (password.hasError("required")) {
+          <mat-error>Password is <strong>required</strong></mat-error>
+        }
+      </mat-form-field>
+      <button matButton="filled" class="sign-button" aria-label="Sign In button" type="submit">Sign In</button>
+    </form>
+    <div class="sign-choice {{ movePanel() }}">
+      <h2 class="sign-choice-title">{{ isSignInPanel() ? "Don't have an account?" : "Already have an account?" }}</h2>
+      <button aria-label="Sign switch button" type="button" class="sign-choice-button" (click)="toggle()">
+        {{ isSignInPanel() ? "Sign Up" : "Sign In" }}
+      </button>
+    </div>
+    <form class="sign-form" [formGroup]="signInForm" (ngSubmit)="signIn()">
+      <h2 class="sign-form-title">Sign Up</h2>
+      <mat-form-field class="sign-form-field">
+        <mat-label>Nickname</mat-label>
+        <input matInput formControlName="email" />
+      </mat-form-field>
+      <mat-form-field class="sign-form-field">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" />
+      </mat-form-field>
+      <mat-form-field class="sign-form-field">
+        <mat-label>Password</mat-label>
+        <input matInput formControlName="password" type="password" />
+      </mat-form-field>
+      <mat-form-field class="sign-form-field">
+        <mat-label>Repeat password</mat-label>
+        <input matInput formControlName="password" type="password" />
+      </mat-form-field>
+      <button matButton="filled" class="sign-button" aria-label="Sign Up button" type="submit">Sign Up</button>
+    </form>
+  </div>
+</div>
