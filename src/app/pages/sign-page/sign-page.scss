@@ -1,6 +1,170 @@
+@use "@angular/material" as mat;
+@property --c1 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: rgb(38, 38, 38);
+}
+
+@property --c2 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: rgb(65, 0, 0);
+}
+
+@property --p1 {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 15%;
+}
+
+@property --p2 {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 75%;
+}
+
+@property --p3 {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 100%;
+}
+
 :host {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 100%;
+
+  .sign-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .sign-forms {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 900px;
+    height: fit-content;
+    border-radius: var(--mat-sys-corner-medium);
+    outline: 1px solid var(--mat-sys-outline-variant);
+    overflow: hidden;
+  }
+
+  .sign-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    row-gap: 1rem;
+    width: 50%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 2rem 3rem 3rem;
+    z-index: 0;
+  }
+
+  .sign-form-field {
+    width: 100%;
+  }
+
+  .sign-choice {
+    position: absolute;
+    left: 50%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 50%;
+    background: linear-gradient(90deg, var(--c1) var(--p1), rgb(40 20 20) var(--p2), var(--c2) var(--p3));
+    z-index: 1;
+  }
+
+  .sign-form-title,
+  .sign-choice-button,
+  .sign-choice-title {
+    display: block;
+    font-size: 1.5em;
+    margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+    margin-inline-start: 0;
+    margin-inline-end: 0;
+    font-weight: normal;
+    unicode-bidi: isolate;
+    letter-spacing: normal;
+    word-spacing: normal;
+    line-height: normal;
+  }
+
+  .sign-choice-button {
+    display: block;
+    background: none;
+    border: none;
+    color: var(--mat-sys-inverse-surface);
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  .sign-button {
+    width: 100%;
+  }
+
+  .sign-up {
+    animation: slide-to-right 250ms ease-in-out both;
+  }
+
+  .sign-in {
+    animation: slide-to-left 250ms ease-in-out both;
+  }
+
+  @keyframes slide-to-right {
+    0% {
+      --c1: rgb(38, 38, 38);
+      --c2: rgb(65, 0, 0);
+      --p1: 15%;
+      --p2: 75%;
+      --p3: 100%;
+      transform: translateX(0);
+    }
+    100% {
+      --c1: rgb(65, 0, 0);
+      --c2: rgb(38, 38, 38);
+      --p1: 0%;
+      --p2: 25%;
+      --p3: 85%;
+      transform: translateX(-100%);
+    }
+  }
+
+  @keyframes slide-to-left {
+    0% {
+      --c1: rgb(65, 0, 0);
+      --c2: rgb(38, 38, 38);
+      --p1: 0%;
+      --p2: 25%;
+      --p3: 85%;
+      transform: translateX(-100%);
+    }
+    100% {
+      --c1: rgb(38, 38, 38);
+      --c2: rgb(65, 0, 0);
+      --p1: 15%;
+      --p2: 75%;
+      --p3: 100%;
+      transform: translateX(0);
+    }
+  }
+
+  @include mat.button-overrides(
+    (
+      filled-container-color: var(--mat-sys-inverse-surface),
+    )
+  );
 }
