@@ -1,6 +1,10 @@
 <div class="sign-page">
   <div class="sign-forms">
-    <form class="sign-form" [formGroup]="signInForm" (ngSubmit)="signIn()">
+    <form
+      class="sign-form {{ isSignInPanel() ? 'show-form' : 'hide-form' }}"
+      [formGroup]="signInForm"
+      (ngSubmit)="signIn()"
+    >
       @let email = signInForm.controls.email;
       @let password = signInForm.controls.password;
       <h2 class="sign-form-title">Sign In</h2>
@@ -26,7 +30,11 @@
         {{ isSignInPanel() ? "Sign Up" : "Sign In" }}
       </button>
     </div>
-    <form class="sign-form" [formGroup]="signInForm" (ngSubmit)="signIn()">
+    <form
+      class="sign-form {{ isSignInPanel() ? 'hide-form' : 'show-form' }}"
+      [formGroup]="signInForm"
+      (ngSubmit)="signIn()"
+    >
       <h2 class="sign-form-title">Sign Up</h2>
       <mat-form-field class="sign-form-field">
         <mat-label>Nickname</mat-label>
