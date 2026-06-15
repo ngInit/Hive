@@ -8,6 +8,13 @@ interface SignInGroup {
   password: FormControl<string>;
 }
 
+interface SignUpGroup {
+  nickname: FormControl<string>;
+  email: FormControl<string>;
+  password: FormControl<string>;
+  repeatPassword: FormControl<string>;
+}
+
 @Component({
   selector: 'hive-sign-page',
   imports: [MatFormField, MatLabel, MatInput, ReactiveFormsModule, MatError, MatButton],
@@ -26,6 +33,25 @@ export class SignPage {
     password: new FormControl<string>('', {
       nonNullable: true,
       validators: [Validators.required, Validators.minLength(8), Validators.pattern('[0-9a-zA-Z!.$%^&*]*')],
+    }),
+  });
+
+  signUpForm = new FormGroup<SignUpGroup>({
+    nickname: new FormControl<string>('', {
+      nonNullable: true,
+      validators: Validators.required,
+    }),
+    email: new FormControl<string>('', {
+      nonNullable: true,
+      validators: [Validators.required, Validators.pattern('^[\\w-\\.]+@[\\w-]+\\.+[\\w-]{2,4}$')],
+    }),
+    password: new FormControl<string>('', {
+      nonNullable: true,
+      validators: [Validators.required, Validators.minLength(8), Validators.pattern('[0-9a-zA-Z!.$%^&*]*')],
+    }),
+    repeatPassword: new FormControl<string>('', {
+      nonNullable: true,
+      validators: [Validators.required],
     }),
   });
 
