@@ -79,6 +79,8 @@
         <input matInput formControlName="repeatPassword" type="password" />
         @if (upRePassword.hasError("required")) {
           <mat-error>Password is <strong>required</strong></mat-error>
+        } @else if (upRePassword.hasError("matchPasswords")) {
+          <mat-error>Password is not the same</mat-error>
         }
       </mat-form-field>
       <button matButton="filled" class="sign-button" aria-label="Sign Up button" type="submit">Sign Up</button>

@@ -2,6 +2,7 @@ import { Component, signal } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import { MatError, MatFormField, MatInput, MatLabel } from '@angular/material/input';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { CompareSignUpPasswords } from '@shared/directives/compare-sign-up-passwords.directive';
 
 interface SignInGroup {
   email: FormControl<string>;
@@ -36,24 +37,29 @@ export class SignPage {
     }),
   });
 
-  signUpForm = new FormGroup<SignUpGroup>({
-    nickname: new FormControl<string>('', {
-      nonNullable: true,
-      validators: Validators.required,
-    }),
-    email: new FormControl<string>('', {
-      nonNullable: true,
-      validators: [Validators.required, Validators.pattern('^[\\w-\\.]+@[\\w-]+\\.+[\\w-]{2,4}$')],
-    }),
-    password: new FormControl<string>('', {
-      nonNullable: true,
-      validators: [Validators.required, Validators.minLength(8), Validators.pattern('[0-9a-zA-Z!.$%^&*]*')],
-    }),
-    repeatPassword: new FormControl<string>('', {
-      nonNullable: true,
-      validators: [Validators.required],
-    }),
-  });
+  signUpForm = new FormGroup<SignUpGroup>(
+    {
+      nickname: new FormControl<string>('', {
+        nonNullable: true,
+        validators: Validators.required,
+      }),
+      email: new FormControl<string>('', {
+        nonNullable: true,
+        validators: [Validators.required, Validators.pattern('^[\\w-\\.]+@[\\w-]+\\.+[\\w-]{2,4}$')],
+      }),
+      password: new FormControl<string>('', {
+        nonNullable: true,
+        validators: [Validators.required, Validators.minLength(8), Validators.pattern('[0-9a-zA-Z!.$%^&*]*')],
+      }),
+      repeatPassword: new FormControl<string>('', {
+        nonNullable: true,
+        validators: [Validators.required],
+      }),
+    },
+    {
+      validators: CompareSignUpPasswords.matchPasswords,
+    }
+  );
 
   signIn() {
     console.log(this.signInForm.value);
