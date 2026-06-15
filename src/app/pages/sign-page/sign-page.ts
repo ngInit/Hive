@@ -21,11 +21,11 @@ export class SignPage {
   signInForm = new FormGroup<SignInGroup>({
     email: new FormControl<string>('', {
       nonNullable: true,
-      validators: [Validators.required, Validators.email],
+      validators: [Validators.required, Validators.pattern('^[\\w-\\.]+@[\\w-]+\\.+[\\w-]{2,4}$')],
     }),
     password: new FormControl<string>('', {
       nonNullable: true,
-      validators: [Validators.minLength(8), Validators.required],
+      validators: [Validators.required, Validators.minLength(8), Validators.pattern('[0-9a-zA-Z!.$%^&*]*')],
     }),
   });
 

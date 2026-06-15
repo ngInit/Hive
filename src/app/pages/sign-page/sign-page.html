@@ -1,25 +1,31 @@
+@let inEmail = signInForm.controls.email;
+@let inPassword = signInForm.controls.password;
 <div class="sign-page">
   <div class="sign-forms">
     <form
       class="sign-form {{ isSignInPanel() ? 'show-form' : 'hide-form' }}"
       [formGroup]="signInForm"
-      (ngSubmit)="signIn()"
+      (submit)="signIn()"
     >
-      @let email = signInForm.controls.email;
-      @let password = signInForm.controls.password;
       <h2 class="sign-form-title">Sign In</h2>
       <mat-form-field class="sign-form-field">
         <mat-label>Email</mat-label>
         <input matInput formControlName="email" />
-        @if (email.hasError("required")) {
+        @if (inEmail.errors?.["pattern"]) {
+          <mat-error>Email examples: <i>hive&#64;hive.com</i> or <i>hi.ve&#64;hive.moon</i></mat-error>
+        } @else if (inEmail.hasError("required")) {
           <mat-error>Email is <strong>required</strong></mat-error>
         }
       </mat-form-field>
       <mat-form-field class="sign-form-field">
         <mat-label>Password</mat-label>
         <input matInput formControlName="password" type="password" />
-        @if (password.hasError("required")) {
+        @if (inPassword.errors?.["pattern"]) {
+          <mat-error>Only numbers, English letters and !.$%^&* are allowed</mat-error>
+        } @else if (inPassword.hasError("required")) {
           <mat-error>Password is <strong>required</strong></mat-error>
+        } @else if (inPassword.hasError("minlength")) {
+          <mat-error>Minimum password length should be <strong>8</strong> characters</mat-error>
         }
       </mat-form-field>
       <button matButton="filled" class="sign-button" aria-label="Sign In button" type="submit">Sign In</button>
