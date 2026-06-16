@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, QueryList, signal, ViewChildren } from '@angular/core';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatError, MatFormField, MatInput, MatLabel } from '@angular/material/input';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -81,6 +81,18 @@ export class SignPage {
     }
   );
 
+  @ViewChildren(ShowPassword)
+  private showPasswordDirectives: QueryList<ShowPassword> | undefined;
+
+  private resetAll(): void {
+    this.errorMessage.set(null);
+    if (this.showPasswordDirectives) {
+      this.showPasswordDirectives.forEach((directive) => {
+        directive.reset();
+      });
+    }
+  }
+
   async signIn(): Promise<void> {
     if (this.signInForm.invalid) {
       this.errorMessage.set('Please fill in all fields');
@@ -110,6 +122,7 @@ export class SignPage {
   }
 
   togglePanel(): void {
+    this.resetAll();
     if (this.movePanel() === '') {
       this.movePanel.set('sign-up');
       this.isSignInPanel.set(false);
