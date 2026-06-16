@@ -10,6 +10,7 @@ export default defineConfig([
   {
     files: ["**/*.ts"],
     rules: {
+      "@typescript-eslint/unbound-method": ["error", { ignoreStatic: true }],
       "@typescript-eslint/no-extraneous-class": ["error", { allowWithDecorator: true }],
       "@angular-eslint/component-selector": ["error", { type: "element", prefix: "hive", style: "kebab-case" }],
       "@angular-eslint/directive-selector": ["error", { type: "attribute", prefix: "hive", style: "camelCase" }],

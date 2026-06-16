@@ -1,16 +1,10 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Router, RouterLink, isActive } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { AuthService } from '@core/services/auth.service';
 import { Popup } from '@components/popup/popup';
-import { SignInData } from '@core/models/auth.model';
-
-const testUser: SignInData = {
-  email: 'paul@email.com',
-  password: 'Paul123!',
-};
 
 @Component({
   selector: 'hive-header',
@@ -23,20 +17,14 @@ export class Header {
   private readonly router = inject(Router);
   protected readonly authService = inject(AuthService);
   protected searchInput = '';
+  readonly isSign = isActive('/sign', this.router);
 
   isPopupOpened = signal(false);
-
-  async signIn(): Promise<void> {
-    await this.authService.signIn(testUser);
-    if (this.authService.error()) {
-      console.log(this.authService.error());
-    }
-  }
 
   async signOut(): Promise<void> {
     await this.authService.signOut();
     if (this.router.url === '/user') {
-      void this.router.navigate(['/']);
+      await this.router.navigate(['/']);
     }
   }
 
