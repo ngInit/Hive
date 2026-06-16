@@ -10,6 +10,7 @@
     <form
       class="sign-form {{ isSignInPanel() ? 'show-form' : 'hide-form' }}"
       [formGroup]="signInForm"
+      (input)="this.errorMessage.set(null)"
       (submit)="signIn()"
     >
       <h2 class="sign-form-title">Sign In</h2>
@@ -34,6 +35,9 @@
         }
       </mat-form-field>
       <button matButton="filled" class="sign-button" aria-label="Sign In button" type="submit">Sign In</button>
+      @if (errorMessage()) {
+        <div class="error-message">{{ errorMessage() }}</div>
+      }
     </form>
     <div class="sign-choice {{ movePanel() }}">
       <h2 class="sign-choice-title">{{ isSignInPanel() ? "Don't have an account?" : "Already have an account?" }}</h2>
@@ -84,6 +88,9 @@
         }
       </mat-form-field>
       <button matButton="filled" class="sign-button" aria-label="Sign Up button" type="submit">Sign Up</button>
+      @if (errorMessage()) {
+        <div class="error-message">{{ errorMessage() }}</div>
+      }
     </form>
   </div>
 </div>

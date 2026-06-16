@@ -25,6 +25,7 @@ interface SignUpGroup {
 export class SignPage {
   readonly movePanel = signal<string>('');
   readonly isSignInPanel = signal(true);
+  public readonly errorMessage = signal<string | null>(null);
 
   signInForm = new FormGroup<SignInGroup>({
     email: new FormControl<string>('', {

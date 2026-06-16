@@ -117,6 +117,11 @@
     width: 100%;
   }
 
+  .error-message {
+    font: var(--mat-sys-body-large);
+    color: var(--mat-sys-error);
+  }
+
   .sign-up {
     animation: slide-to-right 250ms ease-in-out both;
   }
