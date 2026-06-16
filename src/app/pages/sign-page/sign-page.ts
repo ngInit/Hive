@@ -1,11 +1,14 @@
-import { MatButton } from '@angular/material/button';
 import { Component, inject, signal } from '@angular/core';
+import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatError, MatFormField, MatInput, MatLabel } from '@angular/material/input';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CompareSignUpPasswords } from '@shared/directives/compare-sign-up-passwords.directive';
 import { SignInData } from '@core/models/auth.model';
 import { AuthService } from '@core/services/auth.service';
 import { Router } from '@angular/router';
+import { MatIcon } from '@angular/material/icon';
+import { MatSuffix } from '@angular/material/input';
+import { ShowPassword } from '@shared/directives/show-password.directive';
 
 interface SignInGroup {
   email: FormControl<string>;
@@ -21,7 +24,18 @@ interface SignUpGroup {
 
 @Component({
   selector: 'hive-sign-page',
-  imports: [MatFormField, MatLabel, MatInput, ReactiveFormsModule, MatError, MatButton],
+  imports: [
+    MatFormField,
+    MatLabel,
+    MatInput,
+    ReactiveFormsModule,
+    MatError,
+    MatButton,
+    MatIcon,
+    MatIconButton,
+    MatSuffix,
+    ShowPassword,
+  ],
   templateUrl: './sign-page.html',
   styleUrl: './sign-page.scss',
 })

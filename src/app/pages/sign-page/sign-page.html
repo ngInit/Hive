@@ -16,7 +16,7 @@
       <h2 class="sign-form-title">Sign In</h2>
       <mat-form-field class="sign-form-field">
         <mat-label>Email</mat-label>
-        <input matInput formControlName="email" />
+        <input matInput formControlName="email" autocomplete="email" />
         @if (inEmail.errors?.["pattern"]) {
           <mat-error>Email examples: <i>hive&#64;hive.com</i> or <i>hi.ve&#64;hive.moon</i></mat-error>
         } @else if (inEmail.hasError("required")) {
@@ -25,7 +25,16 @@
       </mat-form-field>
       <mat-form-field class="sign-form-field">
         <mat-label>Password</mat-label>
-        <input matInput formControlName="password" type="password" />
+        <input
+          matInput
+          formControlName="password"
+          #inPwd="hiveShowPassword"
+          hiveShowPassword
+          autocomplete="current-password"
+        />
+        <button matSuffix matIconButton type="button" aria-label="Show password" (click)="inPwd.toggle()">
+          <mat-icon>{{ inPwd.visible ? "visibility" : "visibility_off" }}</mat-icon>
+        </button>
         @if (inPassword.errors?.["pattern"]) {
           <mat-error>Only numbers, English letters and !.$%^&* are allowed</mat-error>
         } @else if (inPassword.hasError("required")) {
@@ -61,7 +70,7 @@
       </mat-form-field>
       <mat-form-field class="sign-form-field">
         <mat-label>Email</mat-label>
-        <input matInput formControlName="email" />
+        <input matInput formControlName="email" autocomplete="new-email" />
         @if (upEmail.errors?.["pattern"]) {
           <mat-error>Email examples: <i>hive&#64;hive.com</i> or <i>hi.ve&#64;hive.moon</i></mat-error>
         } @else if (upEmail.hasError("required")) {
@@ -70,7 +79,16 @@
       </mat-form-field>
       <mat-form-field class="sign-form-field">
         <mat-label>Password</mat-label>
-        <input matInput formControlName="password" type="password" />
+        <input
+          matInput
+          formControlName="password"
+          #upPwd="hiveShowPassword"
+          hiveShowPassword
+          autocomplete="new-password"
+        />
+        <button matSuffix matIconButton type="button" aria-label="Show match sign up password" (click)="upPwd.toggle()">
+          <mat-icon>{{ upPwd.visible ? "visibility" : "visibility_off" }}</mat-icon>
+        </button>
         @if (upPassword.errors?.["pattern"]) {
           <mat-error>Only numbers, English letters and !.$%^&* are allowed</mat-error>
         } @else if (upPassword.hasError("required")) {
@@ -81,7 +99,22 @@
       </mat-form-field>
       <mat-form-field class="sign-form-field">
         <mat-label>Repeat password</mat-label>
-        <input matInput formControlName="repeatPassword" type="password" />
+        <input
+          matInput
+          formControlName="repeatPassword"
+          #upRepeatPwd="hiveShowPassword"
+          hiveShowPassword
+          autocomplete="new-password"
+        />
+        <button
+          matSuffix
+          matIconButton
+          type="button"
+          aria-label="Show match sign up password"
+          (click)="upRepeatPwd.toggle()"
+        >
+          <mat-icon>{{ upRepeatPwd.visible ? "visibility" : "visibility_off" }}</mat-icon>
+        </button>
         @if (upRePassword.hasError("required")) {
           <mat-error>Password is <strong>required</strong></mat-error>
         } @else if (upRePassword.hasError("matchPasswords")) {
