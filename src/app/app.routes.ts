@@ -1,13 +1,14 @@
 import { Routes } from '@angular/router';
 import { MainLayout } from '@core/layouts/main-layout/main-layout';
 import { LandingPage } from '@pages/landing-page/landing-page';
-import { authGuard } from '@core/guards/auth-guard';
+import { guestGuard, userGuard } from '@core/guards/auth-guard';
 
 export const routes: Routes = [
   {
     path: 'sign',
     loadComponent: () => import('@core/layouts/sign-layout/sign-layout').then((page) => page.SignLayout),
     title: 'Sign',
+    canActivate: [guestGuard],
     children: [
       {
         path: '',
@@ -28,7 +29,7 @@ export const routes: Routes = [
         path: 'user',
         loadComponent: () => import('@pages/user-page/user-page').then((page) => page.UserPage),
         title: 'Profile',
-        canActivate: [authGuard],
+        canActivate: [userGuard],
         data: { pageTitle: 'Profile' },
       },
       {
