@@ -41,7 +41,7 @@
     </form>
     <div class="sign-choice {{ movePanel() }}">
       <h2 class="sign-choice-title">{{ isSignInPanel() ? "Don't have an account?" : "Already have an account?" }}</h2>
-      <button aria-label="Sign switch button" type="button" class="sign-choice-button" (click)="toggle()">
+      <button aria-label="Sign switch button" type="button" class="sign-choice-button" (click)="togglePanel()">
         {{ isSignInPanel() ? "Sign Up" : "Sign In" }}
       </button>
     </div>

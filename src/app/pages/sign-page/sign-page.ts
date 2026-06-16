@@ -66,7 +66,7 @@ export class SignPage {
     console.log(this.signInForm.value);
   }
 
-  toggle(): void {
+  togglePanel(): void {
     if (this.movePanel() === '') {
       this.movePanel.set('sign-up');
       this.isSignInPanel.set(false);
