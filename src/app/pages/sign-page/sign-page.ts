@@ -85,6 +85,16 @@ export class SignPage {
     }
   }
 
+  signUp(): void {
+    if (this.signUpForm.invalid) {
+      console.log('Sign in form is invalid');
+      this.errorMessage.set('Please fill in all fields');
+      return;
+    } else {
+      console.log('Sign up form is valid');
+    }
+  }
+
   togglePanel(): void {
     if (this.movePanel() === '') {
       this.movePanel.set('sign-up');

@@ -48,7 +48,8 @@
     <form
       class="sign-form {{ isSignInPanel() ? 'hide-form' : 'show-form' }}"
       [formGroup]="signUpForm"
-      (submit)="signIn()"
+      (submit)="signUp()"
+      (input)="this.errorMessage.set(null)"
     >
       <h2 class="sign-form-title">Sign Up</h2>
       <mat-form-field class="sign-form-field">
