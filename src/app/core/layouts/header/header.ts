@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Router, RouterLink, isActive } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
@@ -17,6 +17,7 @@ export class Header {
   private readonly router = inject(Router);
   protected readonly authService = inject(AuthService);
   protected searchInput = '';
+  readonly isSign = isActive('/sign', this.router);
 
   isPopupOpened = signal(false);
 
