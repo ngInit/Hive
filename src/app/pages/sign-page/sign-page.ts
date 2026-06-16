@@ -3,7 +3,7 @@ import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatError, MatFormField, MatInput, MatLabel } from '@angular/material/input';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CompareSignUpPasswords } from '@shared/directives/compare-sign-up-passwords.directive';
-import { SignInData } from '@core/models/auth.model';
+import { SignInData, SignUpData } from '@core/models/auth.model';
 import { AuthService } from '@core/services/auth.service';
 import { Router } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
@@ -111,13 +111,22 @@ export class SignPage {
     }
   }
 
-  signUp(): void {
+  async signUp(): Promise<void> {
     if (this.signUpForm.invalid) {
-      console.log('Sign in form is invalid');
       this.errorMessage.set('Please fill in all fields');
-      return;
     } else {
-      console.log('Sign up form is valid');
+      const newUser: SignUpData = {
+        nickname: this.signUpForm.controls.nickname.value,
+        email: this.signUpForm.controls.email.value,
+        password: this.signUpForm.controls.password.value,
+        repeatPassword: this.signUpForm.controls.repeatPassword.value,
+      };
+      await this.authService.signUp(newUser);
+      if (this.authService.error()) {
+        this.errorMessage.set(this.authService.error());
+      } else {
+        await this.router.navigate(['/']);
+      }
     }
   }
 
