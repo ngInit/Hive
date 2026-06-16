@@ -1,8 +1,11 @@
-import { Component, signal } from '@angular/core';
 import { MatButton } from '@angular/material/button';
+import { Component, inject, signal } from '@angular/core';
 import { MatError, MatFormField, MatInput, MatLabel } from '@angular/material/input';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CompareSignUpPasswords } from '@shared/directives/compare-sign-up-passwords.directive';
+import { SignInData } from '@core/models/auth.model';
+import { AuthService } from '@core/services/auth.service';
+import { Router } from '@angular/router';
 
 interface SignInGroup {
   email: FormControl<string>;
@@ -25,6 +28,8 @@ interface SignUpGroup {
 export class SignPage {
   readonly movePanel = signal<string>('');
   readonly isSignInPanel = signal(true);
+  private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
   public readonly errorMessage = signal<string | null>(null);
 
   signInForm = new FormGroup<SignInGroup>({
@@ -62,8 +67,22 @@ export class SignPage {
     }
   );
 
-  signIn() {
-    console.log(this.signInForm.value);
+  async signIn(): Promise<void> {
+    if (this.signInForm.invalid) {
+      this.errorMessage.set('Please fill in all fields');
+    } else {
+      const currentUser: SignInData = {
+        email: this.signInForm.controls.email.value,
+        password: this.signInForm.controls.password.value,
+      };
+      await this.authService.signIn(currentUser);
+      if (this.authService.error()) {
+        this.errorMessage.set(this.authService.error());
+        this.signInForm.reset();
+      } else {
+        await this.router.navigate(['/']);
+      }
+    }
   }
 
   togglePanel(): void {
