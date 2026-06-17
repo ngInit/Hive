@@ -96,10 +96,6 @@ export class MockAuthRepository implements AuthRepository {
     return this.mockAuthUsers.some((user) => user.email === email);
   }
 
-  private isNicknameExists(nickname: string): boolean {
-    return this.mockAuthUsers.some((user) => user.nickname === nickname);
-  }
-
   private addUser(data: SignUpData): UserAuth {
     const newUid = String(Math.max(0, ...this.mockAuthUsers.map((user) => Number(user.uid))) + 1);
     const user = {
@@ -143,9 +139,6 @@ export class MockAuthRepository implements AuthRepository {
     if (this.isEmailExists(data.email)) {
       throw new Error(`Email ${data.email} is not allowed`);
     }
-    if (this.isNicknameExists(data.nickname)) {
-      throw new Error(`The nickname ${data.nickname} is not allowed`);
-    }
     const user: UserAuth = this.addUser(data);
     this.saveUserSession(user);
     this.currentUser.set(user);
@@ -181,9 +174,6 @@ export class MockAuthRepository implements AuthRepository {
     }
     if (data.email && currentSession.email !== data.email && this.isEmailExists(data.email)) {
       throw new Error(`Email ${data.email} is not allowed`);
-    }
-    if (data.nickname && currentSession.nickname !== data.nickname && this.isNicknameExists(data.nickname)) {
-      throw new Error(`The nickname ${data.nickname} is not allowed`);
     }
     const updatedUser = this.updateUser(data, currentSession);
     this.currentUser.set(updatedUser);
