@@ -3,8 +3,9 @@ export interface JamendoResponseHeaders {
   code: number;
   error_message: string;
   warnings: string;
-  results_count: number;
-  next: string;
+  results_count?: number;
+  results_fullcount?: number;
+  next?: string;
 }
 
 export interface JamendoResponse<T> {
