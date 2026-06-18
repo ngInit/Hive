@@ -19,3 +19,7 @@ interface JamendoFailedResponse {
 }
 
 export type JamendoResponse<T> = JamendoSuccessResponse<T> | JamendoFailedResponse;
+
+export function isJamendoSuccess<T>(response: JamendoResponse<T>): response is JamendoSuccessResponse<T> {
+  return response.headers.status === 'success';
+}
