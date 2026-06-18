@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, input, computed, inject } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
-import { Track } from '@core/models/track.model';
+import { Track } from '@core/models/jamendo/track.model';
 import { TrackPlaysShortPipe } from '@shared/pipes/track-plays-short-pipe';
 import { TrackDurationShortPipe } from '@shared/pipes/track-duration-short-pipe';
 import { PlayerService } from '@core/services/player.service';

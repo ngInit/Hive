@@ -1,6 +1,6 @@
 import { TRACKS_REPOSITORY } from '@core/repositories/tracks/tracks.repository';
 import { Injectable, inject, ResourceRef } from '@angular/core';
-import { TracksResponse } from '@core/models/track.model';
+import { TracksResponse } from '@core/models/jamendo/track.model';
 
 @Injectable({
   providedIn: 'root',

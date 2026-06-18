@@ -1,4 +1,4 @@
-import { TracksResponse } from '@core/models/track.model';
+import { TracksResponse } from '@core/models/jamendo/track.model';
 
 export const tracksMock: TracksResponse = {
   headers: {
@@ -37,7 +37,7 @@ export const tracksMock: TracksResponse = {
         lang: 'fr',
         gender: 'male',
         acousticelectric: 'acoustic',
-        speed: 'high',
+        speed: ['high'],
         tags: {
           genres: ['rock'],
           instruments: ['accordion'],
@@ -84,7 +84,7 @@ export const tracksMock: TracksResponse = {
         lang: 'fr',
         gender: 'male',
         acousticelectric: 'acoustic',
-        speed: 'medium',
+        speed: ['medium'],
         tags: {
           genres: ['rock'],
           instruments: ['accordion'],
@@ -131,7 +131,7 @@ export const tracksMock: TracksResponse = {
         lang: 'fr',
         gender: 'male',
         acousticelectric: 'electric',
-        speed: 'veryhigh',
+        speed: ['veryhigh'],
         tags: {
           genres: ['punk'],
           instruments: ['accordion'],
@@ -178,7 +178,7 @@ export const tracksMock: TracksResponse = {
         lang: 'fr',
         gender: 'male',
         acousticelectric: 'electric',
-        speed: 'high',
+        speed: ['high'],
         tags: {
           genres: ['rock'],
           instruments: ['accordion'],
@@ -225,7 +225,7 @@ export const tracksMock: TracksResponse = {
         lang: 'fr',
         gender: 'male',
         acousticelectric: 'acoustic',
-        speed: 'medium',
+        speed: ['medium'],
         tags: {
           genres: ['rock'],
           instruments: ['accordion'],
@@ -272,7 +272,7 @@ export const tracksMock: TracksResponse = {
         lang: 'fr',
         gender: 'male',
         acousticelectric: 'acoustic',
-        speed: 'verylow',
+        speed: ['verylow'],
         tags: {
           genres: ['rock'],
           instruments: ['accordion'],
@@ -319,7 +319,7 @@ export const tracksMock: TracksResponse = {
         lang: '',
         gender: 'male',
         acousticelectric: 'electric',
-        speed: 'high',
+        speed: ['high'],
         tags: {
           genres: ['metal', 'hardcore'],
           instruments: [],
@@ -366,7 +366,7 @@ export const tracksMock: TracksResponse = {
         lang: '',
         gender: 'male',
         acousticelectric: 'electric',
-        speed: 'medium',
+        speed: ['high'],
         tags: {
           genres: [],
           instruments: [],
@@ -413,7 +413,7 @@ export const tracksMock: TracksResponse = {
         lang: '',
         gender: '',
         acousticelectric: '',
-        speed: 'veryhigh',
+        speed: ['veryhigh'],
         tags: {
           genres: [],
           instruments: [],
@@ -460,7 +460,7 @@ export const tracksMock: TracksResponse = {
         lang: '',
         gender: 'male',
         acousticelectric: 'acoustic',
-        speed: 'medium',
+        speed: ['veryhigh'],
         tags: {
           genres: [],
           instruments: [],

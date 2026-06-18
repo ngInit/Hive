@@ -1,7 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { httpResource } from '@angular/common/http';
 import { environment } from '@env/environment';
-import { TracksResponse } from '@core/models/track.model';
+import { TracksResponse } from '@core/models/jamendo/track.model';
 import { TracksRepository } from './tracks.repository';
 
 @Injectable()

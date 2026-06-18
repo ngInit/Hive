@@ -1,5 +1,5 @@
 import { Injectable, signal } from '@angular/core';
-import { Track } from '@core/models/track.model';
+import { Track } from '@core/models/jamendo/track.model';
 
 @Injectable({
   providedIn: 'root',
