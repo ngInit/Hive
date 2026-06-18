@@ -6,3 +6,8 @@ export interface ResponseHeaders {
   results_count: number;
   next: string;
 }
+
+export interface JamendoResponse<T> {
+  headers: JamendoResponseHeaders;
+  results: T[];
+}
