@@ -1,4 +1,4 @@
-export interface ResponseHeaders {
+export interface JamendoResponseHeaders {
   status: 'success' | 'failed';
   code: number;
   error_message: string;
