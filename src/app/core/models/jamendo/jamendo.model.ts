@@ -8,7 +8,14 @@ export interface JamendoResponseHeaders {
   next?: string;
 }
 
-export interface JamendoResponse<T> {
-  headers: JamendoResponseHeaders;
+interface JamendoSuccessResponse<T> {
+  headers: JamendoResponseHeaders & { status: 'success' };
   results: T[];
 }
+
+interface JamendoFailedResponse {
+  headers: JamendoResponseHeaders & { status: 'failed' };
+  results: [];
+}
+
+export type JamendoResponse<T> = JamendoSuccessResponse<T> | JamendoFailedResponse;
