@@ -1,4 +1,4 @@
-import { TracksResponse } from '@core/models/jamendo/track.model';
+import { TracksResponse } from '@core/models/jamendo/tracks.model';
 
 export const tracksMock: TracksResponse = {
   headers: {
