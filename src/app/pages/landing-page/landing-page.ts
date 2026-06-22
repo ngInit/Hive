@@ -1,9 +1,9 @@
-import { ChangeDetectionStrategy, Component, inject, signal, effect, computed } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
+import { JamendoService } from '@core/services/jamendo.service';
 import { TagsPanel } from '@components/tags-panel/tags-panel';
 import { Carousel } from '@components/carousel/carousel';
-import { Track } from '@core/models/jamendo/tracks.model';
 import { TrackCard } from '@components/track-card/track-card';
-import { TracksService } from '@core/services/tracks.service';
+import { Track } from '@core/models/jamendo/tracks.model';
 
 @Component({
   selector: 'hive-landing-page',
@@ -12,21 +12,13 @@ import { TracksService } from '@core/services/tracks.service';
   styleUrl: './landing-page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LandingPage {
-  readonly tracksService = inject(TracksService);
+export class LandingPage implements OnInit {
+  readonly jamendoService = inject(JamendoService);
   readonly popularTracks = signal<Track[]>([]);
-  readonly popularTracksEmpty = computed(() => {
-    return !this.tracksService.tracks.isLoading() && this.popularTracks().length === 0;
-  });
 
-  constructor() {
-    this.tracksService.searchTracks('David TMX');
-
-    effect(() => {
-      const trackResponse = this.tracksService.tracks.value();
-      if (trackResponse) {
-        this.popularTracks.set(trackResponse.results);
-      }
+  ngOnInit() {
+    void this.jamendoService.getLandingPage().then((response) => {
+      this.popularTracks.set(response.popularSongs);
     });
   }
 }
