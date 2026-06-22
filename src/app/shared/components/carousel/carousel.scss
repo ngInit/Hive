@@ -74,6 +74,17 @@
       animation: carousel-loading 1.5s infinite linear;
     }
   }
+
+  .carousel-empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 200px;
+    border-radius: var(--mat-sys-corner-small);
+    background-color: rgb(240 248 255 / 0.01);
+  }
+
   @keyframes carousel-loading {
     0% {
       background-position: 200% 0;

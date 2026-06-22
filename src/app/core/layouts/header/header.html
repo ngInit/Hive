@@ -1,30 +1,79 @@
 <div class="header-container">
   <button routerLink="/" class="header-logo-button">H<span class="header-app-name">ive</span></button>
-  <div class="header-search-field">
-    <input
-      class="header-search-input"
-      type="text"
-      name="Search"
-      placeholder="Find a song and more..."
-      [(ngModel)]="searchInput"
-    />
-    @if (searchInput) {
-      <button matIconButton class="clear-button" aria-label="Clear" (click)="searchInput = ''">
-        <mat-icon>close</mat-icon>
-      </button>
-    }
-  </div>
-  @if (authService.isAuthenticated()) {
-    <button matIconButton="tonal" aria-label="User menu button" (click)="openPopup()">
-      <mat-icon>person</mat-icon>
-    </button>
-  } @else {
-    <div class="header-buttons-container">
-      <button matIconButton aria-label="Menu button" (click)="openPopup()">
-        <mat-icon>more_vert</mat-icon>
-      </button>
-      <button matButton="filled" aria-label="Sign In button" (click)="signIn()">Sign In</button>
+  @if (!isSign()) {
+    <div class="header-search">
+      <div class="header-search-field">
+        <input
+          class="header-search-input"
+          type="text"
+          name="Search"
+          placeholder="Find a song and more..."
+          [(ngModel)]="searchInput"
+          (ngModelChange)="search($event)"
+          (keyup.enter)="goToSearchPage()"
+        />
+        @if (searchInput) {
+          <button matIconButton class="clear-button" aria-label="Clear" (click)="clearSearch()">
+            <mat-icon>close</mat-icon>
+          </button>
+        }
+      </div>
+      @if (hasSuggestions()) {
+        <div class="header-search-suggestions">
+          @for (suggestion of suggestions().artists; track suggestion.id) {
+            <ng-container
+              [ngTemplateOutlet]="newSuggest"
+              [ngTemplateOutletContext]="{ suggest: suggestion, type: 'Artist' }"
+            />
+          }
+          @for (suggestion of suggestions().albums; track suggestion.id) {
+            <ng-container
+              [ngTemplateOutlet]="newSuggest"
+              [ngTemplateOutletContext]="{ suggest: suggestion, type: 'Album' }"
+            />
+          }
+          @for (suggestion of suggestions().tracks; track suggestion.id) {
+            <ng-container
+              [ngTemplateOutlet]="newSuggest"
+              [ngTemplateOutletContext]="{ suggest: suggestion, type: 'Track' }"
+            />
+          }
+        </div>
+      }
     </div>
+
+    @if (firebaseService.isAuthenticated()) {
+      <button matIconButton="tonal" aria-label="User menu button" (click)="openPopup()">
+        <mat-icon>person</mat-icon>
+      </button>
+    } @else {
+      <div class="header-buttons-container">
+        <button matIconButton aria-label="Menu button" (click)="openPopup()">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <button routerLink="/sign" matButton="filled" aria-label="Sign In button">Sign In</button>
+      </div>
+    }
   }
 </div>
-<hive-popup [(open)]="isPopupOpened" [userStatus]="authService.isAuthenticated()" (signOut)="signOut()" />
+<hive-popup [(open)]="isPopupOpened" [userStatus]="firebaseService.isAuthenticated()" (signOut)="signOut()" />
+
+<ng-template #newSuggest let-suggest="suggest" let-type="type">
+  <button class="suggest-button" aria-label="{{ type }} {{ suggest.name }}">
+    @if (type === "Artist") {
+      <mat-icon aria-label="{{ type }}" fontIcon="person_outline"></mat-icon>
+    }
+    @if (type === "Album") {
+      <mat-icon aria-label="{{ type }}" fontIcon="album"></mat-icon>
+    }
+    @if (type === "Track") {
+      <mat-icon aria-label="{{ type }}" fontIcon="music_note"></mat-icon>
+    }
+    <div class="suggest-info">
+      <span class="suggest-query">{{ suggest.name }}</span>
+      @if (type === "Album" || type === "Track") {
+        <span class="suggest-subtitle">Author: {{ suggest.artist_name }}</span>
+      }
+    </div>
+  </button>
+</ng-template>

@@ -24,6 +24,7 @@ export class Carousel {
   private readonly destroyRef = inject(DestroyRef);
   private readonly defaultScrollStep = 200;
 
+  isEmpty = input(false);
   isLoading = input(true);
   carouselTitle = input<string>('Carousel Title');
 
@@ -34,7 +35,7 @@ export class Carousel {
   constructor() {
     afterRenderEffect({
       read: () => {
-        if (this.isLoading()) {
+        if (this.isLoading() || this.isEmpty()) {
           return;
         }
         this.updateScrollState();

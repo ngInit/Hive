@@ -8,6 +8,4 @@ import { MainLayout } from '@core/layouts/main-layout/main-layout';
   styleUrl: './app.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class App {
-  title = 'Hive';
-}
+export class App {}

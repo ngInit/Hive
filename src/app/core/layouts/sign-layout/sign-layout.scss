@@ -1,0 +1,20 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+  .sign-layout {
+    display: flex;
+    flex-grow: 1;
+    padding: 2rem 200px 8px 200px;
+    view-transition-name: main-content;
+
+    @media screen and (width <= 1200px) {
+      padding: 2rem 100px 8px 100px;
+    }
+
+    @media screen and (width <= 768px) {
+      padding: 2rem 1rem 8px 1rem;
+    }
+  }
+}

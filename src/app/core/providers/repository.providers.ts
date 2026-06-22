@@ -1,15 +1,25 @@
 import { environment } from '@env/environment';
-import { TRACKS_REPOSITORY } from '@core/repositories/tracks/tracks.repository';
-import { MockTracksRepository } from '@core/repositories/tracks/mock-tracks.repository';
-import { JamendoTracksRepository } from '@core/repositories/tracks/jamendo-tracks.repository';
+import { AUTH_REPOSITORY } from '@core/repositories/firebase/firebase.repository';
+import { JAMENDO_REPOSITORY } from '@core/repositories/jamendo/jamendo.repository';
+import { FirebaseMockRepository } from '@core/repositories/firebase/firebase-mock.repository';
+import { FirebaseAuthRepository } from '@core/repositories/firebase/firebase-auth.repository';
+import { JamendoMockRepository } from '@core/repositories/jamendo/jamendo-mock.repository';
+import { JamendoDbRepository } from '@core/repositories/jamendo/jamendo-db.repository';
 
-export function provideTracksRepository() {
+export function provideAuthRepository() {
   return {
-    provide: TRACKS_REPOSITORY,
-    useClass: environment.enableMockData ? MockTracksRepository : JamendoTracksRepository,
+    provide: AUTH_REPOSITORY,
+    useClass: environment.enableMockData ? FirebaseMockRepository : FirebaseAuthRepository,
+  };
+}
+
+export function provideJamendoRepository() {
+  return {
+    provide: JAMENDO_REPOSITORY,
+    useClass: environment.enableMockData ? JamendoMockRepository : JamendoDbRepository,
   };
 }
 
 export function provideRepositories() {
-  return [provideTracksRepository()];
+  return [provideJamendoRepository(), provideAuthRepository()];
 }
