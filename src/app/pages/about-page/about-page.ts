@@ -27,8 +27,7 @@ export class AboutPage {
       name: 'Aleksei Nikolaev',
       role: 'Role: All in one',
       avatar: 'https://avatars.githubusercontent.com/u/122630180?v=4',
-      photo:
-        'https://scontent.fbud7-3.fna.fbcdn.net/v/t39.30808-6/490815157_9515783105209563_1840217380200187705_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=a5f93a&_nc_ohc=-xv8ZJi7cGwQ7kNvwHVFw1c&_nc_oc=Adq3aHOzT6rUCwvganhYXLoAxSIPcRamRs0xNGkevAgxGjWkXzTO2Ik1WA3xdEfCVfQ&_nc_zt=23&_nc_ht=scontent.fbud7-3.fna&_nc_gid=KLc91yk6Qxfc_RrMm4lnqw&_nc_ss=7b2a8&oh=00_Af6eJgiQwKp_c8Xesa0g_WY6WlGp5ckX_B0tauBtm3hSLQ&oe=6A1B2321',
+      photo: './assets/images/photo-cat.jpeg',
       description: `You hear that Mr. Anderson?... I'm  patient developer, photographer and restorer who loves to code and create new things.`,
       socials: {
         github: 'https://github.com/ngInit',
