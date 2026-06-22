@@ -17,8 +17,7 @@ export class JamendoDbRepository implements JamendoRepository {
         continue;
       }
       if (Array.isArray(value)) {
-        const arraySeparator = key === 'order' ? ' ' : ',';
-        params = params.set(key, value.map(String).join(arraySeparator));
+        params = params.set(key, value.map(String).join(' '));
       } else {
         params = params.set(key, value);
       }
