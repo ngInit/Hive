@@ -1,12 +1,8 @@
 <hive-tags-panel />
 <div class="carousels-container">
-  <hive-carousel
-    carouselTitle="Popular tracks"
-    [isLoading]="this.tracksService.tracks.isLoading()"
-    [isEmpty]="this.popularTracksEmpty()"
-  >
-    @for (track of popularTracks(); track track.id) {
-      <hive-track-card [track]="track" />
+  <hive-carousel carouselTitle="Popular tracks" [isLoading]="isLoading()" [isEmpty]="false">
+    @for (popularTrack of popularTracks(); track popularTrack.id) {
+      <hive-track-card [track]="popularTrack" />
     }
   </hive-carousel>
   <hive-carousel carouselTitle="New releases" />
