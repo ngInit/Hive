@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { MainLayout } from '@core/layouts/main-layout/main-layout';
 
 @Component({
   selector: 'hive-root',
-  imports: [RouterOutlet],
+  imports: [MainLayout],
   templateUrl: './app.html',
   styleUrl: './app.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
