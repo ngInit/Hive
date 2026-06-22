@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, input, computed, inject } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { Track } from '@core/models/jamendo/tracks.model';
 import { TrackPlaysShortPipe } from '@shared/pipes/track-plays-short-pipe';
 import { TrackDurationShortPipe } from '@shared/pipes/track-duration-short-pipe';
@@ -14,6 +14,7 @@ import { PlayerService } from '@core/services/player.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TrackCard {
+  private readonly router = inject(Router);
   private readonly playerService = inject(PlayerService);
   readonly track = input.required<Track>();
   readonly isPlaying = computed(
@@ -22,5 +23,13 @@ export class TrackCard {
 
   playTrack(): void {
     this.playerService.toggle(this.track());
+  }
+
+  async goToArtist(): Promise<void> {
+    await this.router.navigate(['/artist'], { queryParams: { q: this.track().artist_id } });
+  }
+
+  async goToTrack(): Promise<void> {
+    await this.router.navigate(['/track'], { queryParams: { q: this.track().id } });
   }
 }

@@ -21,7 +21,11 @@
     </div>
   </button>
   <div class="track-card-bottom">
-    <p routerLink="/" aria-label="Page of the artist {{ track().artist_name }}">{{ track().artist_name }}</p>
-    <p routerLink="/" aria-label="Page of the track {{ track().name }}">{{ track().name }}</p>
+    <button class="track-card-button" (click)="goToArtist()" aria-label="Page of the artist {{ track().artist_name }}">
+      {{ track().artist_name }}
+    </button>
+    <button class="track-card-button" (click)="goToTrack()" aria-label="Page of the artist {{ track().name }}">
+      {{ track().name }}
+    </button>
   </div>
 </div>
