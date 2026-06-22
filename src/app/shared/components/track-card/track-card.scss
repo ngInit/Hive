@@ -107,19 +107,27 @@
   .track-card-bottom {
     display: flex;
     flex-direction: column;
+    row-gap: 6px;
     width: 100%;
     padding-top: 8px;
     margin-left: 2px;
+  }
 
-    * {
-      text-decoration: none;
-      color: inherit;
-      margin: 0;
-      cursor: pointer;
+  .track-card-button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    text-align: left;
+    color: inherit;
+    background-color: transparent;
+    cursor: pointer;
 
-      &:hover {
-        text-decoration: underline;
-      }
+    &:hover {
+      text-decoration: underline;
     }
   }
 }
