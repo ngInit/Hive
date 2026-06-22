@@ -4,7 +4,7 @@ import { MatError, MatFormField, MatInput, MatLabel } from '@angular/material/in
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CompareSignUpPasswords } from '@shared/directives/compare-sign-up-passwords.directive';
 import { SignInData, SignUpData } from '@core/models/auth.model';
-import { AuthService } from '@core/services/auth.service';
+import { FirebaseService } from '@core/services/firebase.service';
 import { Router } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
 import { MatSuffix } from '@angular/material/input';
@@ -42,7 +42,7 @@ interface SignUpGroup {
 export class SignPage {
   readonly movePanel = signal<string>('');
   readonly isSignInPanel = signal(true);
-  private readonly authService = inject(AuthService);
+  private readonly authService = inject(FirebaseService);
   private readonly router = inject(Router);
   public readonly errorMessage = signal<string | null>(null);
 
