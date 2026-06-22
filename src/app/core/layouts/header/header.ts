@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { Router, RouterLink, isActive } from '@angular/router';
+import { FirebaseService } from '@core/services/firebase.service';
 import { FormsModule } from '@angular/forms';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
-import { AuthService } from '@core/services/auth.service';
 import { Popup } from '@components/popup/popup';
 
 @Component({
@@ -15,14 +15,14 @@ import { Popup } from '@components/popup/popup';
 })
 export class Header {
   private readonly router = inject(Router);
-  protected readonly authService = inject(AuthService);
+  protected readonly firebaseService = inject(FirebaseService);
   protected searchInput = '';
   readonly isSign = isActive('/sign', this.router);
 
   isPopupOpened = signal(false);
 
   async signOut(): Promise<void> {
-    await this.authService.signOut();
+    await this.firebaseService.signOut();
     if (this.router.url === '/user') {
       await this.router.navigate(['/']);
     }

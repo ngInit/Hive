@@ -1,11 +1,11 @@
 import { Injectable, signal, inject, computed } from '@angular/core';
-import { AUTH_REPOSITORY } from '@core/repositories/auth/auth.repository';
+import { AUTH_REPOSITORY } from '@core/repositories/firebase/firebase.repository';
 import { SignInData, SignUpData } from '@core/models/auth.model';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AuthService {
+export class FirebaseService {
   private readonly repository = inject(AUTH_REPOSITORY);
   readonly currentUser = this.repository.currentUser;
   readonly error = signal<string | null>(null);

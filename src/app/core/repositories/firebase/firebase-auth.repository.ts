@@ -1,5 +1,5 @@
 import { Injectable, signal } from '@angular/core';
-import { AuthRepository } from '@core/repositories/auth/auth.repository';
+import { FirebaseRepository } from '@core/repositories/firebase/firebase.repository';
 import { environment } from '@env/environment';
 import { FirebaseApp, initializeApp } from 'firebase/app';
 import { Auth, getAuth } from 'firebase/auth';
@@ -28,7 +28,7 @@ interface fbData {
 }
 
 @Injectable()
-export class FirebaseAuthRepository implements AuthRepository {
+export class FirebaseAuthRepository implements FirebaseRepository {
   readonly currentUser = signal<UserAuth | null>(null);
   readonly isAuthReady = signal(false);
   constructor() {

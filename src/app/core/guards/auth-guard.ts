@@ -1,9 +1,9 @@
 import { CanActivateFn, Router, UrlTree } from '@angular/router';
 import { effect, inject } from '@angular/core';
-import { AuthService } from '@core/services/auth.service';
+import { FirebaseService } from '@core/services/firebase.service';
 
 function afterAuthIsReady(
-  service: AuthService,
+  service: FirebaseService,
   response: () => boolean | UrlTree
 ): boolean | UrlTree | Promise<boolean | UrlTree> {
   if (service.isAuthReady()) {
@@ -20,7 +20,7 @@ function afterAuthIsReady(
 }
 
 export const guestGuard: CanActivateFn = () => {
-  const authService = inject(AuthService);
+  const authService = inject(FirebaseService);
   const router = inject(Router);
   return afterAuthIsReady(authService, () => {
     return authService.isAuthenticated() ? router.createUrlTree(['/']) : true;
@@ -28,7 +28,7 @@ export const guestGuard: CanActivateFn = () => {
 };
 
 export const userGuard: CanActivateFn = () => {
-  const authService = inject(AuthService);
+  const authService = inject(FirebaseService);
   const router = inject(Router);
   return afterAuthIsReady(authService, () => {
     return authService.isAuthenticated() ? true : router.createUrlTree(['/']);

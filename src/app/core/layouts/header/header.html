@@ -15,7 +15,7 @@
         </button>
       }
     </div>
-    @if (authService.isAuthenticated()) {
+    @if (firebaseService.isAuthenticated()) {
       <button matIconButton="tonal" aria-label="User menu button" (click)="openPopup()">
         <mat-icon>person</mat-icon>
       </button>
@@ -29,4 +29,4 @@
     }
   }
 </div>
-<hive-popup [(open)]="isPopupOpened" [userStatus]="authService.isAuthenticated()" (signOut)="signOut()" />
+<hive-popup [(open)]="isPopupOpened" [userStatus]="firebaseService.isAuthenticated()" (signOut)="signOut()" />

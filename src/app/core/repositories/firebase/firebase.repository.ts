@@ -2,9 +2,9 @@ import { SignInData, SignUpData, UpdateData } from '@core/models/auth.model';
 import { InjectionToken, Signal } from '@angular/core';
 import { UserAuth } from '@core/models/user.model';
 
-export const AUTH_REPOSITORY = new InjectionToken<AuthRepository>('AUTH_REPOSITORY');
+export const AUTH_REPOSITORY = new InjectionToken<FirebaseRepository>('AUTH_REPOSITORY');
 
-export interface AuthRepository {
+export interface FirebaseRepository {
   readonly currentUser: Signal<UserAuth | null>;
   readonly isAuthReady: Signal<boolean>;
   signIn(data: SignInData): Promise<UserAuth>;
