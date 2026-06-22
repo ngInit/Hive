@@ -1,5 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 import { MockUserAuth, UserAuth } from '@core/models/user.model';
+import { mockUsers } from '@shared/mocks/auth.mock';
 import { SignInData, SignUpData, UpdateData } from '@core/models/auth.model';
 import { FirebaseRepository } from '@core/repositories/firebase/firebase.repository';
 import { delay } from '@utils/delay';
@@ -8,20 +9,6 @@ import { environment } from '@env/environment';
 const DEFAULT_DELAY = environment.mockDelayMs;
 const MOCK_USERS_STORAGE_KEY = 'hive_mock_users';
 const MOCK_USER_SESSION_KEY = 'hive_mock_user_session';
-const mockUsers: MockUserAuth[] = [
-  {
-    uid: '0',
-    nickname: 'Paul',
-    email: 'paul@email.com',
-    password: 'Paul123!',
-  },
-  {
-    uid: '1',
-    nickname: 'Admin',
-    email: 'admin@email.com',
-    password: 'Admin1234!',
-  },
-];
 
 @Injectable()
 export class FirebaseMockRepository implements FirebaseRepository {
