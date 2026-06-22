@@ -1,7 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { MockUserAuth, UserAuth } from '@core/models/user.model';
 import { SignInData, SignUpData, UpdateData } from '@core/models/auth.model';
-import { AuthRepository } from '@core/repositories/auth/auth.repository';
+import { FirebaseRepository } from '@core/repositories/firebase/firebase.repository';
 import { delay } from '@utils/delay';
 import { environment } from '@env/environment';
 
@@ -24,7 +24,7 @@ const mockUsers: MockUserAuth[] = [
 ];
 
 @Injectable()
-export class MockAuthRepository implements AuthRepository {
+export class FirebaseMockRepository implements FirebaseRepository {
   private readonly mockAuthUsers: MockUserAuth[] = mockUsers;
   readonly currentUser = signal<UserAuth | null>(this.loadUserSession());
   readonly isAuthReady = signal(true);
