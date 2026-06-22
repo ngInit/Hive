@@ -5,10 +5,11 @@ import { Carousel } from '@components/carousel/carousel';
 import { TrackCard } from '@components/track-card/track-card';
 import { Track } from '@core/models/jamendo/tracks.model';
 import { Album } from '@core/models/jamendo/albums.model';
+import { AlbumCard } from '@components/album-card/album-card';
 
 @Component({
   selector: 'hive-landing-page',
-  imports: [TagsPanel, Carousel, TrackCard],
+  imports: [TagsPanel, Carousel, TrackCard, AlbumCard],
   templateUrl: './landing-page.html',
   styleUrl: './landing-page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

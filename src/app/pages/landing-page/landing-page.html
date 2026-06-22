@@ -12,7 +12,7 @@
   </hive-carousel>
   <hive-carousel carouselTitle="New albums" [isLoading]="isLoading()" [isEmpty]="false">
     @for (newAlbum of newAlbums(); track newAlbum.id) {
-      <div>{{ newAlbum.name }}</div>
+      <hive-album-card [album]="newAlbum" />
     }
   </hive-carousel>
 </div>
