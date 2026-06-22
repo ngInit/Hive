@@ -94,11 +94,13 @@ export class JamendoService {
       this.repository.createRequest('tracks', {
         limit: '10',
         boost: 'popularity_month',
+        include: ['stats'],
       }),
       this.repository.createRequest('tracks', {
         limit: '10',
         datebetween: getDateRangeFromToday(30),
         order: ['releasedate'],
+        include: ['stats'],
       }),
       this.repository.createRequest('albums', {
         limit: '10',
@@ -135,6 +137,7 @@ export class JamendoService {
       this.repository.createRequest('tracks', {
         artist_id: [id],
         limit: '10',
+        include: ['stats'],
       }),
     ]);
 
@@ -162,6 +165,7 @@ export class JamendoService {
       this.repository.createRequest('tracks', {
         album_id: [id],
         limit: 'all',
+        include: ['stats'],
       }),
     ]);
 
@@ -212,6 +216,7 @@ export class JamendoService {
       limit: String(limit),
       offset: offset,
       fullcount: true,
+      include: ['stats'],
     });
 
     return this.getPaginated(tracksResponse, offset, limit);
