@@ -1,1 +1,21 @@
-<p>album-card works!</p>
+<div class="album-card-wrapper">
+  <button class="album-card-top" (click)="goToAlbum()">
+    <div class="album-card-cover">
+      <img
+        class="album-cover"
+        src="{{ album().image || 'https://picsum.photos/id/39/200.webp?blur=2' }}"
+        alt="Album cover"
+        width="200"
+        height="200"
+      />
+    </div>
+  </button>
+  <div class="album-card-bottom">
+    <button class="album-card-button" (click)="goToAlbum()" aria-label="Page of the album {{ album().name }}">
+      {{ album().name }}
+    </button>
+    <button class="album-card-button" (click)="goToArtist()" aria-label="Page of the artist {{ album().artist_name }}">
+      {{ album().artist_name }}
+    </button>
+  </div>
+</div>
