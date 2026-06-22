@@ -5,6 +5,14 @@
       <hive-track-card [track]="popularTrack" />
     }
   </hive-carousel>
-  <hive-carousel carouselTitle="New releases" />
-  <hive-carousel carouselTitle="New albums" />
+  <hive-carousel carouselTitle="New releases" [isLoading]="isLoading()" [isEmpty]="false">
+    @for (newRelease of newReleases(); track newRelease.id) {
+      <hive-track-card [track]="newRelease" />
+    }
+  </hive-carousel>
+  <hive-carousel carouselTitle="New albums" [isLoading]="isLoading()" [isEmpty]="false">
+    @for (newAlbum of newAlbums(); track newAlbum.id) {
+      <div>{{ newAlbum.name }}</div>
+    }
+  </hive-carousel>
 </div>
