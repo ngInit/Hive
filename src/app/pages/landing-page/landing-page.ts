@@ -22,10 +22,17 @@ export class LandingPage implements OnInit {
   readonly isLoading = signal(false);
 
   ngOnInit() {
-    void this.jamendoService.getLandingPage().then((response) => {
-      this.popularTracks.set(response.popularSongs);
-      this.newReleases.set(response.newReleases);
-      this.newAlbums.set(response.newAlbums);
-    });
+    this.isLoading.set(true);
+    void this.jamendoService
+      .getLandingPage()
+      .then((response) => {
+        this.popularTracks.set(response.popularSongs);
+        this.newReleases.set(response.newReleases);
+        this.newAlbums.set(response.newAlbums);
+        this.isLoading.set(false);
+      })
+      .then(() => {
+        this.isLoading.set(false);
+      });
   }
 }
