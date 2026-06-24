@@ -203,16 +203,12 @@ export class JamendoService {
   }
 
   async getTracksByTag(
-    tag: string,
+    tags: string[],
     offset = 0,
     limit = 25
   ): Promise<{ items: Track[]; total: number; offset: number; limit: number }> {
-    const searchTag = tag.trim();
-    if (!searchTag) {
-      return { items: [], total: 0, offset, limit };
-    }
     const tracksResponse = await this.repository.createRequest('tracks', {
-      tags: [searchTag],
+      tags: tags,
       limit: String(limit),
       offset: offset,
       fullcount: true,
