@@ -118,4 +118,12 @@ export class TrackPage {
         this.isLoading.set(false);
       });
   }
+
+  async goToArtist(): Promise<void> {
+    await this.navigationService.goToArtist(this.track()?.artist_id);
+  }
+
+  async goToAlbum(): Promise<void> {
+    await this.navigationService.goToAlbum(this.track()?.album_id);
+  }
 }
