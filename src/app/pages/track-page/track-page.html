@@ -1,0 +1,66 @@
+@if (this.track(); as track) {
+  <div class="track-page-title">
+    <mat-icon class="title-icon" aria-label="{{ track.name }}" fontIcon="music_note" />
+    <div class="title-description">
+      <h1 class="title-name">
+        {{ track.name }}
+      </h1>
+      <h2 class="title-artist">
+        released by
+        <button class="title-artist-name" aria-label="Go to artist {{ track.artist_name }} page" (click)="goToArtist()">
+          {{ track.artist_name }}
+        </button>
+      </h2>
+    </div>
+  </div>
+  <div class="track-page-release">
+    <img class="release-cover" [src]="track.image" alt="Album cover" />
+    <div class="release-information">
+      @let genres = track.musicinfo?.tags?.genres;
+      @if (genres) {
+        <mat-chip-set aria-label="Tag selection">
+          @for (genre of genres; track $index) {
+            <mat-chip class="genre-chip" disabled>{{
+              genre.slice(0, 1).toUpperCase() + genre.slice(1).toLowerCase()
+            }}</mat-chip>
+          }
+        </mat-chip-set>
+      }
+      <p>Released: {{ track.releasedate }}</p>
+      <p>Duration: {{ track.duration | trackDurationShort }}</p>
+      <p>Listened: {{ track.stats?.rate_listened_total | trackPlaysShort }}</p>
+      <p>Favorite: {{ track.stats?.favorited | trackPlaysShort }}</p>
+      <div class="release-album">
+        From Album:
+        <button class="release-album-name" aria-label="Go to album {{ track.artist_name }} page" (click)="goToAlbum()">
+          {{ track.album_name }}
+        </button>
+      </div>
+    </div>
+  </div>
+  <hive-carousel carouselTitle="Similar tracks by genges" [isLoading]="isLoading()" [isEmpty]="isEmpty()">
+    @for (track of similarTracks(); track track.id) {
+      <hive-track-card [track]="track" />
+    }
+  </hive-carousel>
+} @else {
+  <div class="track-page-title">
+    <mat-icon class="title-icon" fontIcon="music_note" />
+    <div class="title-description-loading"></div>
+  </div>
+  @if (errorMessage()) {
+    <div class="track-page-error">{{ errorMessage() }}</div>
+  }
+  <div class="track-page-release">
+    <div class="release-cover-loading"></div>
+    <div class="release-information">
+      <div class="release-genres-loading"></div>
+      <div class="release-album-name-loading">Released:</div>
+      <div class="release-album-name-loading">Duration:</div>
+      <div class="release-album-name-loading">Listened:</div>
+      <div class="release-album-name-loading">Favorite:</div>
+      <div class="release-album-name-loading">From Album:</div>
+    </div>
+  </div>
+  <hive-carousel carouselTitle="Similar tracks by genges" [isLoading]="isLoading()" [isEmpty]="isEmpty()" />
+}

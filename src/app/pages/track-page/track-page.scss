@@ -1,0 +1,130 @@
+@use "@angular/material" as mat;
+
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  row-gap: 24px;
+  width: 100%;
+  margin-top: 24px;
+
+  .track-page-title {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 16px;
+  }
+
+  .title-icon {
+    width: fit-content;
+    height: fit-content;
+    font-size: 3rem;
+  }
+
+  .title-description {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    row-gap: 8px;
+  }
+
+  .title-name,
+  .title-artist {
+    margin: 0;
+    font-weight: normal;
+  }
+
+  .title-artist-name,
+  .release-album-name {
+    font: inherit;
+    text-decoration: underline;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+  }
+
+  .track-page-release {
+    display: flex;
+    flex-direction: row;
+    column-gap: 24px;
+    margin-bottom: 36px;
+  }
+
+  .release-cover {
+    width: 200px;
+    height: 200px;
+    border-radius: var(--mat-sys-corner-small);
+  }
+
+  .genre-chip {
+    margin: 0 0 0 8px;
+  }
+
+  .track-page-error {
+    position: absolute;
+    left: 0;
+    width: -webkit-fill-available;
+    height: -webkit-fill-available;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font: var(--mat-sys-display-medium);
+    background-color: rgb(36 21 21 / 0.66);
+  }
+
+  .title-description-loading {
+    width: 400px;
+    height: 48px;
+    border-radius: var(--mat-sys-corner-small);
+    background: linear-gradient(
+      110deg,
+      transparent 10%,
+      rgb(240 248 255 / 0.1) 40%,
+      rgb(240 248 255 / 0.02) 40%,
+      rgb(240 248 255 / 0.1) 20%,
+      transparent 80%
+    );
+    background-size: 200% 100%;
+    animation: track-loading 2.5s infinite linear;
+  }
+
+  .release-cover-loading {
+    width: 200px;
+    height: 200px;
+    border-radius: var(--mat-sys-corner-small);
+    background: linear-gradient(110deg, transparent 30%, rgb(240 248 255 / 0.05) 50%, transparent 80%);
+    background-size: 200% 100%;
+    animation: track-loading 2s infinite linear;
+  }
+
+  .release-genres-loading {
+    width: 300px;
+    height: 32px;
+    border-radius: var(--mat-sys-corner-small);
+    background: linear-gradient(110deg, transparent 30%, rgb(240 248 255 / 0.05) 50%, transparent 80%);
+    background-size: 200% 100%;
+    animation-name: track-loading;
+    animation-duration: 2s;
+    animation-delay: 0.5s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+  }
+
+  .release-album-name-loading {
+    margin: 14px 0;
+  }
+
+  @keyframes track-loading {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
+}

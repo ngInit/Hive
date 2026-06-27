@@ -17,6 +17,7 @@ export class PlayerService {
   }
 
   pauseTrack(): void {
+    this.currentTrackId.set(null);
     this.isPlaying.set(false);
   }
 

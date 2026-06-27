@@ -38,6 +38,11 @@ export const routes: Routes = [
         title: 'About',
       },
       {
+        path: 'track',
+        loadComponent: () => import('@pages/track-page/track-page').then((page) => page.TrackPage),
+        title: 'Track',
+      },
+      {
         path: '**',
         loadComponent: () => import('@pages/error-page/error-page').then((page) => page.ErrorPage),
         title: 'Error',
