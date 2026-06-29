@@ -12,13 +12,13 @@
   />
   <div class="player-controls">
     <div class="player-left-controls">
-      <button class="player-button" aria-label="Previous track">
+      <button class="player-button" aria-label="Previous track" (click)="prevTrack()">
         <mat-icon>skip_previous</mat-icon>
       </button>
-      <button class="player-button" aria-label="Play/pause track">
+      <button class="player-button" aria-label="Play/pause track" (click)="playPause()">
         <mat-icon>play_arrow</mat-icon>
       </button>
-      <button class="player-button" aria-label="Next track">
+      <button class="player-button" aria-label="Next track" (click)="nextTrack()">
         <mat-icon>skip_next</mat-icon>
       </button>
     </div>
@@ -29,21 +29,23 @@
         alt="Track cover"
       />
       <div class="track-details">
-        <button class="player-button player-track-title">
+        <button class="player-button player-track-title" aria-label="Track title" (click)="goToTrack()">
           Track title title title title title title title title title title title title title
         </button>
-        <button class="player-button player-track-artist">Artist</button>
+        <button class="player-button player-track-artist" aria-label="Artist title" (click)="goToArtist()">
+          Artist
+        </button>
       </div>
-      <button class="player-button player-favorite" aria-label="Next track">
-        <mat-icon>favorite_outline</mat-icon>
+      <button class="player-button player-favorite" aria-label="Favorite track" (click)="toggleFavorite()">
+        <mat-icon>{{ isFavorite ? "favorite" : "favorite_outline" }}</mat-icon>
       </button>
     </div>
     <div class="player-right-controls">
-      <button class="player-button player-repeat" aria-label="Next track">
-        <mat-icon>repeat</mat-icon>
+      <button class="player-button player-repeat" aria-label="Repeat track" (click)="repeat()">
+        <mat-icon>{{ isRepeat ? "repeat_on" : "repeat" }}</mat-icon>
       </button>
-      <button class="player-button player-mute" aria-label="Next track">
-        <mat-icon>volume_up</mat-icon>
+      <button class="player-button player-mute" aria-label="Mute track" (click)="mute()">
+        <mat-icon>{{ volumeIcon() }}</mat-icon>
       </button>
       <input
         type="range"
@@ -51,8 +53,8 @@
         step="0.01"
         min="0"
         [max]="1"
-        [value]="volumeBarValue"
-        [style.--volumeValue]="100 * volumeBarValue + '%'"
+        [value]="volumeBarValue()"
+        [style.--volumeValue]="100 * volumeBarValue() + '%'"
         (input)="volumeProgress($event)"
       />
     </div>
