@@ -41,11 +41,11 @@ export class Player implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.getPlayer().autoplay = false;
-    this.getPlayer().controls = true;
     this.getPlayer().volume = 0.25;
     this.getPlayer().loop = this.isRepeat;
     this.getPlayer().muted = false;
     this.getPlayer().preload = 'none';
+    this.getPlayer().load();
   }
 
   private getPlayer(): HTMLAudioElement {
