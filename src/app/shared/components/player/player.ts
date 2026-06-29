@@ -96,15 +96,14 @@ export class Player implements AfterViewInit {
   }
 
   mute(): void {
-    if (!this.isMuted) {
+    if (!this.getPlayer().muted) {
       this.volumeBackup = this.volumeBarValue();
       this.volumeBarValue.set(0);
     } else {
       this.volumeBarValue.set(this.volumeBackup);
       this.volumeBackup = 0;
     }
-    this.isMuted = !this.isMuted;
-    // this.getPlayer().muted = this.isMuted;
+    this.getPlayer().muted = !this.getPlayer().muted;
   }
 
   repeat(): void {
