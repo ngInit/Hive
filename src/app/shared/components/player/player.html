@@ -4,67 +4,68 @@
   (timeupdate)="onTimeUpdate()"
   (loadedmetadata)="onLoadedMetadata()"
   (ended)="nextTrack()"
-  )
 ></audio>
-<div class="player-container">
-  <input
-    type="range"
-    class="player-progress"
-    step="1"
-    min="0"
-    [max]="100"
-    [value]="progressBarValue()"
-    [style.--progressValue]="progressBarValue() + '%'"
-    (input)="playProgress($event)"
-  />
-  <div class="player-controls">
-    <div class="player-left-controls">
-      <button class="player-button" aria-label="Previous track" (click)="prevTrack()">
-        <mat-icon>skip_previous</mat-icon>
-      </button>
-      <button class="player-button" aria-label="Play/pause track" (click)="playPause()">
-        <mat-icon>{{ isPlaying ? "pause" : "play_arrow" }}</mat-icon>
-      </button>
-      <button class="player-button" aria-label="Next track" (click)="nextTrack()">
-        <mat-icon>skip_next</mat-icon>
-      </button>
-      <p class="player-duration">{{ duration() | trackDurationShort }} / {{ currentTime() | trackDurationShort }}</p>
-    </div>
-    <div class="player-information">
-      <img
-        class="player-cover"
-        src="https://usercontent.jamendo.com?type=album&id=569538&width=300&trackid=2179454"
-        alt="Track cover"
-      />
-      <div class="track-details">
-        <button class="player-button player-track-title" aria-label="Track title" (click)="goToTrack()">
-          {{ currentTrack().name }}
+@if (tracks.length > 0) {
+  <div class="player-container">
+    <input
+      type="range"
+      class="player-progress"
+      step="1"
+      min="0"
+      [max]="100"
+      [value]="progressBarValue()"
+      [style.--progressValue]="progressBarValue() + '%'"
+      (input)="playProgress($event)"
+    />
+    <div class="player-controls">
+      <div class="player-left-controls">
+        <button class="player-button" aria-label="Previous track" (click)="prevTrack()">
+          <mat-icon>skip_previous</mat-icon>
         </button>
-        <button class="player-button player-track-artist" aria-label="Artist title" (click)="goToArtist()">
-          {{ currentTrack().artist_name }}
+        <button class="player-button" aria-label="Play/pause track" (click)="playPause()">
+          <mat-icon>{{ isPlaying ? "pause" : "play_arrow" }}</mat-icon>
+        </button>
+        <button class="player-button" aria-label="Next track" (click)="nextTrack()">
+          <mat-icon>skip_next</mat-icon>
+        </button>
+        <p class="player-duration">{{ duration() | trackDurationShort }} / {{ currentTime() | trackDurationShort }}</p>
+      </div>
+      <div class="player-information">
+        <img
+          class="player-cover"
+          src="https://usercontent.jamendo.com?type=album&id=569538&width=300&trackid=2179454"
+          alt="Track cover"
+        />
+        <div class="track-details">
+          <button class="player-button player-track-title" aria-label="Track title" (click)="goToTrack()">
+            {{ currentTrack().name }}
+          </button>
+          <button class="player-button player-track-artist" aria-label="Artist title" (click)="goToArtist()">
+            {{ currentTrack().artist_name }}
+          </button>
+        </div>
+        <button class="player-button player-favorite" aria-label="Favorite track" (click)="toggleFavorite()">
+          <mat-icon>{{ isFavorite ? "favorite" : "favorite_outline" }}</mat-icon>
         </button>
       </div>
-      <button class="player-button player-favorite" aria-label="Favorite track" (click)="toggleFavorite()">
-        <mat-icon>{{ isFavorite ? "favorite" : "favorite_outline" }}</mat-icon>
-      </button>
-    </div>
-    <div class="player-right-controls">
-      <button class="player-button player-repeat" aria-label="Repeat track" (click)="repeat()">
-        <mat-icon>{{ isRepeat ? "repeat_on" : "repeat" }}</mat-icon>
-      </button>
-      <button class="player-button player-mute" aria-label="Mute track" (click)="mute()">
-        <mat-icon>{{ volumeIcon() }}</mat-icon>
-      </button>
-      <input
-        type="range"
-        class="player-volume"
-        step="0.01"
-        min="0"
-        [max]="1"
-        [value]="volumeBarValue()"
-        [style.--volumeValue]="100 * volumeBarValue() + '%'"
-        (input)="volumeProgress($event)"
-      />
+      <div class="player-right-controls">
+        <button class="player-button player-repeat" aria-label="Repeat track" (click)="repeat()">
+          <mat-icon>{{ isRepeat ? "repeat_on" : "repeat" }}</mat-icon>
+        </button>
+        <button class="player-button player-mute" aria-label="Mute track" (click)="mute()">
+          <mat-icon>{{ volumeIcon() }}</mat-icon>
+        </button>
+        <input
+          type="range"
+          class="player-volume"
+          step="0.01"
+          min="0"
+          [max]="1"
+          [value]="volumeBarValue()"
+          [style.--volumeValue]="100 * volumeBarValue() + '%'"
+          (input)="volumeProgress($event)"
+        />
+      </div>
     </div>
   </div>
-</div>
+}
