@@ -137,10 +137,17 @@ export class Player implements AfterViewInit {
   }
 
   async nextTrack(): Promise<void> {
-    this.resetData();
+    if (this.currentTrackIndex() >= this.tracks.length - 1) {
+      return;
+    }
+    const wasPlaying = this.isPlaying;
     const nextIndex = this.currentTrackIndex() + 1;
-    this.currentTrackIndex.set(nextIndex);
-    await this.playPause();
+    this.pause();
+    this.loadTrack(nextIndex);
+
+    if (wasPlaying) {
+      await this.play();
+    }
   }
 
   mute(): void {
