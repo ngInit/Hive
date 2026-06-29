@@ -56,8 +56,6 @@ export class Player implements AfterViewInit {
   }
 
   private resetData(): void {
-    this.isPlaying = false;
-    this.getPlayer().pause();
     this.getPlayer().currentTime = 0;
     this.duration.set(0);
     this.currentTime.set(0);
