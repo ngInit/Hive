@@ -1,4 +1,5 @@
-import { Component, AfterViewInit, ViewChild, ElementRef, computed, signal } from '@angular/core';
+import { Component, AfterViewInit, inject, ViewChild, ElementRef, computed, signal } from '@angular/core';
+import { PlayerService } from '@core/services/player.service';
 import { MatIcon } from '@angular/material/icon';
 import { Track } from '@core/models/jamendo/tracks.model';
 import { tracksMock } from '@shared/mocks/tracks.mock';
@@ -16,6 +17,7 @@ export class Player implements AfterViewInit {
   readonly currentTrack = computed(() => {
     return this.tracks[this.currentTrackIndex()];
   });
+  private readonly playerService = inject(PlayerService);
   readonly currentTime = signal<number>(0);
   readonly duration = signal<number>(0);
   progressBarValue = signal<number>(0);
@@ -126,36 +128,14 @@ export class Player implements AfterViewInit {
 
   pause(): void {
     this.getPlayer().pause();
-    this.isPlaying = false;
   }
 
-  async prevTrack(): Promise<void> {
-    if (this.currentTrackIndex() <= 0) {
-      return;
-    }
-
-    const wasPlaying = this.isPlaying;
-    const prevIndex = this.currentTrackIndex() - 1;
-    this.pause();
-    this.loadTrack(prevIndex);
-
-    if (wasPlaying) {
-      await this.play();
-    }
+  prevTrack(): void {
+    this.playerService.prevTrack();
   }
 
-  async nextTrack(): Promise<void> {
-    if (this.currentTrackIndex() >= this.tracks.length - 1) {
-      return;
-    }
-    const wasPlaying = this.isPlaying;
-    const nextIndex = this.currentTrackIndex() + 1;
-    this.pause();
-    this.loadTrack(nextIndex);
-
-    if (wasPlaying) {
-      await this.play();
-    }
+  nextTrack(): void {
+    this.playerService.nextTrack();
   }
 
   mute(): void {
