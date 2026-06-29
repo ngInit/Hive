@@ -42,6 +42,26 @@ export class PlayerService {
     this.isPlaying.set(true);
   }
 
+  nextTrack(): void {
+    if (!this.hasNextTrack()) {
+      return;
+    }
+    this.currentTrackIndex.update((index) => {
+      return index + 1;
+    });
+    this.isPlaying.set(true);
+  }
+
+  prevTrack(): void {
+    if (!this.hasPreviousTrack()) {
+      return;
+    }
+    this.currentTrackIndex.update((index) => {
+      return index - 1;
+    });
+    this.isPlaying.set(true);
+  }
+
   toggle(track: Track): void {
     const isTheSameTrack = this.playingTrack()?.id === track.id;
     if (!isTheSameTrack) {
