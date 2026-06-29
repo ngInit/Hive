@@ -109,8 +109,7 @@ export class Player implements AfterViewInit {
 
   repeat(): void {
     this.isRepeat = !this.isRepeat;
-    // this.getPlayer().loop = true;
-    console.log('repeat', this.isRepeat);
+    this.getPlayer().loop = this.isRepeat;
   }
 
   toggleFavorite(): void {
