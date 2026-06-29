@@ -1,9 +1,8 @@
 import { Component, AfterViewInit, inject, ViewChild, ElementRef, computed, signal } from '@angular/core';
 import { PlayerService } from '@core/services/player.service';
+import { TrackDurationShortPipe } from '@shared/pipes/track-duration-short-pipe';
 import { MatIcon } from '@angular/material/icon';
 import { Track } from '@core/models/jamendo/tracks.model';
-import { tracksMock } from '@shared/mocks/tracks.mock';
-import { TrackDurationShortPipe } from '@shared/pipes/track-duration-short-pipe';
 
 @Component({
   selector: 'hive-player',
@@ -12,16 +11,14 @@ import { TrackDurationShortPipe } from '@shared/pipes/track-duration-short-pipe'
   styleUrl: './player.scss',
 })
 export class Player implements AfterViewInit {
-  private currentTrackIndex = signal<number>(0);
-  readonly tracks: Track[] = tracksMock.results;
-  readonly currentTrack = computed(() => {
-    return this.tracks[this.currentTrackIndex()];
-  });
   private readonly playerService = inject(PlayerService);
+  private isPlayerLoaded = signal<boolean>(false);
+  private loadedTrackId: string | null = null;
+  readonly currentTrack = this.playerService.playingTrack;
   readonly currentTime = signal<number>(0);
   readonly duration = signal<number>(0);
+  readonly isPlaying = this.playerService.isPlayingTrack;
   progressBarValue = signal<number>(0);
-  volumeBackup = 0;
   volumeBarValue = signal<number>(0.25);
   volumeIcon = computed(() => {
     if (this.volumeBarValue() === 0) {
@@ -34,7 +31,7 @@ export class Player implements AfterViewInit {
     return 'volume_up';
   });
 
-  isPlaying = false;
+  volumeBackup = 0;
   isRepeat = false;
   isFavorite = false;
 
@@ -42,13 +39,13 @@ export class Player implements AfterViewInit {
   audioElement: ElementRef<HTMLAudioElement> | undefined;
 
   ngAfterViewInit(): void {
-    this.loadTrack(0);
     this.getPlayer().autoplay = false;
     this.getPlayer().volume = 0.25;
     this.getPlayer().loop = this.isRepeat;
     this.getPlayer().muted = false;
     this.getPlayer().preload = 'none';
     this.getPlayer().load();
+    this.isPlayerLoaded.set(true);
   }
 
   private getPlayer(): HTMLAudioElement {
@@ -65,10 +62,12 @@ export class Player implements AfterViewInit {
     this.progressBarValue.set(0);
   }
 
-  private loadTrack(index: number): void {
-    this.currentTrackIndex.set(index);
-    this.getPlayer().src = this.currentTrack().audio;
-    this.resetData();
+  private loadTrack(track: Track): void {
+    if (this.loadedTrackId !== track.id) {
+      this.loadedTrackId = track.id;
+      this.getPlayer().src = track.audio;
+      this.resetData();
+    }
   }
 
   playProgress(event: Event): void {
@@ -92,7 +91,7 @@ export class Player implements AfterViewInit {
   }
 
   onTimeUpdate(): void {
-    if (this.getPlayer().duration === 0 || !this.isPlaying) {
+    if (this.getPlayer().duration === 0 || !this.isPlaying()) {
       return;
     }
     const progress = Math.floor((this.getPlayer().currentTime / this.getPlayer().duration) * 100);
@@ -104,23 +103,18 @@ export class Player implements AfterViewInit {
     this.duration.set(Math.ceil(this.getPlayer().duration));
   }
 
-  async playPause(): Promise<void> {
-    if (!this.isPlaying) {
-      await this.play();
+  playPause(): void {
+    if (this.playerService.isPlayingTrack()) {
+      this.playerService.pauseTrack();
     } else {
-      this.pause();
+      this.playerService.resumeTrack();
     }
   }
 
   async play(): Promise<void> {
     try {
-      await this.getPlayer()
-        .play()
-        .then(() => {
-          this.isPlaying = true;
-        });
+      await this.getPlayer().play();
     } catch (error) {
-      this.isPlaying = false;
       this.resetData();
       console.error('Playback failed:', error);
     }
