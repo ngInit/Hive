@@ -104,16 +104,29 @@ export class Player implements AfterViewInit {
 
   async playPause(): Promise<void> {
     if (!this.isPlaying) {
-      try {
-        this.getPlayer().src = this.currentTrack().audio;
-        await this.getPlayer().play();
-      } catch (err) {
-        console.error('Playback failed:', err);
-      }
+      await this.play();
     } else {
-      this.getPlayer().pause();
+      this.pause();
     }
-    this.isPlaying = !this.isPlaying;
+  }
+
+  async play(): Promise<void> {
+    try {
+      await this.getPlayer()
+        .play()
+        .then(() => {
+          this.isPlaying = true;
+        });
+    } catch (error) {
+      this.isPlaying = false;
+      this.resetData();
+      console.error('Playback failed:', error);
+    }
+  }
+
+  pause(): void {
+    this.getPlayer().pause();
+    this.isPlaying = false;
   }
 
   async prevTrack(): Promise<void> {
