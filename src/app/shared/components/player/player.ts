@@ -91,9 +91,9 @@ export class Player implements AfterViewInit {
 
   private loadTrack(track: Track): void {
     if (this.loadedTrackId !== track.id) {
+      this.resetData();
       this.loadedTrackId = track.id;
       this.getPlayer().src = track.audio;
-      this.resetData();
     }
   }
 
@@ -122,7 +122,7 @@ export class Player implements AfterViewInit {
       return;
     }
     const progress = Math.floor((this.getPlayer().currentTime / this.getPlayer().duration) * 100);
-    this.progressBarValue.set(progress);
+    this.progressBarValue.set(isNaN(progress) ? 0 : progress);
     this.currentTime.set(Math.ceil(this.getPlayer().currentTime));
   }
 
