@@ -2,18 +2,23 @@ import { Component, AfterViewInit, ViewChild, ElementRef, computed, signal } fro
 import { MatIcon } from '@angular/material/icon';
 import { Track } from '@core/models/jamendo/tracks.model';
 import { tracksMock } from '@shared/mocks/tracks.mock';
+import { TrackDurationShortPipe } from '@shared/pipes/track-duration-short-pipe';
 
 @Component({
   selector: 'hive-player',
-  imports: [MatIcon],
+  imports: [MatIcon, TrackDurationShortPipe],
   templateUrl: './player.html',
   styleUrl: './player.scss',
 })
 export class Player implements AfterViewInit {
-  private readonly selectedUrl = `https://prod-1.storage.jamendo.com/?trackid=2179454&format=mp31&from=BTco%2FHLwKM129vrjHY%2FmBA%3D%3D%7ClUdnmKMx%2BA%2B8nyJfLCtSkg%3D%3D`;
-
-  progressBarValue = 0;
+  private currentTrackIndex = signal<number>(0);
   readonly tracks: Track[] = tracksMock.results;
+  readonly currentTrack = computed(() => {
+    return this.tracks[this.currentTrackIndex()];
+  });
+  readonly currentTime = signal<number>(0);
+  readonly duration = signal<number>(0);
+  progressBarValue = signal<number>(0);
   volumeBackup = 0;
   volumeBarValue = signal<number>(0.25);
   volumeIcon = computed(() => {
@@ -28,7 +33,6 @@ export class Player implements AfterViewInit {
   });
 
   isPlaying = false;
-  isMuted = false;
   isRepeat = false;
   isFavorite = false;
 
@@ -36,12 +40,11 @@ export class Player implements AfterViewInit {
   audioElement: ElementRef<HTMLAudioElement> | undefined;
 
   ngAfterViewInit(): void {
-    this.getPlayer().src = this.selectedUrl;
     this.getPlayer().autoplay = false;
     this.getPlayer().controls = true;
     this.getPlayer().volume = 0.25;
     this.getPlayer().loop = this.isRepeat;
-    this.getPlayer().muted = this.isMuted;
+    this.getPlayer().muted = false;
     this.getPlayer().preload = 'none';
   }
 
@@ -52,12 +55,20 @@ export class Player implements AfterViewInit {
     return this.audioElement.nativeElement;
   }
 
+  private resetData(): void {
+    this.isPlaying = false;
+    this.getPlayer().pause();
+    this.getPlayer().currentTime = 0;
+    this.duration.set(0);
+    this.currentTime.set(0);
+    this.progressBarValue.set(0);
+  }
+
   playProgress(event: Event): void {
     if (event.target instanceof HTMLInputElement) {
       const progressBar = event.target;
-      this.progressBarValue = Number(progressBar.value);
-      console.log('track progress: ', progressBar.value);
-      // this.getPlayer().currentTime = this.getPlayer().duration * (progress / 100);
+      this.progressBarValue.set(Number(progressBar.value));
+      this.getPlayer().currentTime = Math.ceil(this.getPlayer().duration * (this.progressBarValue() / 100));
     }
   }
 
@@ -65,34 +76,53 @@ export class Player implements AfterViewInit {
     if (event.target instanceof HTMLInputElement) {
       const volumeBar = event.target;
       this.volumeBarValue.set(Number(volumeBar.value));
+      this.getPlayer().volume = this.volumeBarValue();
       this.volumeBackup = 0;
-      this.isMuted = false;
-      console.log('volume: ', volumeBar.value);
+      if (this.getPlayer().muted) {
+        this.getPlayer().muted = false;
+      }
     }
   }
 
-  playPause(): void {
+  onTimeUpdate(): void {
+    if (this.getPlayer().duration === 0 || !this.isPlaying) {
+      return;
+    }
+    const progress = Math.floor((this.getPlayer().currentTime / this.getPlayer().duration) * 100);
+    this.progressBarValue.set(progress);
+    this.currentTime.set(Math.ceil(this.getPlayer().currentTime));
+  }
+
+  onLoadedMetadata(): void {
+    this.duration.set(Math.ceil(this.getPlayer().duration));
+  }
+
+  async playPause(): Promise<void> {
     if (!this.isPlaying) {
-      this.isPlaying = true;
-      // try {
-      //   await this.getPlayer().play();
-      // } catch (err) {
-      //   console.error('Playback failed:', err);
-      // }
-      console.log('play');
+      try {
+        this.getPlayer().src = this.currentTrack().audio;
+        await this.getPlayer().play();
+      } catch (err) {
+        console.error('Playback failed:', err);
+      }
     } else {
-      // this.getPlayer().pause();
-      this.isPlaying = false;
-      console.log('pause');
+      this.getPlayer().pause();
     }
+    this.isPlaying = !this.isPlaying;
   }
 
-  prevTrack(): void {
-    console.log('prevTrack');
+  async prevTrack(): Promise<void> {
+    this.resetData();
+    const nextIndex = this.currentTrackIndex() - 1;
+    this.currentTrackIndex.set(nextIndex);
+    await this.playPause();
   }
 
-  nextTrack(): void {
-    console.log('nextTrack');
+  async nextTrack(): Promise<void> {
+    this.resetData();
+    const nextIndex = this.currentTrackIndex() + 1;
+    this.currentTrackIndex.set(nextIndex);
+    await this.playPause();
   }
 
   mute(): void {

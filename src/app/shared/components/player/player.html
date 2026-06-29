@@ -1,13 +1,20 @@
-<audio class="native-player" #audioPlayer></audio>
+<audio
+  class="native-player"
+  #audioPlayer
+  (timeupdate)="onTimeUpdate()"
+  (loadedmetadata)="onLoadedMetadata()"
+  (ended)="nextTrack()"
+  )
+></audio>
 <div class="player-container">
   <input
     type="range"
     class="player-progress"
     step="1"
     min="0"
-    [max]="audioPlayer.duration"
-    [value]="progressBarValue"
-    [style.--progressValue]="progressBarValue + '%'"
+    [max]="100"
+    [value]="progressBarValue()"
+    [style.--progressValue]="progressBarValue() + '%'"
     (input)="playProgress($event)"
   />
   <div class="player-controls">
@@ -16,11 +23,12 @@
         <mat-icon>skip_previous</mat-icon>
       </button>
       <button class="player-button" aria-label="Play/pause track" (click)="playPause()">
-        <mat-icon>play_arrow</mat-icon>
+        <mat-icon>{{ isPlaying ? "pause" : "play_arrow" }}</mat-icon>
       </button>
       <button class="player-button" aria-label="Next track" (click)="nextTrack()">
         <mat-icon>skip_next</mat-icon>
       </button>
+      <p class="player-duration">{{ duration() | trackDurationShort }} / {{ currentTime() | trackDurationShort }}</p>
     </div>
     <div class="player-information">
       <img
@@ -30,10 +38,10 @@
       />
       <div class="track-details">
         <button class="player-button player-track-title" aria-label="Track title" (click)="goToTrack()">
-          Track title title title title title title title title title title title title title
+          {{ currentTrack().name }}
         </button>
         <button class="player-button player-track-artist" aria-label="Artist title" (click)="goToArtist()">
-          Artist
+          {{ currentTrack().artist_name }}
         </button>
       </div>
       <button class="player-button player-favorite" aria-label="Favorite track" (click)="toggleFavorite()">
