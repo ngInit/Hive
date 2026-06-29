@@ -21,17 +21,13 @@ export class PlayerService {
     return this.currentTrackIndex() > 0;
   });
 
-  playCollection(tracks: Track[]): void {
+  playCollection(tracks: Track[], startIndex = 0): void {
     if (tracks.length === 0) {
       return;
     }
     this.trackList.set(tracks);
-    this.currentTrackIndex.set(0);
+    this.currentTrackIndex.set(startIndex);
     this.isPlaying.set(true);
-  }
-
-  playTrack(track: Track): void {
-    this.playCollection([track]);
   }
 
   pauseTrack(): void {
@@ -62,10 +58,12 @@ export class PlayerService {
     this.isPlaying.set(true);
   }
 
-  toggle(track: Track): void {
+  toggle(track: Track, allTracks?: Track[] | null): void {
+    const tracks = allTracks ?? [track];
+    const index = tracks.findIndex((result) => result.id === track.id);
     const isTheSameTrack = this.playingTrack()?.id === track.id;
     if (!isTheSameTrack) {
-      this.playTrack(track);
+      this.playCollection(tracks, index);
       return;
     }
     if (this.isPlaying()) {

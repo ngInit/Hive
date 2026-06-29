@@ -40,7 +40,7 @@
   </div>
   <hive-carousel carouselTitle="Similar tracks by genges" [isLoading]="isLoading()" [isEmpty]="isEmpty()">
     @for (track of similarTracks(); track track.id) {
-      <hive-track-card [track]="track" />
+      <hive-track-card [track]="track" [allTracks]="similarTracks()" />
     }
   </hive-carousel>
 } @else {
