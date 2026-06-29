@@ -40,6 +40,7 @@ export class Player implements AfterViewInit {
   audioElement: ElementRef<HTMLAudioElement> | undefined;
 
   ngAfterViewInit(): void {
+    this.loadTrack(0);
     this.getPlayer().autoplay = false;
     this.getPlayer().volume = 0.25;
     this.getPlayer().loop = this.isRepeat;
@@ -60,6 +61,12 @@ export class Player implements AfterViewInit {
     this.duration.set(0);
     this.currentTime.set(0);
     this.progressBarValue.set(0);
+  }
+
+  private loadTrack(index: number): void {
+    this.currentTrackIndex.set(index);
+    this.getPlayer().src = this.currentTrack().audio;
+    this.resetData();
   }
 
   playProgress(event: Event): void {
