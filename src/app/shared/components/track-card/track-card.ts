@@ -17,9 +17,12 @@ export class TrackCard {
   private readonly router = inject(Router);
   private readonly playerService = inject(PlayerService);
   readonly track = input.required<Track>();
-  readonly isPlaying = computed(
-    () => this.playerService.isPlayingTrack() && this.playerService.playingTrackId() === Number(this.track().id)
-  );
+  readonly isActive = computed(() => {
+    return this.playerService.playingTrack()?.id === this.track().id;
+  });
+  readonly isPlaying = computed(() => {
+    return this.isActive() && this.playerService.isPlayingTrack();
+  });
 
   playTrack(): void {
     this.playerService.toggle(this.track());
