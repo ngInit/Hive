@@ -70,6 +70,13 @@
   .player-left-controls {
     display: flex;
     flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .player-duration {
+    margin: 0;
+    padding-left: 8px;
   }
 
   .player-left-controls .player-button {
