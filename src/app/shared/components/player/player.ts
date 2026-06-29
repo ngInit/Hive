@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, inject, ViewChild, ElementRef, computed, signal } from '@angular/core';
+import { Component, AfterViewInit, inject, ViewChild, ElementRef, computed, signal, effect } from '@angular/core';
 import { PlayerService } from '@core/services/player.service';
 import { TrackDurationShortPipe } from '@shared/pipes/track-duration-short-pipe';
 import { MatIcon } from '@angular/material/icon';
@@ -37,6 +37,29 @@ export class Player implements AfterViewInit {
 
   @ViewChild('audioPlayer')
   audioElement: ElementRef<HTMLAudioElement> | undefined;
+
+  constructor() {
+    effect(() => {
+      if (!this.isPlayerLoaded()) {
+        return;
+      }
+      const track = this.playerService.playingTrack();
+      const isPlayingTrack = this.playerService.isPlayingTrack();
+
+      if (!track) {
+        this.loadedTrackId = null;
+        this.pause();
+        return;
+      }
+
+      this.loadTrack(track);
+      if (isPlayingTrack) {
+        void this.play();
+      } else {
+        this.pause();
+      }
+    });
+  }
 
   ngAfterViewInit(): void {
     this.getPlayer().autoplay = false;

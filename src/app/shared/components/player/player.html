@@ -5,7 +5,7 @@
   (loadedmetadata)="onLoadedMetadata()"
   (ended)="nextTrack()"
 ></audio>
-@if (tracks.length > 0) {
+@if (currentTrack()) {
   <div class="player-container">
     <input
       type="range"
@@ -23,7 +23,7 @@
           <mat-icon>skip_previous</mat-icon>
         </button>
         <button class="player-button" aria-label="Play/pause track" (click)="playPause()">
-          <mat-icon>{{ isPlaying ? "pause" : "play_arrow" }}</mat-icon>
+          <mat-icon>{{ isPlaying() ? "pause" : "play_arrow" }}</mat-icon>
         </button>
         <button class="player-button" aria-label="Next track" (click)="nextTrack()">
           <mat-icon>skip_next</mat-icon>
@@ -33,15 +33,15 @@
       <div class="player-information">
         <img
           class="player-cover"
-          src="{{ currentTrack().image || 'https://picsum.photos/id/39/200.webp?blur=2' }}"
+          src="{{ currentTrack()?.image || 'https://picsum.photos/id/39/200.webp?blur=2' }}"
           alt="Track cover"
         />
         <div class="track-details">
           <button class="player-button player-track-title" aria-label="Track title" (click)="goToTrack()">
-            {{ currentTrack().name }}
+            {{ currentTrack()?.name || "Unknown track" }}
           </button>
           <button class="player-button player-track-artist" aria-label="Artist title" (click)="goToArtist()">
-            {{ currentTrack().artist_name }}
+            {{ currentTrack()?.artist_name || "Unknown artist" }}
           </button>
         </div>
         <button class="player-button player-favorite" aria-label="Favorite track" (click)="toggleFavorite()">
