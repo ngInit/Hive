@@ -1,0 +1,60 @@
+<audio class="native-player" #audioPlayer></audio>
+<div class="player-container">
+  <input
+    type="range"
+    class="player-progress"
+    step="1"
+    min="0"
+    [max]="audioPlayer.duration"
+    [value]="progressBarValue"
+    [style.--progressValue]="progressBarValue + '%'"
+    (input)="playProgress($event)"
+  />
+  <div class="player-controls">
+    <div class="player-left-controls">
+      <button class="player-button" aria-label="Previous track">
+        <mat-icon>skip_previous</mat-icon>
+      </button>
+      <button class="player-button" aria-label="Play/pause track">
+        <mat-icon>play_arrow</mat-icon>
+      </button>
+      <button class="player-button" aria-label="Next track">
+        <mat-icon>skip_next</mat-icon>
+      </button>
+    </div>
+    <div class="player-information">
+      <img
+        class="player-cover"
+        src="https://usercontent.jamendo.com?type=album&id=569538&width=300&trackid=2179454"
+        alt="Track cover"
+      />
+      <div class="track-details">
+        <button class="player-button player-track-title">
+          Track title title title title title title title title title title title title title
+        </button>
+        <button class="player-button player-track-artist">Artist</button>
+      </div>
+      <button class="player-button player-favorite" aria-label="Next track">
+        <mat-icon>favorite_outline</mat-icon>
+      </button>
+    </div>
+    <div class="player-right-controls">
+      <button class="player-button player-repeat" aria-label="Next track">
+        <mat-icon>repeat</mat-icon>
+      </button>
+      <button class="player-button player-mute" aria-label="Next track">
+        <mat-icon>volume_up</mat-icon>
+      </button>
+      <input
+        type="range"
+        class="player-volume"
+        step="0.01"
+        min="0"
+        [max]="1"
+        [value]="volumeBarValue"
+        [style.--volumeValue]="100 * volumeBarValue + '%'"
+        (input)="volumeProgress($event)"
+      />
+    </div>
+  </div>
+</div>
