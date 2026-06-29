@@ -1,5 +1,7 @@
 import { Component, AfterViewInit, ViewChild, ElementRef, computed, signal } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
+import { Track } from '@core/models/jamendo/tracks.model';
+import { tracksMock } from '@shared/mocks/tracks.mock';
 
 @Component({
   selector: 'hive-player',
@@ -11,6 +13,7 @@ export class Player implements AfterViewInit {
   private readonly selectedUrl = `https://prod-1.storage.jamendo.com/?trackid=2179454&format=mp31&from=BTco%2FHLwKM129vrjHY%2FmBA%3D%3D%7ClUdnmKMx%2BA%2B8nyJfLCtSkg%3D%3D`;
 
   progressBarValue = 0;
+  readonly tracks: Track[] = tracksMock.results;
   volumeBackup = 0;
   volumeBarValue = signal<number>(0.25);
   volumeIcon = computed(() => {
