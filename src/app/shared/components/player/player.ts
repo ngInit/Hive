@@ -3,6 +3,7 @@ import { PlayerService } from '@core/services/player.service';
 import { TrackDurationShortPipe } from '@shared/pipes/track-duration-short-pipe';
 import { MatIcon } from '@angular/material/icon';
 import { Track } from '@core/models/jamendo/tracks.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'hive-player',
@@ -11,6 +12,7 @@ import { Track } from '@core/models/jamendo/tracks.model';
   styleUrl: './player.scss',
 })
 export class Player implements AfterViewInit {
+  private readonly router = inject(Router);
   private readonly playerService = inject(PlayerService);
   private isPlayerLoaded = signal<boolean>(false);
   private loadedTrackId: string | null = null;
@@ -18,6 +20,8 @@ export class Player implements AfterViewInit {
   readonly currentTime = signal<number>(0);
   readonly duration = signal<number>(0);
   readonly isPlaying = this.playerService.isPlayingTrack;
+  readonly hasNextTrack = this.playerService.hasNextTrack;
+  readonly hasPreviousTrack = this.playerService.hasPreviousTrack;
   progressBarValue = signal<number>(0);
   volumeBarValue = signal<number>(0.25);
   volumeIcon = computed(() => {
@@ -176,11 +180,17 @@ export class Player implements AfterViewInit {
     console.log('favorite', this.isFavorite);
   }
 
-  goToTrack(): void {
-    console.log('goToTrack');
+  async goToTrack(): Promise<void> {
+    const currentTrackId = this.currentTrack()?.id;
+    if (currentTrackId) {
+      await this.router.navigate(['/track'], { queryParams: { q: currentTrackId } });
+    }
   }
 
-  goToArtist(): void {
-    console.log('goToArtist');
+  async goToArtist(): Promise<void> {
+    const currentArtistId = this.currentTrack()?.artist_id;
+    if (currentArtistId) {
+      await this.router.navigate(['/artist'], { queryParams: { q: currentArtistId } });
+    }
   }
 }

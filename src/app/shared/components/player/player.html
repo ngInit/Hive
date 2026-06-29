@@ -19,13 +19,18 @@
     />
     <div class="player-controls">
       <div class="player-left-controls">
-        <button class="player-button" aria-label="Previous track" (click)="prevTrack()">
+        <button
+          class="player-button"
+          aria-label="Previous track"
+          (click)="prevTrack()"
+          [disabled]="!hasPreviousTrack()"
+        >
           <mat-icon>skip_previous</mat-icon>
         </button>
         <button class="player-button" aria-label="Play/pause track" (click)="playPause()">
           <mat-icon>{{ isPlaying() ? "pause" : "play_arrow" }}</mat-icon>
         </button>
-        <button class="player-button" aria-label="Next track" (click)="nextTrack()">
+        <button class="player-button" aria-label="Next track" (click)="nextTrack()" [disabled]="!hasNextTrack()">
           <mat-icon>skip_next</mat-icon>
         </button>
         <p class="player-duration">{{ duration() | trackDurationShort }} / {{ currentTime() | trackDurationShort }}</p>
