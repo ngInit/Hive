@@ -32,28 +32,33 @@
 </div>
 
 <ng-template #newSearch let-items="items" let-search="search" let-type="type">
-  @if (type === "Artists") {
-    @for (artist of items; track artist.id) {
-      <ng-container [ngTemplateOutlet]="artistCard" [ngTemplateOutletContext]="{ artist: artist }" />
-    }
-  }
-  @if (type === "Albums") {
-    @for (album of items; track album.id) {
-      <hive-album-card [album]="album" />
-    }
-  }
-  @if (type === "Tracks") {
-    @for (track of items; track track.id) {
-      <hive-track-card [track]="track" [allTracks]="items" />
-    }
-  }
+  <div class="search-container">
+    <h1 class="search-title">{{ type }}</h1>
+    <div class="search-results">
+      @if (type === "Artists") {
+        @for (artist of items; track artist.id) {
+          <ng-container [ngTemplateOutlet]="artistCard" [ngTemplateOutletContext]="{ artist: artist }" />
+        }
+      }
+      @if (type === "Albums") {
+        @for (album of items; track album.id) {
+          <hive-album-card [album]="album" />
+        }
+      }
+      @if (type === "Tracks") {
+        @for (track of items; track track.id) {
+          <hive-track-card [track]="track" [allTracks]="items" />
+        }
+      }
+    </div>
+  </div>
   <mat-paginator
     (page)="paginationEvent($event)"
     [length]="search.total"
     [pageSize]="search.limit"
     [disabled]="false"
     [showFirstLastButtons]="true"
-    [pageSizeOptions]="[21, 42, 84, 168]"
+    [pageSizeOptions]="[7, 14, 21, 42, 84, 168]"
     [hidePageSize]="false"
     [pageIndex]="search.offset / search.limit"
     aria-label="Select page"
