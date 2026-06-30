@@ -5,6 +5,8 @@ import { JamendoService } from '@core/services/jamendo.service';
 import { NgTemplateOutlet } from '@angular/common';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { JamendoSearchResponse } from '@core/models/jamendo/jamendo.model';
+import { TrackCard } from '@components/track-card/track-card';
+import { AlbumCard } from '@components/album-card/album-card';
 
 const INITIAL_SEARCH: JamendoSearchResponse = {
   items: [],
@@ -15,7 +17,7 @@ const INITIAL_SEARCH: JamendoSearchResponse = {
 
 @Component({
   selector: 'hive-search-page',
-  imports: [NgTemplateOutlet, MatPaginator],
+  imports: [NgTemplateOutlet, MatPaginator, TrackCard, AlbumCard],
   templateUrl: './search-page.html',
   styleUrl: './search-page.scss',
 })
@@ -71,8 +73,8 @@ export class SearchPage {
     console.log(this.artists());
   }
 
-  async goToArtist(): Promise<void> {
-    await this.navigationService.goToArtist('0');
+  async goToArtist(id: string): Promise<void> {
+    await this.navigationService.goToArtist(id);
   }
 
   async goToAlbum(): Promise<void> {

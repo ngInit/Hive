@@ -34,17 +34,17 @@
 <ng-template #newSearch let-items="items" let-search="search" let-type="type">
   @if (type === "Artists") {
     @for (artist of items; track artist.id) {
-      <p>{{ artist.name }}</p>
+      <ng-container [ngTemplateOutlet]="artistCard" [ngTemplateOutletContext]="{ artist: artist }" />
     }
   }
   @if (type === "Albums") {
     @for (album of items; track album.id) {
-      <p>{{ album.name }}</p>
+      <hive-album-card [album]="album" />
     }
   }
   @if (type === "Tracks") {
     @for (track of items; track track.id) {
-      <p>{{ track.name }}</p>
+      <hive-track-card [track]="track" [allTracks]="items" />
     }
   }
   <mat-paginator
