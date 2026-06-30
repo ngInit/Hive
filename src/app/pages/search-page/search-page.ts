@@ -76,12 +76,4 @@ export class SearchPage {
   async goToArtist(id: string): Promise<void> {
     await this.navigationService.goToArtist(id);
   }
-
-  async goToAlbum(): Promise<void> {
-    await this.navigationService.goToAlbum('0');
-  }
-
-  async goToTrack(): Promise<void> {
-    await this.navigationService.goToTrack('0');
-  }
 }
