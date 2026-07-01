@@ -111,9 +111,20 @@ export class SearchPage {
     return Number(total) === 0;
   }
 
-  paginationEvent(event: PageEvent) {
-    console.log(event);
-    console.log(this.artists());
+  paginationEvent(event: PageEvent, type: EndPoint): void {
+    const offset = event.pageIndex * event.pageSize;
+    const limit = event.pageSize;
+    this.loadSectionData(this.query(), type, offset, limit);
+  }
+
+  calculatePageSizesOptions(total: number): number[] {
+    const sizes = [21, 42, 84, 168, total];
+    if (total > 21) {
+      return sizes.filter((size) => {
+        return size <= total;
+      });
+    }
+    return [total];
   }
 
   async goToArtist(id: string): Promise<void> {

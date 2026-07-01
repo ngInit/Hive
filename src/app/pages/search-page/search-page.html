@@ -32,18 +32,6 @@
 </div>
 
 <ng-template #newSearch let-items="items" let-search="search" let-type="type">
-  <mat-paginator
-    (page)="paginationEvent($event)"
-    [length]="search.total"
-    [pageSize]="search.limit"
-    [disabled]="false"
-    [showFirstLastButtons]="true"
-    [pageSizeOptions]="[7, 14, 21, 42, 84, 168]"
-    [hidePageSize]="false"
-    [pageIndex]="search.offset / search.limit"
-    aria-label="Select page"
-  >
-  </mat-paginator>
   <div>
     <div class="search-container">
       <h1 class="search-title">{{ type }}</h1>
@@ -83,6 +71,18 @@
         }
       </div>
     </div>
+    <mat-paginator
+      (page)="paginationEvent($event, type.toLowerCase())"
+      [length]="search.total"
+      [pageSize]="search.limit || 21"
+      [disabled]="search.total === 0"
+      [showFirstLastButtons]="true"
+      [pageSizeOptions]="calculatePageSizesOptions(search.total)"
+      [hidePageSize]="search.total <= 21"
+      [pageIndex]="search.offset / search.limit"
+      aria-label="Select page"
+    >
+    </mat-paginator>
   </div>
 </ng-template>
 
