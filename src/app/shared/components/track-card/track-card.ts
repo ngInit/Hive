@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component, input, computed, inject } from '@angular/core';
+import { NavigationService } from '@core/services/navigation.service';
+import { PlayerService } from '@core/services/player.service';
 import { MatIcon } from '@angular/material/icon';
-import { Router } from '@angular/router';
 import { Track } from '@core/models/jamendo/tracks.model';
 import { TrackPlaysShortPipe } from '@shared/pipes/track-plays-short-pipe';
 import { TrackDurationShortPipe } from '@shared/pipes/track-duration-short-pipe';
-import { PlayerService } from '@core/services/player.service';
 
 @Component({
   selector: 'hive-track-card',
@@ -14,7 +14,7 @@ import { PlayerService } from '@core/services/player.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TrackCard {
-  private readonly router = inject(Router);
+  private readonly navigationService = inject(NavigationService);
   private readonly playerService = inject(PlayerService);
   readonly allTracks = input<Track[] | null>();
   readonly track = input.required<Track>();
@@ -30,10 +30,10 @@ export class TrackCard {
   }
 
   async goToArtist(): Promise<void> {
-    await this.router.navigate(['/artist'], { queryParams: { q: this.track().artist_id } });
+    await this.navigationService.goToArtist(this.track().artist_id);
   }
 
   async goToTrack(): Promise<void> {
-    await this.router.navigate(['/track'], { queryParams: { q: this.track().id } });
+    await this.navigationService.goToTrack(this.track().id);
   }
 }

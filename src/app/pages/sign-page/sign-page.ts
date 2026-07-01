@@ -1,11 +1,11 @@
 import { Component, inject, QueryList, signal, ViewChildren } from '@angular/core';
+import { NavigationService } from '@core/services/navigation.service';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatError, MatFormField, MatInput, MatLabel } from '@angular/material/input';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CompareSignUpPasswords } from '@shared/directives/compare-sign-up-passwords.directive';
 import { SignInData, SignUpData } from '@core/models/auth.model';
 import { FirebaseService } from '@core/services/firebase.service';
-import { Router } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
 import { MatSuffix } from '@angular/material/input';
 import { ShowPassword } from '@shared/directives/show-password.directive';
@@ -43,7 +43,7 @@ export class SignPage {
   readonly movePanel = signal<string>('');
   readonly isSignInPanel = signal(true);
   private readonly authService = inject(FirebaseService);
-  private readonly router = inject(Router);
+  private readonly navigationService = inject(NavigationService);
   public readonly errorMessage = signal<string | null>(null);
 
   signInForm = new FormGroup<SignInGroup>({
@@ -106,7 +106,7 @@ export class SignPage {
         this.errorMessage.set(this.authService.error());
         this.signInForm.reset();
       } else {
-        await this.router.navigate(['/']);
+        await this.navigationService.goHome();
       }
     }
   }
@@ -125,7 +125,7 @@ export class SignPage {
       if (this.authService.error()) {
         this.errorMessage.set(this.authService.error());
       } else {
-        await this.router.navigate(['/']);
+        await this.navigationService.goHome();
       }
     }
   }

@@ -1,5 +1,5 @@
 import { Component, inject, input } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationService } from '@core/services/navigation.service';
 import { Album } from '@core/models/jamendo/albums.model';
 
 @Component({
@@ -8,14 +8,14 @@ import { Album } from '@core/models/jamendo/albums.model';
   styleUrl: './album-card.scss',
 })
 export class AlbumCard {
-  private readonly router = inject(Router);
+  private readonly navigationService = inject(NavigationService);
   readonly album = input.required<Album>();
 
   async goToArtist(): Promise<void> {
-    await this.router.navigate(['/artist'], { queryParams: { q: this.album().artist_id } });
+    await this.navigationService.goToArtist(this.album().artist_id);
   }
 
   async goToAlbum(): Promise<void> {
-    await this.router.navigate(['/album'], { queryParams: { q: this.album().id } });
+    await this.navigationService.goToAlbum(this.album().id);
   }
 }
