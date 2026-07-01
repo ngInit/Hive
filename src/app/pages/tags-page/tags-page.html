@@ -1,1 +1,32 @@
-<p>tags-page works!</p>
+@let tracks = tracksContext().items;
+@let total = tracksContext().total;
+@let offset = tracksContext().offset;
+@let limit = tracksContext().limit;
+<div class="search-container">
+  <h1 class="search-title">
+    Tracks by <span class="search-tag">{{ query() }}</span> tag
+  </h1>
+  <div class="search-results">
+    @if (isTracksLoading()) {
+      <div class="search-results-loading">Loading...</div>
+    } @else if (isEmpty()) {
+      <div class="search-results-empty">No results</div>
+    } @else {
+      @for (track of tracks; track track.id) {
+        <hive-track-card [track]="track" [allTracks]="tracks" />
+      }
+    }
+  </div>
+</div>
+<mat-paginator
+  (page)="paginationEvent($event)"
+  [length]="total"
+  [pageSize]="limit || INITIAL_SEARCH.limit"
+  [disabled]="total === 0"
+  [showFirstLastButtons]="true"
+  [pageSizeOptions]="calculatePageSizesOptions(total)"
+  [hidePageSize]="total <= INITIAL_SEARCH.limit"
+  [pageIndex]="offset / limit"
+  aria-label="Select page"
+>
+</mat-paginator>
