@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { MainLayout } from '@core/layouts/main-layout/main-layout';
 import { LandingPage } from '@pages/landing-page/landing-page';
+import { HomePage } from '@pages/home-page/home-page';
 import { guestGuard, userGuard } from '@core/guards/auth-guard';
 
 export const routes: Routes = [
@@ -23,7 +24,18 @@ export const routes: Routes = [
       {
         path: '',
         component: LandingPage,
-        title: 'Hive',
+        children: [
+          {
+            path: '',
+            component: HomePage,
+            title: 'Hive',
+          },
+          {
+            path: 'tags',
+            loadComponent: () => import('@pages/tags-page/tags-page').then((page) => page.TagsPage),
+            title: 'Tags',
+          },
+        ],
       },
       {
         path: 'user',
