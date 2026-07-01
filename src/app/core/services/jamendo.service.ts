@@ -78,7 +78,7 @@ export class JamendoService {
         return this.getPaginated(albumsResponse, offset, limit);
       }
       case 'tracks': {
-        const tracksResponse = await this.repository.createRequest('tracks', common);
+        const tracksResponse = await this.repository.createRequest('tracks', { ...common, include: ['stats'] });
         return this.getPaginated(tracksResponse, offset, limit);
       }
     }
