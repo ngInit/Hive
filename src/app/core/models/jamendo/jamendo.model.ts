@@ -1,6 +1,6 @@
-import { ArtistsRequest, ArtistsResponse } from '@core/models/jamendo/artists.model';
-import { TracksRequest, TracksResponse } from '@core/models/jamendo/tracks.model';
-import { AlbumsRequest, AlbumsResponse } from '@core/models/jamendo/albums.model';
+import { Artist, ArtistsRequest, ArtistsResponse } from '@core/models/jamendo/artists.model';
+import { Track, TracksRequest, TracksResponse } from '@core/models/jamendo/tracks.model';
+import { Album, AlbumsRequest, AlbumsResponse } from '@core/models/jamendo/albums.model';
 
 export type EndPoint = 'artists' | 'tracks' | 'albums';
 
@@ -37,6 +37,13 @@ interface JamendoFailedResponse {
 }
 
 export type JamendoResponse<T> = JamendoSuccessResponse<T> | JamendoFailedResponse;
+
+export interface JamendoSearchResponse {
+  items: Artist[] | Album[] | Track[];
+  total: number;
+  offset: number;
+  limit: number;
+}
 
 export function isJamendoSuccess<T>(response: JamendoResponse<T>): response is JamendoSuccessResponse<T> {
   return response.headers.status === 'success';

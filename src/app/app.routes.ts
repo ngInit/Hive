@@ -43,6 +43,11 @@ export const routes: Routes = [
         title: 'Track',
       },
       {
+        path: 'search',
+        loadComponent: () => import('@pages/search-page/search-page').then((page) => page.SearchPage),
+        title: 'Search',
+      },
+      {
         path: '**',
         loadComponent: () => import('@pages/error-page/error-page').then((page) => page.ErrorPage),
         title: 'Error',

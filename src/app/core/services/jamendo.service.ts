@@ -1,7 +1,7 @@
 import { JAMENDO_REPOSITORY } from '@core/repositories/jamendo/jamendo.repository';
 import { Injectable, inject } from '@angular/core';
 import { getDateRangeFromToday } from '@utils/dateRange';
-import { EndPoint, isJamendoSuccess, JamendoResponse } from '@core/models/jamendo/jamendo.model';
+import { EndPoint, isJamendoSuccess, JamendoResponse, JamendoSearchResponse } from '@core/models/jamendo/jamendo.model';
 import { Artist } from '@core/models/jamendo/artists.model';
 import { Album } from '@core/models/jamendo/albums.model';
 import { Track } from '@core/models/jamendo/tracks.model';
@@ -56,12 +56,7 @@ export class JamendoService {
     };
   }
 
-  async getSearchPage(
-    query: string,
-    entity: EndPoint,
-    offset = 0,
-    limit = 12
-  ): Promise<{ items: Artist[] | Album[] | Track[]; total: number; offset: number; limit: number }> {
+  async getSearchPage(query: string, entity: EndPoint, offset = 0, limit = 12): Promise<JamendoSearchResponse> {
     const searchString = query.trim();
     const common = { namesearch: searchString, offset: offset, limit: String(limit), fullcount: true };
     if (!searchString) {
@@ -83,7 +78,7 @@ export class JamendoService {
         return this.getPaginated(albumsResponse, offset, limit);
       }
       case 'tracks': {
-        const tracksResponse = await this.repository.createRequest('tracks', common);
+        const tracksResponse = await this.repository.createRequest('tracks', { ...common, include: ['stats'] });
         return this.getPaginated(tracksResponse, offset, limit);
       }
     }

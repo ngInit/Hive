@@ -1,0 +1,106 @@
+<ng-container
+  [ngTemplateOutlet]="newSearch"
+  [ngTemplateOutletContext]="{
+    items: artistsContext().items,
+    search: artistsContext().search,
+    type: artistsContext().type,
+  }"
+/>
+
+<ng-container
+  [ngTemplateOutlet]="newSearch"
+  [ngTemplateOutletContext]="{
+    items: albumsContext().items,
+    search: albumsContext().search,
+    type: albumsContext().type,
+  }"
+/>
+
+<ng-container
+  [ngTemplateOutlet]="newSearch"
+  [ngTemplateOutletContext]="{
+    items: tracksContext().items,
+    search: tracksContext().search,
+    type: tracksContext().type,
+  }"
+/>
+
+<ng-template #newSearch let-items="items" let-search="search" let-type="type">
+  <div>
+    <div class="search-container">
+      <h1 class="search-title">{{ type }}</h1>
+      <div class="search-results">
+        @if (type === "Artists") {
+          @if (isArtistsLoading()) {
+            <div class="search-results-loading">Loading...</div>
+          } @else if (isEmpty(search.total)) {
+            <div class="search-results-empty">No results</div>
+          } @else {
+            @for (artist of items; track artist.id) {
+              <ng-container [ngTemplateOutlet]="artistCard" [ngTemplateOutletContext]="{ artist: artist }" />
+            }
+          }
+        }
+        @if (type === "Albums") {
+          @if (isAlbumsLoading()) {
+            <div class="search-results-loading">Loading...</div>
+          } @else if (isEmpty(search.total)) {
+            <div class="search-results-empty">No results</div>
+          } @else {
+            @for (album of items; track album.id) {
+              <hive-album-card [album]="album" />
+            }
+          }
+        }
+        @if (type === "Tracks") {
+          @if (isTracksLoading()) {
+            <div class="search-results-loading">Loading...</div>
+          } @else if (isEmpty(search.total)) {
+            <div class="search-results-empty">No results</div>
+          } @else {
+            @for (track of items; track track.id) {
+              <hive-track-card [track]="track" [allTracks]="items" />
+            }
+          }
+        }
+      </div>
+    </div>
+    <mat-paginator
+      (page)="paginationEvent($event, type.toLowerCase())"
+      [length]="search.total"
+      [pageSize]="search.limit || 21"
+      [disabled]="search.total === 0"
+      [showFirstLastButtons]="true"
+      [pageSizeOptions]="calculatePageSizesOptions(search.total)"
+      [hidePageSize]="search.total <= 21"
+      [pageIndex]="search.offset / search.limit"
+      aria-label="Select page"
+    >
+    </mat-paginator>
+  </div>
+</ng-template>
+
+<ng-template #artistCard let-artist="artist">
+  <div class="artist-card">
+    <div class="artist-card-wrapper">
+      <button class="artist-card-top" aria-label="Page of the artist {{ artist.name }}" (click)="goToArtist(artist.id)">
+        <div class="artist-card-cover">
+          <img
+            class="artist-cover"
+            src="{{ artist.image || 'https://picsum.photos/id/39/200.webp?blur=2' }}"
+            alt="Album cover"
+            width="200"
+            height="200"
+          />
+        </div>
+      </button>
+      <button
+        class="artist-card-button"
+        aria-label="Page of the artist {{ artist.name }}"
+        (click)="goToArtist(artist.id)"
+      >
+        {{ artist.name }}
+      </button>
+    </div>
+  </div>
+</ng-template>
