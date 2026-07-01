@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, DestroyRef, inject, signal } from '@angular/core';
 import { Router, RouterLink, isActive } from '@angular/router';
+import { NavigationService } from '@core/services/navigation.service';
 import { FirebaseService } from '@core/services/firebase.service';
 import { JamendoService } from '@core/services/jamendo.service';
 import { Subject, debounceTime, distinctUntilChanged, switchMap, from, of, catchError } from 'rxjs';
@@ -22,6 +23,7 @@ import { Track } from '@core/models/jamendo/tracks.model';
 })
 export class Header {
   private readonly router = inject(Router);
+  private readonly navigationService = inject(NavigationService);
   protected readonly firebaseService = inject(FirebaseService);
   private readonly jamendoService = inject(JamendoService);
   private readonly destroyRef = inject(DestroyRef);
@@ -65,7 +67,7 @@ export class Header {
   async signOut(): Promise<void> {
     await this.firebaseService.signOut();
     if (this.router.url === '/user') {
-      await this.router.navigate(['/']);
+      await this.navigationService.goHome();
     }
   }
 
@@ -82,7 +84,7 @@ export class Header {
     if (!this.searchInput) {
       return;
     }
-    await this.router.navigate(['/search'], { queryParams: { q: this.searchInput } });
+    await this.navigationService.goToSearch(this.searchInput);
   }
 
   clearSearch(): void {
