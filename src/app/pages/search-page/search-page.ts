@@ -1,12 +1,12 @@
 import { Component, computed, effect, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { NavigationService } from '@core/services/navigation.service';
 import { JamendoService } from '@core/services/jamendo.service';
 import { NgTemplateOutlet } from '@angular/common';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { EndPoint, JamendoSearchResponse } from '@core/models/jamendo/jamendo.model';
-import { TrackCard } from '@components/track-card/track-card';
+import { ArtistCard } from '@components/artist-card/artist-card';
 import { AlbumCard } from '@components/album-card/album-card';
+import { TrackCard } from '@components/track-card/track-card';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs';
 
@@ -19,13 +19,12 @@ const INITIAL_SEARCH: JamendoSearchResponse = {
 
 @Component({
   selector: 'hive-search-page',
-  imports: [NgTemplateOutlet, MatPaginator, TrackCard, AlbumCard],
+  imports: [NgTemplateOutlet, MatPaginator, ArtistCard, AlbumCard, TrackCard],
   templateUrl: './search-page.html',
   styleUrl: './search-page.scss',
 })
 export class SearchPage {
   private readonly route = inject(ActivatedRoute);
-  private readonly navigationService = inject(NavigationService);
   private readonly jamendoService = inject(JamendoService);
   private readonly artists = signal<JamendoSearchResponse>(INITIAL_SEARCH);
   private readonly albums = signal<JamendoSearchResponse>(INITIAL_SEARCH);
@@ -84,7 +83,12 @@ export class SearchPage {
     });
   }
 
-  private loadSectionData(query: string, type: EndPoint, offset = 0, limit = 0): void {
+  private loadSectionData(
+    query: string,
+    type: EndPoint,
+    offset = INITIAL_SEARCH.offset,
+    limit = INITIAL_SEARCH.limit
+  ): void {
     const { data, loading } = this.searchState[type];
     loading.set(true);
 
@@ -102,9 +106,9 @@ export class SearchPage {
   }
 
   loadData(query: string): void {
-    this.loadSectionData(query, 'artists', 0, 21);
-    this.loadSectionData(query, 'albums', 0, 21);
-    this.loadSectionData(query, 'tracks', 0, 21);
+    this.loadSectionData(query, 'artists');
+    this.loadSectionData(query, 'albums');
+    this.loadSectionData(query, 'tracks');
   }
 
   isEmpty(total: number | string): boolean {
@@ -125,9 +129,5 @@ export class SearchPage {
       });
     }
     return [total];
-  }
-
-  async goToArtist(id: string): Promise<void> {
-    await this.navigationService.goToArtist(id);
   }
 }
