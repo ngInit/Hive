@@ -7,6 +7,18 @@ import { Router } from '@angular/router';
 export class NavigationService {
   private readonly router = inject(Router);
 
+  async goHome(): Promise<void> {
+    await this.router.navigate(['/']);
+  }
+
+  async goToSearch(query: string): Promise<void> {
+    await this.router.navigate(['/search'], { queryParams: { q: query } });
+  }
+
+  async goToTagsSearch(query: string): Promise<void> {
+    await this.router.navigate(['/tags'], { queryParams: { q: query } });
+  }
+
   async goToArtist(id: string | undefined): Promise<void> {
     if (id) {
       await this.router.navigate(['/artist'], { queryParams: { q: id } });
