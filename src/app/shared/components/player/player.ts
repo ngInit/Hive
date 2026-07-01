@@ -1,9 +1,9 @@
 import { Component, AfterViewInit, inject, ViewChild, ElementRef, computed, signal, effect } from '@angular/core';
+import { NavigationService } from '@core/services/navigation.service';
 import { PlayerService } from '@core/services/player.service';
 import { TrackDurationShortPipe } from '@shared/pipes/track-duration-short-pipe';
 import { MatIcon } from '@angular/material/icon';
 import { Track } from '@core/models/jamendo/tracks.model';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'hive-player',
@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
   styleUrl: './player.scss',
 })
 export class Player implements AfterViewInit {
-  private readonly router = inject(Router);
+  private readonly navigationService = inject(NavigationService);
   private readonly playerService = inject(PlayerService);
   private isPlayerLoaded = signal<boolean>(false);
   private loadedTrackId: string | null = null;
@@ -182,15 +182,11 @@ export class Player implements AfterViewInit {
 
   async goToTrack(): Promise<void> {
     const currentTrackId = this.currentTrack()?.id;
-    if (currentTrackId) {
-      await this.router.navigate(['/track'], { queryParams: { q: currentTrackId } });
-    }
+    await this.navigationService.goToTrack(currentTrackId);
   }
 
   async goToArtist(): Promise<void> {
     const currentArtistId = this.currentTrack()?.artist_id;
-    if (currentArtistId) {
-      await this.router.navigate(['/artist'], { queryParams: { q: currentArtistId } });
-    }
+    await this.navigationService.goToArtist(currentArtistId);
   }
 }
