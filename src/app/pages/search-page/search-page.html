@@ -1,35 +1,29 @@
-<div>
-  <ng-container
-    [ngTemplateOutlet]="newSearch"
-    [ngTemplateOutletContext]="{
-      items: artistsContext().items,
-      search: artistsContext().search,
-      type: artistsContext().type,
-    }"
-  />
-</div>
+<ng-container
+  [ngTemplateOutlet]="newSearch"
+  [ngTemplateOutletContext]="{
+    items: artistsContext().items,
+    search: artistsContext().search,
+    type: artistsContext().type,
+  }"
+/>
 
-<div>
-  <ng-container
-    [ngTemplateOutlet]="newSearch"
-    [ngTemplateOutletContext]="{
-      items: albumsContext().items,
-      search: albumsContext().search,
-      type: albumsContext().type,
-    }"
-  />
-</div>
+<ng-container
+  [ngTemplateOutlet]="newSearch"
+  [ngTemplateOutletContext]="{
+    items: albumsContext().items,
+    search: albumsContext().search,
+    type: albumsContext().type,
+  }"
+/>
 
-<div>
-  <ng-container
-    [ngTemplateOutlet]="newSearch"
-    [ngTemplateOutletContext]="{
-      items: tracksContext().items,
-      search: tracksContext().search,
-      type: tracksContext().type,
-    }"
-  />
-</div>
+<ng-container
+  [ngTemplateOutlet]="newSearch"
+  [ngTemplateOutletContext]="{
+    items: tracksContext().items,
+    search: tracksContext().search,
+    type: tracksContext().type,
+  }"
+/>
 
 <ng-template #newSearch let-items="items" let-search="search" let-type="type">
   <div>
