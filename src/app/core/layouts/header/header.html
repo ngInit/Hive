@@ -61,7 +61,7 @@
 <hive-popup [(open)]="isPopupOpened" [userStatus]="firebaseService.isAuthenticated()" (signOut)="signOut()" />
 
 <ng-template #newSuggest let-suggest="suggest" let-type="type">
-  <button class="suggest-button" aria-label="{{ type }} {{ suggest.name }}">
+  <button class="suggest-button" aria-label="{{ type }} {{ suggest.name }}" (mousedown)="goToSuggest(type, suggest.id)">
     @if (type === "Artist") {
       <mat-icon aria-label="{{ type }}" fontIcon="person_outline"></mat-icon>
     }

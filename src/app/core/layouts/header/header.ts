@@ -92,6 +92,20 @@ export class Header {
     }
   }
 
+  goToSuggest(type: string, id: string): void {
+    switch (type) {
+      case 'Artist':
+        void this.navigationService.goToArtist(id);
+        break;
+      case 'Album':
+        void this.navigationService.goToAlbum(id);
+        break;
+      case 'Track':
+        void this.navigationService.goToTrack(id);
+        break;
+    }
+  }
+
   clearSearch(): void {
     this.searchInput.set('');
     this.suggestions.set({ artists: [], albums: [], tracks: [] });
