@@ -30,6 +30,7 @@ export class Header {
   private readonly searchQuery$ = new Subject<string>();
   protected searchInput = signal('');
   readonly isSign = isActive('/sign', this.router);
+  readonly isSuggestionsShown = signal<boolean>(false);
   readonly suggestions = signal<{
     artists: Artist[];
     albums: Album[];
@@ -79,12 +80,16 @@ export class Header {
     this.searchQuery$.next(query);
   }
 
-  async goToSearchPage(): Promise<void> {
+  async goToSearchPage(event: Event): Promise<void> {
     this.searchInput.set(this.searchInput().trim());
     if (!this.searchInput()) {
       return;
     }
     await this.navigationService.goToSearch(this.searchInput());
+    this.isSuggestionsShown.set(false);
+    if (event.target instanceof HTMLInputElement) {
+      event.target.blur();
+    }
   }
 
   clearSearch(): void {
