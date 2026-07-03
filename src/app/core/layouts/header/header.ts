@@ -28,8 +28,9 @@ export class Header {
   private readonly jamendoService = inject(JamendoService);
   private readonly destroyRef = inject(DestroyRef);
   private readonly searchQuery$ = new Subject<string>();
-  protected searchInput = '';
+  protected searchInput = signal<string>('');
   readonly isSign = isActive('/sign', this.router);
+  readonly isSuggestionsShown = signal<boolean>(false);
   readonly suggestions = signal<{
     artists: Artist[];
     albums: Album[];
@@ -79,16 +80,34 @@ export class Header {
     this.searchQuery$.next(query);
   }
 
-  async goToSearchPage(): Promise<void> {
-    this.searchInput = this.searchInput.trim();
-    if (!this.searchInput) {
+  async goToSearchPage(event: Event): Promise<void> {
+    this.searchInput.set(this.searchInput().trim());
+    if (!this.searchInput()) {
       return;
     }
-    await this.navigationService.goToSearch(this.searchInput);
+    await this.navigationService.goToSearch(this.searchInput());
+    this.isSuggestionsShown.set(false);
+    if (event.target instanceof HTMLInputElement) {
+      event.target.blur();
+    }
+  }
+
+  goToSuggest(type: string, id: string): void {
+    switch (type) {
+      case 'Artist':
+        void this.navigationService.goToArtist(id);
+        break;
+      case 'Album':
+        void this.navigationService.goToAlbum(id);
+        break;
+      case 'Track':
+        void this.navigationService.goToTrack(id);
+        break;
+    }
   }
 
   clearSearch(): void {
-    this.searchInput = '';
+    this.searchInput.set('');
     this.suggestions.set({ artists: [], albums: [], tracks: [] });
     this.search('');
   }
