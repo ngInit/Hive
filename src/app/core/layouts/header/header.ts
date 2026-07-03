@@ -28,7 +28,7 @@ export class Header {
   private readonly jamendoService = inject(JamendoService);
   private readonly destroyRef = inject(DestroyRef);
   private readonly searchQuery$ = new Subject<string>();
-  protected searchInput = '';
+  protected searchInput = signal('');
   readonly isSign = isActive('/sign', this.router);
   readonly suggestions = signal<{
     artists: Artist[];
@@ -80,15 +80,15 @@ export class Header {
   }
 
   async goToSearchPage(): Promise<void> {
-    this.searchInput = this.searchInput.trim();
-    if (!this.searchInput) {
+    this.searchInput.set(this.searchInput().trim());
+    if (!this.searchInput()) {
       return;
     }
-    await this.navigationService.goToSearch(this.searchInput);
+    await this.navigationService.goToSearch(this.searchInput());
   }
 
   clearSearch(): void {
-    this.searchInput = '';
+    this.searchInput.set('');
     this.suggestions.set({ artists: [], albums: [], tracks: [] });
     this.search('');
   }

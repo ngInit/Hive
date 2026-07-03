@@ -12,7 +12,7 @@
           (ngModelChange)="search($event)"
           (keyup.enter)="goToSearchPage()"
         />
-        @if (searchInput) {
+        @if (searchInput()) {
           <button matIconButton class="clear-button" aria-label="Clear" (click)="clearSearch()">
             <mat-icon>close</mat-icon>
           </button>
