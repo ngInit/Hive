@@ -28,7 +28,7 @@ export class Header {
   private readonly jamendoService = inject(JamendoService);
   private readonly destroyRef = inject(DestroyRef);
   private readonly searchQuery$ = new Subject<string>();
-  protected searchInput = signal('');
+  protected searchInput = signal<string>('');
   readonly isSign = isActive('/sign', this.router);
   readonly isSuggestionsShown = signal<boolean>(false);
   readonly suggestions = signal<{
