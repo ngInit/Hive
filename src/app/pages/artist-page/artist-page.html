@@ -1,0 +1,51 @@
+@if (this.artist(); as artist) {
+  <div class="artist-page-title">
+    <mat-icon class="title-icon" aria-label="{{ artist.name }}" fontIcon="person" />
+    <h1 class="title-name">{{ artist.name }}</h1>
+  </div>
+  <div class="artist-page-information">
+    <img
+      class="artist-image"
+      [src]="artist.image || 'https://picsum.photos/id/40/200.webp?blur=2'"
+      alt="Artist image"
+    />
+    <div class="artist-information">
+      <a [href]="artist.website" target="_blank" rel="noreferrer noopener">Official webpage</a>
+      <a [href]="artist.shareurl" target="_blank" rel="noreferrer noopener">Jamendo webpage</a>
+      <p>Joined date: {{ artist.joindate }}</p>
+    </div>
+  </div>
+
+  <hive-carousel carouselTitle="Artist albums" [isLoading]="isLoading()" [isEmpty]="albums()?.length === 0">
+    @if (albums(); as albums) {
+      @for (album of albums; track album.id) {
+        <hive-album-card [album]="album" />
+      }
+    }
+  </hive-carousel>
+  <hive-carousel carouselTitle="Artist tracks" [isLoading]="isLoading()" [isEmpty]="tracks()?.length === 0">
+    @if (tracks(); as tracks) {
+      @for (track of tracks; track track.id) {
+        <hive-track-card [track]="track" [allTracks]="this.tracks()" />
+      }
+    }
+  </hive-carousel>
+} @else {
+  <div class="artist-page-title">
+    <mat-icon class="title-icon" fontIcon="person" />
+    <div class="title-description-loading"></div>
+  </div>
+  @if (errorMessage()) {
+    <div class="artist-page-error">{{ errorMessage() }}</div>
+  }
+  <div class="artist-page-information">
+    <div class="artist-image-loading"></div>
+    <div class="artist-information">
+      <div class="artist-information-loading">Official webpage:</div>
+      <div class="artist-information-loading">Jamendo webpage:</div>
+      <div class="artist-information-loading">Joined date:</div>
+    </div>
+  </div>
+  <hive-carousel carouselTitle="Artist albums" [isLoading]="isLoading()" [isEmpty]="this.albums()?.length === 0" />
+  <hive-carousel carouselTitle="Artist tracks" [isLoading]="isLoading()" [isEmpty]="this.tracks()?.length === 0" />
+}
