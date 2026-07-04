@@ -1,1 +1,42 @@
-<p>album-page works!</p>
+@if (this.album(); as album) {
+  <div class="album-page-title">
+    <mat-icon class="title-icon" aria-label="{{ album.name }}" fontIcon="album" />
+    <div class="title-description">
+      <h1 class="title-name">{{ album.name }}</h1>
+      <h2 class="title-artist">
+        released by
+        <button class="title-artist-name" aria-label="Go to artist ARTIST NAME page" (click)="goToArtist()">
+          {{ album.artist_name }}
+        </button>
+      </h2>
+    </div>
+  </div>
+  <div class="album-page-release">
+    <img class="release-cover" [src]="album.image" alt="Album cover" />
+    <div class="release-information">
+      <p>Release date: {{ album.releasedate }}</p>
+      <a [href]="album.shareurl">Jamendo webpage</a>
+    </div>
+  </div>
+  <hive-carousel carouselTitle="Album tracks" [isLoading]="isLoading()" [isEmpty]="isEmpty()">
+    @for (track of tracks(); track track.id) {
+      <hive-track-card [track]="track" [allTracks]="tracks()" />
+    }
+  </hive-carousel>
+} @else {
+  <div class="album-page-title">
+    <mat-icon class="title-icon" fontIcon="album" />
+    <div class="title-description-loading"></div>
+  </div>
+  @if (errorMessage()) {
+    <div class="album-page-error">{{ errorMessage() }}</div>
+  }
+  <div class="album-page-release">
+    <div class="release-cover-loading"></div>
+    <div class="release-information">
+      <div class="release-album-name-loading">Release date:</div>
+      <div class="release-album-name-loading">Jamendo webpage</div>
+    </div>
+  </div>
+  <hive-carousel carouselTitle="Album tracks" [isLoading]="isLoading()" [isEmpty]="isEmpty()" />
+}
