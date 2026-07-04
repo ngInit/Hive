@@ -44,6 +44,10 @@
     border: none;
     padding: 0;
     cursor: pointer;
+
+    &:hover {
+      color: var(--mat-sys-error);
+    }
   }
 
   .album-page-release {
@@ -57,6 +61,15 @@
     width: 200px;
     height: 200px;
     border-radius: var(--mat-sys-corner-small);
+  }
+
+  .album-information a {
+    text-decoration: underline;
+    color: var(--mat-sys-on-surface);
+
+    &:hover {
+      color: var(--mat-sys-error);
+    }
   }
 
   .album-page-error {
