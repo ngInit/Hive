@@ -55,6 +55,11 @@ export const routes: Routes = [
         title: 'Artist',
       },
       {
+        path: 'album',
+        loadComponent: () => import('@pages/album-page/album-page').then((page) => page.AlbumPage),
+        title: 'Album',
+      },
+      {
         path: 'track',
         loadComponent: () => import('@pages/track-page/track-page').then((page) => page.TrackPage),
         title: 'Track',

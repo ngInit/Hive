@@ -1,6 +1,7 @@
 @use "@angular/material" as mat;
 
 :host {
+  display: block;
   position: relative;
   width: fit-content;
   min-width: 200px;
@@ -64,6 +65,7 @@
     align-items: center;
     justify-content: flex-start;
     width: 100%;
+    max-width: 200px;
     padding: 0;
     border: 0;
     text-align: left;
