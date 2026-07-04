@@ -63,6 +63,12 @@
     border-radius: var(--mat-sys-corner-small);
   }
 
+  .album-information > :first-child {
+    margin-top: 0;
+    margin-bottom: 16px;
+    line-height: 10px;
+  }
+
   .album-information a {
     text-decoration: underline;
     color: var(--mat-sys-on-surface);
