@@ -42,10 +42,25 @@
     border-radius: var(--mat-sys-corner-small);
   }
 
+  .artist-information {
+    display: flex;
+    flex-direction: column;
+    font: var(--mat-sys-body-medium);
+  }
+
   .artist-information > :first-child {
     margin-top: 0;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
     line-height: 10px;
+  }
+
+  .artist-information a {
+    text-decoration: underline;
+    color: var(--mat-sys-on-surface);
+
+    &:hover {
+      color: var(--mat-sys-error);
+    }
   }
 
   .artist-page-error {

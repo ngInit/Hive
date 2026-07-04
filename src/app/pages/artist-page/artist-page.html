@@ -10,8 +10,8 @@
       alt="Artist image"
     />
     <div class="artist-information">
-      <p>Official webpage: {{ artist.website }}</p>
-      <p>Jamendo webpage: {{ artist.shareurl }}</p>
+      <a [href]="artist.website" target="_blank" rel="noreferrer noopener">Official webpage</a>
+      <a [href]="artist.shareurl" target="_blank" rel="noreferrer noopener">Jamendo webpage</a>
       <p>Joined date: {{ artist.joindate }}</p>
     </div>
   </div>
