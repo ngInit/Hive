@@ -15,7 +15,7 @@
     <img class="release-cover" [src]="album.image" alt="Album cover" />
     <div class="album-information">
       <p>Release date: {{ album.releasedate }}</p>
-      <a [href]="album.shareurl">Jamendo webpage</a>
+      <a [href]="album.shareurl" target="_blank" rel="noreferrer noopener">Jamendo webpage</a>
     </div>
   </div>
   <hive-carousel carouselTitle="Album tracks" [isLoading]="isLoading()" [isEmpty]="isEmpty()">
@@ -33,7 +33,7 @@
   }
   <div class="album-page-release">
     <div class="release-cover-loading"></div>
-    <div class="release-information">
+    <div class="album-information">
       <div class="release-album-name-loading">Release date:</div>
       <div class="release-album-name-loading">Jamendo webpage</div>
     </div>
