@@ -35,7 +35,6 @@ export class AlbumPage {
     return !tracks || tracks.length === 0;
   });
 
-  //TODO: move it to utils and use it in other pages
   private readonly albumId = toSignal(
     this.route.queryParamMap.pipe(
       map((parameter) => {
