@@ -70,7 +70,8 @@ export class UserPage {
       return;
     }
     if (this.profileForm.invalid) {
-      this.errorMessage.set('Please fill in all fields');
+      this.errorMessage.set('Please, check all the necessary fields');
+      this.isUpdating.set(false);
       return;
     }
     const newUser: UpdateData = {
