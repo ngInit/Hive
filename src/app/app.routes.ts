@@ -50,6 +50,11 @@ export const routes: Routes = [
         title: 'About',
       },
       {
+        path: 'artist',
+        loadComponent: () => import('@pages/artist-page/artist-page').then((page) => page.ArtistPage),
+        title: 'Artist',
+      },
+      {
         path: 'track',
         loadComponent: () => import('@pages/track-page/track-page').then((page) => page.TrackPage),
         title: 'Track',
