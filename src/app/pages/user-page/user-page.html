@@ -3,9 +3,9 @@
 @let upPassword = profileForm.controls.password;
 @let upRePassword = profileForm.controls.repeatPassword;
 
-<form class="frofile-form" [formGroup]="profileForm" (input)="this.errorMessage.set(null)" (submit)="updateProfile()">
-  <h2 class="profile-form-title">{{ this.user()?.nickname }}'s profile</h2>
-  <mat-form-field class="sign-form-field">
+<form class="profile-form" [formGroup]="profileForm" (input)="this.errorMessage.set(null)" (submit)="updateProfile()">
+  <h2 class="profile-form-title">Hello {{ this.user()?.nickname }}</h2>
+  <mat-form-field class="profile-form-field">
     <mat-label>Nickname</mat-label>
     <input matInput formControlName="nickname" />
     @if (upNickname.hasError("required")) {
