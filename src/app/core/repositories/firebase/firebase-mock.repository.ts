@@ -37,10 +37,6 @@ export class FirebaseMockRepository implements FirebaseRepository {
     }
   }
 
-  private saveUsers(users: MockUserAuth[]): void {
-    localStorage.setItem(MOCK_USERS_STORAGE_KEY, JSON.stringify(users));
-  }
-
   private saveUserSession(user: UserAuth): void {
     localStorage.setItem(MOCK_USER_SESSION_KEY, JSON.stringify(user));
   }
