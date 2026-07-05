@@ -43,7 +43,8 @@ The application uses the Jamendo API v3.0, which provides access to over 500,000
 </p>
 
 ## 🥷 Team Members
-- Aleksei — [ngInit](https://github.com/nginit)
+- Aleksei Hancharevich (role: Mentor) — [aliaksei-sl](https://github.com/aliaksei-sl)
+- Aleksei Nikolaev (role: All in one) — [ngInit](https://github.com/nginit)
 
 ## 🎚️ Local Setup
   - <img src="https://raw.githubusercontent.com/ngInit/ngInit/ec0fcb7041549fd2edb085c89cf567afd14d5258/ICONS/NPM_R.svg" alt="NPM" width="32" height="32"/>10.9.7
