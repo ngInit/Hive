@@ -6,6 +6,9 @@ The application uses the Jamendo API v3.0, which provides access to over 500,000
 ## 🎞️ Videos
   - ### For Sprint 4 the [link](https://youtu.be/3tfRaZ3Fg_I) to a short video ~1 min demonstrating the 404, loading, and error states
 
+## 🌎 Deployment 
+  - ### The [link](https://hive-eta-fawn.vercel.app/) to the deployed application on Vercel
+
 ## 📚 Technology Stack
 <p>
     <img src="https://raw.githubusercontent.com/ngInit/ngInit/ec0fcb7041549fd2edb085c89cf567afd14d5258/ICONS/Angular_R.svg" alt="Angular" width="40" height="40"/>
@@ -58,7 +61,7 @@ The application uses the Jamendo API v3.0, which provides access to over 500,000
      npm start
      ```
 
-  - 🔗 Open by link: [Open in browser](http://localhost:4200)
+  - 🔗 Open by link: [Open in browser](http://localhost:4200) or `http://localhost:4200`
 
   - ### Additional Scripts
     - `npm run test` — Run unit tests
