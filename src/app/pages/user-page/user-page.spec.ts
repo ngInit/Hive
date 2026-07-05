@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { provideAuthRepository } from '@core/providers/repository.providers';
 import { UserPage } from './user-page';
 
 describe('UserPage', () => {
@@ -9,6 +9,7 @@ describe('UserPage', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [UserPage],
+      providers: [provideAuthRepository()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(UserPage);
@@ -16,7 +17,7 @@ describe('UserPage', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('Should create', () => {
     expect(component).toBeTruthy();
   });
 });

@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { provideJamendoRepository } from '@core/providers/repository.providers';
+import { provideRouter } from '@angular/router';
 import { TagsPage } from './tags-page';
 
 describe('TagsPage', () => {
@@ -9,6 +10,7 @@ describe('TagsPage', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [TagsPage],
+      providers: [provideJamendoRepository(), provideRouter([])],
     }).compileComponents();
 
     fixture = TestBed.createComponent(TagsPage);
@@ -16,7 +18,7 @@ describe('TagsPage', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('Should create', () => {
     expect(component).toBeTruthy();
   });
 });

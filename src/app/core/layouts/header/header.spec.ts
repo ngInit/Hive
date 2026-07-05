@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideAuthRepository } from '@core/providers/repository.providers';
+import { provideJamendoRepository } from '@core/providers/repository.providers';
 import { provideRouter } from '@angular/router';
-
 import { Header } from './header';
 
 describe('Header', () => {
@@ -10,7 +11,7 @@ describe('Header', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [Header],
-      providers: [provideRouter([])],
+      providers: [provideAuthRepository(), provideJamendoRepository(), provideRouter([])],
     }).compileComponents();
 
     fixture = TestBed.createComponent(Header);
@@ -18,7 +19,7 @@ describe('Header', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('Should create', () => {
     expect(component).toBeTruthy();
   });
 });

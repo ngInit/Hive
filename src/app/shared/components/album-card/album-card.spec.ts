@@ -1,8 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { AlbumCard } from './album-card';
+import { albumsMock } from '@shared/mocks/albums.mock';
 
-describe('AlbumCard', () => {
+const album = albumsMock.results[0];
+
+describe('AlbumCard component', () => {
   let component: AlbumCard;
   let fixture: ComponentFixture<AlbumCard>;
 
@@ -13,10 +15,18 @@ describe('AlbumCard', () => {
 
     fixture = TestBed.createComponent(AlbumCard);
     component = fixture.componentInstance;
+    fixture.componentRef.setInput('album', album);
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('Should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('Render album name', () => {
+    if (fixture.nativeElement instanceof HTMLElement) {
+      const cardButton = fixture.nativeElement.querySelector('.album-card-button');
+      expect(cardButton?.textContent.trim()).toBe(album.name);
+    }
   });
 });
