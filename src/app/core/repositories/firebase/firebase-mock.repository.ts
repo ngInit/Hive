@@ -12,7 +12,7 @@ const MOCK_USER_SESSION_KEY = 'hive_mock_user_session';
 
 @Injectable()
 export class FirebaseMockRepository implements FirebaseRepository {
-  private readonly mockAuthUsers: MockUserAuth[] = mockUsers;
+  private mockAuthUsers: MockUserAuth[] = mockUsers;
   readonly currentUser = signal<UserAuth | null>(this.loadUserSession());
   readonly isAuthReady = signal(true);
   constructor() {
@@ -92,7 +92,6 @@ export class FirebaseMockRepository implements FirebaseRepository {
       password: data.password,
     };
     this.mockAuthUsers.push(user);
-    this.saveUsers(this.mockAuthUsers);
     return {
       uid: user.uid,
       nickname: user.nickname,
@@ -116,7 +115,6 @@ export class FirebaseMockRepository implements FirebaseRepository {
       nickname: currentUser.nickname,
       email: currentUser.email,
     };
-    this.saveUsers(this.mockAuthUsers);
     this.saveUserSession(updatedUserData);
     return updatedUserData;
   }
@@ -176,7 +174,7 @@ export class FirebaseMockRepository implements FirebaseRepository {
     await this.signOut(data);
     const users = this.loadUsers();
     const newList = users.filter((user) => user.uid !== data.uid);
-    this.saveUsers(newList);
     this.currentUser.set(null);
+    this.mockAuthUsers = newList;
   }
 }
