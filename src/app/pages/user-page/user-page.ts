@@ -82,14 +82,12 @@ export class UserPage {
   }
 
   async updateProfile(): Promise<void> {
-    this.isUpdating.set(true);
     const user = this.user();
     if (!user) {
       return;
     }
     if (this.profileForm.invalid) {
       this.errorMessage.set('Please, check all the necessary fields');
-      this.isUpdating.set(false);
       return;
     }
     const newUser: UpdateData = {
