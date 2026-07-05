@@ -5,12 +5,11 @@ import { JamendoRepository } from '@core/repositories/jamendo/jamendo.repository
 import { EndPoint, JamendoEndpointRequest, JamendoEndpointResponse } from '@core/models/jamendo/jamendo.model';
 import { firstValueFrom } from 'rxjs';
 
-type HttpParamValue = string | number | (string | number)[] | boolean | undefined | null;
-
 @Injectable()
 export class JamendoDbRepository implements JamendoRepository {
   private readonly http = inject(HttpClient);
-  private convertJamendoParams(query: Record<string, HttpParamValue>): HttpParams {
+
+  private convertJamendoParams(query: object): HttpParams {
     let params = new HttpParams();
     for (const [key, value] of Object.entries(query)) {
       if (value === undefined || value === null) {
@@ -19,7 +18,7 @@ export class JamendoDbRepository implements JamendoRepository {
       if (Array.isArray(value)) {
         params = params.set(key, value.map(String).join(' '));
       } else {
-        params = params.set(key, value);
+        params = params.set(key, String(value));
       }
     }
     return params;
@@ -31,11 +30,7 @@ export class JamendoDbRepository implements JamendoRepository {
   ): Promise<JamendoEndpointResponse[T]> {
     return firstValueFrom(
       this.http.get<JamendoEndpointResponse[T]>(`${environment.jamendoApiUrl}/${endpoint}/`, {
-        params: this.convertJamendoParams({
-          client_id: environment.jamendoClientId,
-          format: 'json',
-          ...params,
-        }),
+        params: this.convertJamendoParams(params),
       })
     );
   }
