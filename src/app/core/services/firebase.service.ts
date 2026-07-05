@@ -1,6 +1,7 @@
 import { Injectable, signal, inject, computed } from '@angular/core';
 import { AUTH_REPOSITORY } from '@core/repositories/firebase/firebase.repository';
-import { SignInData, SignUpData } from '@core/models/auth.model';
+import { SignInData, SignUpData, UpdateData } from '@core/models/auth.model';
+import { UserAuth } from '@core/models/user.model';
 
 @Injectable({
   providedIn: 'root',
@@ -44,6 +45,34 @@ export class FirebaseService {
     this.error.set(null);
     try {
       await this.repository.signUp(data);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Unknown error';
+      this.error.set(message);
+    } finally {
+      this.isLoading.set(false);
+    }
+  }
+
+  async updateUserData(uid: string, data: UpdateData): Promise<boolean> {
+    this.isLoading.set(true);
+    this.error.set(null);
+    try {
+      await this.repository.updateProfile(uid, data);
+      return true;
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Unknown error';
+      this.error.set(message);
+      return false;
+    } finally {
+      this.isLoading.set(false);
+    }
+  }
+
+  async deleteUserData(data: UserAuth): Promise<void> {
+    this.isLoading.set(true);
+    this.error.set(null);
+    try {
+      await this.repository.deleteProfile(data);
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Unknown error';
       this.error.set(message);

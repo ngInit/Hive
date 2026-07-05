@@ -1,6 +1,120 @@
-<h1>User page... and will be later =)))</h1>
-<h3>Page title is {{ this.pageTitle }}</h3>
-<h3>Page id is {{ this.pageId }}</h3>
-<h3>User uid: {{ this.user()?.uid }}</h3>
-<h3>User nickname: {{ this.user()?.nickname }}</h3>
-<h3>User email: {{ this.user()?.email }}</h3>
+@let upNickname = profileForm.controls.nickname;
+@let upEmail = profileForm.controls.email;
+@let upPassword = profileForm.controls.password;
+@let upRePassword = profileForm.controls.repeatPassword;
+
+<form class="profile-form" [formGroup]="profileForm" (input)="this.errorMessage.set(null)" (submit)="updateProfile()">
+  <div [class.form-loading]="isUpdating()"></div>
+  <h2 class="profile-form-title">Hello {{ this.user()?.nickname }}</h2>
+  <mat-form-field class="profile-form-field">
+    <mat-label>Nickname</mat-label>
+    <input matInput formControlName="nickname" />
+    @if (upNickname.hasError("required")) {
+      <mat-error>Nickname is <strong>required</strong></mat-error>
+    }
+  </mat-form-field>
+  <mat-form-field class="profile-form-field">
+    <mat-label>Email</mat-label>
+    <input matInput formControlName="email" autocomplete="email" />
+    @if (upEmail.errors?.["pattern"]) {
+      <mat-error>Email examples: <i>hive&#64;hive.com</i> or <i>hi.ve&#64;hive.moon</i></mat-error>
+    } @else if (upEmail.hasError("required")) {
+      <mat-error>Email is <strong>required</strong></mat-error>
+    }
+  </mat-form-field>
+  <mat-form-field class="profile-form-field">
+    <mat-label>Password</mat-label>
+    <input matInput formControlName="password" #upPwd="hiveShowPassword" hiveShowPassword autocomplete="new-password" />
+    <button matSuffix matIconButton type="button" aria-label="Show match update password" (click)="upPwd.toggle()">
+      <mat-icon>{{ upPwd.visible ? "visibility" : "visibility_off" }}</mat-icon>
+    </button>
+    @if (upPassword.errors?.["pattern"]) {
+      <mat-error>Only numbers, English letters and !.$%^&* are allowed</mat-error>
+    } @else if (upPassword.hasError("required")) {
+      <mat-error>Password is <strong>required</strong></mat-error>
+    } @else if (upPassword.hasError("minlength")) {
+      <mat-error>Minimum password length should be <strong>8</strong> characters</mat-error>
+    }
+  </mat-form-field>
+  <mat-form-field class="profile-form-field">
+    <mat-label>Repeat password</mat-label>
+    <input
+      matInput
+      formControlName="repeatPassword"
+      #upRepeatPwd="hiveShowPassword"
+      hiveShowPassword
+      autocomplete="new-password"
+    />
+    <button
+      matSuffix
+      matIconButton
+      type="button"
+      aria-label="Show match update password"
+      (click)="upRepeatPwd.toggle()"
+    >
+      <mat-icon>{{ upRepeatPwd.visible ? "visibility" : "visibility_off" }}</mat-icon>
+    </button>
+    @if (upRePassword.hasError("required")) {
+      <mat-error>Password is <strong>required</strong></mat-error>
+    } @else if (upRePassword.hasError("matchPasswords")) {
+      <mat-error>Password is not the same</mat-error>
+    }
+  </mat-form-field>
+  @if (errorMessage()) {
+    <div class="error-message">{{ errorMessage() }}</div>
+  }
+  <div class="profile-form-buttons">
+    <button
+      matButton="tonal"
+      class="delete-button"
+      aria-label="Delete button"
+      type="button"
+      [disabled]="isUpdating()"
+      (click)="isDeleting.set(true)"
+    >
+      Delete account
+    </button>
+    <button matButton="filled" class="update-button" aria-label="Update button" type="submit" [disabled]="isUpdating()">
+      @if (isUpdating()) {
+        <mat-spinner diameter="20" class="update-spinner" />
+      } @else {
+        Update
+      }
+    </button>
+  </div>
+</form>
+
+<div
+  role="presentation"
+  class="profile-delete-confirmation"
+  [class.delete-visible]="isDeleting()"
+  (click)="closeDeletingPopup($event)"
+>
+  <div class="delete-confirmation-container">
+    <h1>Are you sure you want to delete your account?</h1>
+    <div class="delete-confirmation-buttons">
+      <button
+        matButton="filled"
+        class="update-button"
+        aria-label="Cancel button"
+        (click)="isDeleting.set(false)"
+        [disabled]="isUpdating()"
+      >
+        Cancel
+      </button>
+      <button
+        matButton="tonal"
+        class="delete-confirmation-button"
+        aria-label="Delete button"
+        (click)="deleteProfile()"
+        [disabled]="isUpdating()"
+      >
+        @if (isUpdating()) {
+          <mat-spinner diameter="20" class="update-spinner" />
+        } @else {
+          Delete
+        }
+      </button>
+    </div>
+  </div>
+</div>

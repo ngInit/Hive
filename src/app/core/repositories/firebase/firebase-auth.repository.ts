@@ -12,6 +12,7 @@ import {
   updatePassword,
   updateEmail,
   onAuthStateChanged,
+  deleteUser,
 } from 'firebase/auth';
 import { SignInData, SignUpData, UpdateData } from '@core/models/auth.model';
 import { UserAuth, userConverter } from '@core/models/user.model';
@@ -101,6 +102,12 @@ export class FirebaseAuthRepository implements FirebaseRepository {
     if (uid !== user.uid) {
       throw new Error('User is not authorized to update this profile');
     }
+    if (data.nickname && data.nickname === user.displayName) {
+      throw new Error('Nickname is not changed. Your current nickname is the same as the new one');
+    }
+    if (data.email && data.email === user.email) {
+      throw new Error('Email is not changed. Your current email is the same as the new one');
+    }
     if (!data.email && !data.nickname && !data.password) {
       throw new Error('No changes');
     }
@@ -108,7 +115,7 @@ export class FirebaseAuthRepository implements FirebaseRepository {
       if (data.nickname) {
         await updateFirebaseProfile(user, { displayName: data.nickname });
       }
-      if (data.email && user.email !== data.email) {
+      if (data.email) {
         await updateEmail(user, data.email);
       }
       if (data.password) {
@@ -124,5 +131,16 @@ export class FirebaseAuthRepository implements FirebaseRepository {
     } catch (error) {
       throwFirebaseAuthError(error);
     }
+  }
+
+  async deleteProfile(data: UserAuth): Promise<void> {
+    const user = auth.currentUser;
+    if (!user) {
+      throw new Error('User not found');
+    }
+    if (data.uid !== user.uid) {
+      throw new Error('User is not authorized to delete this profile');
+    }
+    await deleteUser(user);
   }
 }
