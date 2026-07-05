@@ -8,6 +8,7 @@ import { MatIcon } from '@angular/material/icon';
 import { ShowPassword } from '@shared/directives/show-password.directive';
 import { CompareSignUpPasswords } from '@shared/directives/compare-sign-up-passwords.directive';
 import { UpdateData } from '@core/models/auth.model';
+import { NavigationService } from '@core/services/navigation.service';
 
 interface UpdateGroup {
   nickname: FormControl<string>;
@@ -37,9 +38,10 @@ interface UpdateGroup {
 })
 export class UserPage {
   private readonly authService = inject(FirebaseService);
+  private readonly navigationService = inject(NavigationService);
   protected readonly user = this.authService.currentUser;
   public readonly errorMessage = signal<string | null>(null);
-  public readonly isUpdating = signal(false);
+  public readonly isUpdating = this.authService.isLoading;
 
   profileForm = new FormGroup<UpdateGroup>(
     {
@@ -86,6 +88,18 @@ export class UserPage {
     } else {
       this.errorMessage.set(this.authService.error());
     }
-    this.isUpdating.set(false);
+  }
+
+  async deleteProfile(): Promise<void> {
+    const user = this.user();
+    if (!user) {
+      return;
+    }
+    try {
+      await this.authService.deleteUserData(user);
+      await this.navigationService.goHome();
+    } catch {
+      this.errorMessage.set(this.authService.error());
+    }
   }
 }
