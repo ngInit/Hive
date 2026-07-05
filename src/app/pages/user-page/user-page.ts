@@ -35,6 +35,9 @@ interface UpdateGroup {
     ShowPassword,
     MatProgressSpinner,
   ],
+  host: {
+    '(keydown.escape)': 'this.closeDeletingOnEscape()',
+  },
 })
 export class UserPage {
   private readonly authService = inject(FirebaseService);
@@ -42,6 +45,7 @@ export class UserPage {
   protected readonly user = this.authService.currentUser;
   public readonly errorMessage = signal<string | null>(null);
   public readonly isUpdating = this.authService.isLoading;
+  public readonly isDeleting = signal(false);
 
   profileForm = new FormGroup<UpdateGroup>(
     {
@@ -64,6 +68,18 @@ export class UserPage {
       validators: CompareSignUpPasswords.matchPasswords,
     }
   );
+
+  protected closeDeletingOnEscape(): void {
+    if (this.isDeleting()) {
+      this.isDeleting.set(false);
+    }
+  }
+
+  protected closeDeletingPopup(event: MouseEvent): void {
+    if (event.target === event.currentTarget) {
+      this.isDeleting.set(false);
+    }
+  }
 
   async updateProfile(): Promise<void> {
     this.isUpdating.set(true);

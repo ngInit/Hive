@@ -4,6 +4,7 @@
 @let upRePassword = profileForm.controls.repeatPassword;
 
 <form class="profile-form" [formGroup]="profileForm" (input)="this.errorMessage.set(null)" (submit)="updateProfile()">
+  <div [class.form-loading]="isUpdating()"></div>
   <h2 class="profile-form-title">Hello {{ this.user()?.nickname }}</h2>
   <mat-form-field class="profile-form-field">
     <mat-label>Nickname</mat-label>
@@ -63,7 +64,14 @@
     <div class="error-message">{{ errorMessage() }}</div>
   }
   <div class="profile-form-buttons">
-    <button matButton="tonal" class="delete-button" aria-label="Delete button" type="button" [disabled]="isUpdating()">
+    <button
+      matButton="tonal"
+      class="delete-button"
+      aria-label="Delete button"
+      type="button"
+      [disabled]="isUpdating()"
+      (click)="isDeleting.set(true)"
+    >
       Delete account
     </button>
     <button matButton="filled" class="update-button" aria-label="Update button" type="submit" [disabled]="isUpdating()">
@@ -75,3 +83,38 @@
     </button>
   </div>
 </form>
+
+<div
+  role="presentation"
+  class="profile-delete-confirmation"
+  [class.delete-visible]="isDeleting()"
+  (click)="closeDeletingPopup($event)"
+>
+  <div class="delete-confirmation-container">
+    <h1>Are you sure you want to delete your account?</h1>
+    <div class="delete-confirmation-buttons">
+      <button
+        matButton="filled"
+        class="update-button"
+        aria-label="Cancel button"
+        (click)="isDeleting.set(false)"
+        [disabled]="isUpdating()"
+      >
+        Cancel
+      </button>
+      <button
+        matButton="tonal"
+        class="delete-confirmation-button"
+        aria-label="Delete button"
+        (click)="deleteProfile()"
+        [disabled]="isUpdating()"
+      >
+        @if (isUpdating()) {
+          <mat-spinner diameter="20" class="update-spinner" />
+        } @else {
+          Delete
+        }
+      </button>
+    </div>
+  </div>
+</div>
