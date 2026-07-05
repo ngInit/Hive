@@ -30,7 +30,7 @@ The application uses the Jamendo API v3.0, which provides access to over 500,000
     - HttpClient
     - RxJS
     - Firebase (Authentication, Firestore)
-    - Angular Testing Utilities (Jasmine / Karma)
+    - Vitest + jsdom + Angular Testing Utilities (TestBed)
 
 ## 📚 Tools
 <p>
