@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { provideJamendoRepository } from '@core/providers/repository.providers';
+import { provideRouter } from '@angular/router';
 import { HomePage } from './home-page';
 
 describe('HomePage', () => {
@@ -9,6 +10,7 @@ describe('HomePage', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [HomePage],
+      providers: [provideJamendoRepository(), provideRouter([])],
     }).compileComponents();
 
     fixture = TestBed.createComponent(HomePage);
@@ -16,7 +18,7 @@ describe('HomePage', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('Should create', () => {
     expect(component).toBeTruthy();
   });
 });
