@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideRouter } from '@angular/router';
 import { ArtistCard } from './artist-card';
 import { artistsMock } from '@shared/mocks/artists.mock';
 
@@ -12,7 +11,6 @@ describe('ArtistCard component', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ArtistCard],
-      providers: [provideRouter([])],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ArtistCard);
