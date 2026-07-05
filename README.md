@@ -57,7 +57,7 @@ The application uses the Jamendo API v3.0, which provides access to over 500,000
      npm install
      ```
 
-  - ### 🏹 Local starts
+  - ### 🏹 Local start
      ```bash
      npm start
      ```
@@ -65,10 +65,7 @@ The application uses the Jamendo API v3.0, which provides access to over 500,000
   - 🔗 Open by link: [Open in browser](http://localhost:4200) or `http://localhost:4200`
 
   - ### Additional Scripts
-    - `npm run test` — Run unit tests
-    - `npm run lint` — Run ESLint
-    - `npm run format` — Run Prettier (check mode)
-    - `npm run build` — Build the project
-
-
-## 🌎 Deployment [link](https://hive-eta-fawn.vercel.app/)
+    - ➦`npm run test` — Run all the unit tests
+    - ➦`npm run lint:check` — Run ESLint (check mode)
+    - ➦`npm run format:check` — Run Prettier (check mode)
+    - ➦`npm run build` — Build the Hive application
