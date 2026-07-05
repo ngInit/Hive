@@ -3,6 +3,9 @@
 &#160;&#160;&#160;&#160; Hive is a music streaming service clone where the user can search for tracks and artists, listen to music, build playlists, and maintain a favorites library.
 The application uses the Jamendo API v3.0, which provides access to over 500,000+ freely licensed tracks, along with metadata for artists, albums, and audio streaming links.
 
+## 🎞️ Videos
+  - ### For Sprint 4 the [link](https://youtu.be/3tfRaZ3Fg_I) to a short video ~1 min demonstrating the 404, loading, and error states
+
 ## 📚 Technology Stack
 <p>
     <img src="https://raw.githubusercontent.com/ngInit/ngInit/ec0fcb7041549fd2edb085c89cf567afd14d5258/ICONS/Angular_R.svg" alt="Angular" width="40" height="40"/>
