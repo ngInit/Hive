@@ -166,4 +166,17 @@ export class FirebaseMockRepository implements FirebaseRepository {
     this.currentUser.set(updatedUser);
     return updatedUser;
   }
+
+  async deleteProfile(data: UserAuth): Promise<void> {
+    await delay(DEFAULT_DELAY);
+    const currentSession: UserAuth = this.getUserBySession();
+    if (currentSession.uid !== data.uid) {
+      throw new Error('Invalid user session');
+    }
+    await this.signOut(data);
+    const users = this.loadUsers();
+    const newList = users.filter((user) => user.uid !== data.uid);
+    this.saveUsers(newList);
+    this.currentUser.set(null);
+  }
 }

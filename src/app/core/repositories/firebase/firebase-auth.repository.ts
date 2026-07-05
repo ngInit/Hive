@@ -12,6 +12,7 @@ import {
   updatePassword,
   updateEmail,
   onAuthStateChanged,
+  deleteUser,
 } from 'firebase/auth';
 import { SignInData, SignUpData, UpdateData } from '@core/models/auth.model';
 import { UserAuth, userConverter } from '@core/models/user.model';
@@ -130,5 +131,16 @@ export class FirebaseAuthRepository implements FirebaseRepository {
     } catch (error) {
       throwFirebaseAuthError(error);
     }
+  }
+
+  async deleteProfile(data: UserAuth): Promise<void> {
+    const user = auth.currentUser;
+    if (!user) {
+      throw new Error('User not found');
+    }
+    if (data.uid !== user.uid) {
+      throw new Error('User is not authorized to delete this profile');
+    }
+    await deleteUser(user);
   }
 }
