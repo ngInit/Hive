@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { NavigationService } from '@core/services/navigation.service';
 import { MatChip, MatChipSet } from '@angular/material/chips';
 
 @Component({
@@ -9,6 +10,7 @@ import { MatChip, MatChipSet } from '@angular/material/chips';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TagsPanel {
+  private readonly navigationService = inject(NavigationService);
   tags: string[] = [
     'rock',
     'pop',
@@ -21,4 +23,8 @@ export class TagsPanel {
     'hip-hop',
     'r&b',
   ];
+
+  goToTag(tag: string): void {
+    void this.navigationService.goToTagsSearch(tag);
+  }
 }

@@ -11,4 +11,5 @@ export interface FirebaseRepository {
   signOut(data: UserAuth): Promise<void>;
   signUp(data: SignUpData): Promise<UserAuth>;
   updateProfile(uid: string, data: UpdateData): Promise<UserAuth>;
+  deleteProfile(data: UserAuth): Promise<void>;
 }

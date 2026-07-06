@@ -1,7 +1,7 @@
 import { JAMENDO_REPOSITORY } from '@core/repositories/jamendo/jamendo.repository';
 import { Injectable, inject } from '@angular/core';
 import { getDateRangeFromToday } from '@utils/dateRange';
-import { EndPoint, isJamendoSuccess, JamendoResponse } from '@core/models/jamendo/jamendo.model';
+import { EndPoint, isJamendoSuccess, JamendoResponse, JamendoSearchResponse } from '@core/models/jamendo/jamendo.model';
 import { Artist } from '@core/models/jamendo/artists.model';
 import { Album } from '@core/models/jamendo/albums.model';
 import { Track } from '@core/models/jamendo/tracks.model';
@@ -56,12 +56,7 @@ export class JamendoService {
     };
   }
 
-  async getSearchPage(
-    query: string,
-    entity: EndPoint,
-    offset = 0,
-    limit = 12
-  ): Promise<{ items: Artist[] | Album[] | Track[]; total: number; offset: number; limit: number }> {
+  async getSearchPage(query: string, entity: EndPoint, offset = 0, limit = 12): Promise<JamendoSearchResponse> {
     const searchString = query.trim();
     const common = { namesearch: searchString, offset: offset, limit: String(limit), fullcount: true };
     if (!searchString) {
@@ -83,7 +78,7 @@ export class JamendoService {
         return this.getPaginated(albumsResponse, offset, limit);
       }
       case 'tracks': {
-        const tracksResponse = await this.repository.createRequest('tracks', common);
+        const tracksResponse = await this.repository.createRequest('tracks', { ...common, include: ['stats'] });
         return this.getPaginated(tracksResponse, offset, limit);
       }
     }
@@ -94,11 +89,13 @@ export class JamendoService {
       this.repository.createRequest('tracks', {
         limit: '10',
         boost: 'popularity_month',
+        include: ['stats'],
       }),
       this.repository.createRequest('tracks', {
         limit: '10',
         datebetween: getDateRangeFromToday(30),
         order: ['releasedate'],
+        include: ['stats'],
       }),
       this.repository.createRequest('albums', {
         limit: '10',
@@ -135,6 +132,7 @@ export class JamendoService {
       this.repository.createRequest('tracks', {
         artist_id: [id],
         limit: '10',
+        include: ['stats'],
       }),
     ]);
 
@@ -162,6 +160,7 @@ export class JamendoService {
       this.repository.createRequest('tracks', {
         album_id: [id],
         limit: 'all',
+        include: ['stats'],
       }),
     ]);
 
@@ -199,19 +198,16 @@ export class JamendoService {
   }
 
   async getTracksByTag(
-    tag: string,
+    tags: string[],
     offset = 0,
     limit = 25
   ): Promise<{ items: Track[]; total: number; offset: number; limit: number }> {
-    const searchTag = tag.trim();
-    if (!searchTag) {
-      return { items: [], total: 0, offset, limit };
-    }
     const tracksResponse = await this.repository.createRequest('tracks', {
-      tags: [searchTag],
+      tags: tags,
       limit: String(limit),
       offset: offset,
       fullcount: true,
+      include: ['stats'],
     });
 
     return this.getPaginated(tracksResponse, offset, limit);

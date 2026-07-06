@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { MainLayout } from '@core/layouts/main-layout/main-layout';
 import { LandingPage } from '@pages/landing-page/landing-page';
+import { HomePage } from '@pages/home-page/home-page';
 import { guestGuard, userGuard } from '@core/guards/auth-guard';
 
 export const routes: Routes = [
@@ -23,7 +24,18 @@ export const routes: Routes = [
       {
         path: '',
         component: LandingPage,
-        title: 'Hive',
+        children: [
+          {
+            path: '',
+            component: HomePage,
+            title: 'Hive',
+          },
+          {
+            path: 'tags',
+            loadComponent: () => import('@pages/tags-page/tags-page').then((page) => page.TagsPage),
+            title: 'Tags',
+          },
+        ],
       },
       {
         path: 'user',
@@ -36,6 +48,26 @@ export const routes: Routes = [
         path: 'about',
         loadComponent: () => import('@pages/about-page/about-page').then((page) => page.AboutPage),
         title: 'About',
+      },
+      {
+        path: 'artist',
+        loadComponent: () => import('@pages/artist-page/artist-page').then((page) => page.ArtistPage),
+        title: 'Artist',
+      },
+      {
+        path: 'album',
+        loadComponent: () => import('@pages/album-page/album-page').then((page) => page.AlbumPage),
+        title: 'Album',
+      },
+      {
+        path: 'track',
+        loadComponent: () => import('@pages/track-page/track-page').then((page) => page.TrackPage),
+        title: 'Track',
+      },
+      {
+        path: 'search',
+        loadComponent: () => import('@pages/search-page/search-page').then((page) => page.SearchPage),
+        title: 'Search',
       },
       {
         path: '**',

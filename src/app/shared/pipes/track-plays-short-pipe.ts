@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class TrackPlaysShortPipe implements PipeTransform {
   transform(rawPlays: number | undefined): string {
     if (!rawPlays) {
-      return '';
+      return '0';
     }
     return new Intl.NumberFormat('en-US', {
       notation: 'compact',

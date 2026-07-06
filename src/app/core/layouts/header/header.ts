@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, DestroyRef, inject, signal } from '@angular/core';
 import { Router, RouterLink, isActive } from '@angular/router';
+import { NavigationService } from '@core/services/navigation.service';
 import { FirebaseService } from '@core/services/firebase.service';
 import { JamendoService } from '@core/services/jamendo.service';
 import { Subject, debounceTime, distinctUntilChanged, switchMap, from, of, catchError } from 'rxjs';
@@ -22,12 +23,14 @@ import { Track } from '@core/models/jamendo/tracks.model';
 })
 export class Header {
   private readonly router = inject(Router);
+  private readonly navigationService = inject(NavigationService);
   protected readonly firebaseService = inject(FirebaseService);
   private readonly jamendoService = inject(JamendoService);
   private readonly destroyRef = inject(DestroyRef);
   private readonly searchQuery$ = new Subject<string>();
-  protected searchInput = '';
+  protected searchInput = signal<string>('');
   readonly isSign = isActive('/sign', this.router);
+  readonly isSuggestionsShown = signal<boolean>(false);
   readonly suggestions = signal<{
     artists: Artist[];
     albums: Album[];
@@ -65,7 +68,7 @@ export class Header {
   async signOut(): Promise<void> {
     await this.firebaseService.signOut();
     if (this.router.url === '/user') {
-      await this.router.navigate(['/']);
+      await this.navigationService.goHome();
     }
   }
 
@@ -77,16 +80,34 @@ export class Header {
     this.searchQuery$.next(query);
   }
 
-  async goToSearchPage(): Promise<void> {
-    this.searchInput = this.searchInput.trim();
-    if (!this.searchInput) {
+  async goToSearchPage(event: Event): Promise<void> {
+    this.searchInput.set(this.searchInput().trim());
+    if (!this.searchInput()) {
       return;
     }
-    await this.router.navigate(['/search'], { queryParams: { q: this.searchInput } });
+    await this.navigationService.goToSearch(this.searchInput());
+    this.isSuggestionsShown.set(false);
+    if (event.target instanceof HTMLInputElement) {
+      event.target.blur();
+    }
+  }
+
+  goToSuggest(type: string, id: string): void {
+    switch (type) {
+      case 'Artist':
+        void this.navigationService.goToArtist(id);
+        break;
+      case 'Album':
+        void this.navigationService.goToAlbum(id);
+        break;
+      case 'Track':
+        void this.navigationService.goToTrack(id);
+        break;
+    }
   }
 
   clearSearch(): void {
-    this.searchInput = '';
+    this.searchInput.set('');
     this.suggestions.set({ artists: [], albums: [], tracks: [] });
     this.search('');
   }

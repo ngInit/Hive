@@ -12,7 +12,7 @@ const MOCK_USER_SESSION_KEY = 'hive_mock_user_session';
 
 @Injectable()
 export class FirebaseMockRepository implements FirebaseRepository {
-  private readonly mockAuthUsers: MockUserAuth[] = mockUsers;
+  private mockAuthUsers: MockUserAuth[] = mockUsers;
   readonly currentUser = signal<UserAuth | null>(this.loadUserSession());
   readonly isAuthReady = signal(true);
   constructor() {
@@ -35,10 +35,6 @@ export class FirebaseMockRepository implements FirebaseRepository {
     } catch {
       return [...mockUsers];
     }
-  }
-
-  private saveUsers(users: MockUserAuth[]): void {
-    localStorage.setItem(MOCK_USERS_STORAGE_KEY, JSON.stringify(users));
   }
 
   private saveUserSession(user: UserAuth): void {
@@ -92,7 +88,6 @@ export class FirebaseMockRepository implements FirebaseRepository {
       password: data.password,
     };
     this.mockAuthUsers.push(user);
-    this.saveUsers(this.mockAuthUsers);
     return {
       uid: user.uid,
       nickname: user.nickname,
@@ -116,7 +111,6 @@ export class FirebaseMockRepository implements FirebaseRepository {
       nickname: currentUser.nickname,
       email: currentUser.email,
     };
-    this.saveUsers(this.mockAuthUsers);
     this.saveUserSession(updatedUserData);
     return updatedUserData;
   }
@@ -165,5 +159,18 @@ export class FirebaseMockRepository implements FirebaseRepository {
     const updatedUser = this.updateUser(data, currentSession);
     this.currentUser.set(updatedUser);
     return updatedUser;
+  }
+
+  async deleteProfile(data: UserAuth): Promise<void> {
+    await delay(DEFAULT_DELAY);
+    const currentSession: UserAuth = this.getUserBySession();
+    if (currentSession.uid !== data.uid) {
+      throw new Error('Invalid user session');
+    }
+    await this.signOut(data);
+    const users = this.loadUsers();
+    const newList = users.filter((user) => user.uid !== data.uid);
+    this.currentUser.set(null);
+    this.mockAuthUsers = newList;
   }
 }

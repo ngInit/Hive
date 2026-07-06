@@ -1,0 +1,81 @@
+<ng-container
+  [ngTemplateOutlet]="newSearch"
+  [ngTemplateOutletContext]="{
+    items: artistsContext().items,
+    search: artistsContext().search,
+    type: artistsContext().type,
+  }"
+/>
+
+<ng-container
+  [ngTemplateOutlet]="newSearch"
+  [ngTemplateOutletContext]="{
+    items: albumsContext().items,
+    search: albumsContext().search,
+    type: albumsContext().type,
+  }"
+/>
+
+<ng-container
+  [ngTemplateOutlet]="newSearch"
+  [ngTemplateOutletContext]="{
+    items: tracksContext().items,
+    search: tracksContext().search,
+    type: tracksContext().type,
+  }"
+/>
+
+<ng-template #newSearch let-items="items" let-search="search" let-type="type">
+  <div>
+    <div class="search-container">
+      <h1 class="search-title">{{ type }}</h1>
+      <div class="search-results">
+        @if (type === "Artists") {
+          @if (isArtistsLoading()) {
+            <div class="search-results-loading">Loading...</div>
+          } @else if (isEmpty(search.total)) {
+            <div class="search-results-empty">No results</div>
+          } @else {
+            @for (artist of items; track artist.id) {
+              <hive-artist-card [artist]="artist" />
+            }
+          }
+        }
+        @if (type === "Albums") {
+          @if (isAlbumsLoading()) {
+            <div class="search-results-loading">Loading...</div>
+          } @else if (isEmpty(search.total)) {
+            <div class="search-results-empty">No results</div>
+          } @else {
+            @for (album of items; track album.id) {
+              <hive-album-card [album]="album" />
+            }
+          }
+        }
+        @if (type === "Tracks") {
+          @if (isTracksLoading()) {
+            <div class="search-results-loading">Loading...</div>
+          } @else if (isEmpty(search.total)) {
+            <div class="search-results-empty">No results</div>
+          } @else {
+            @for (track of items; track track.id) {
+              <hive-track-card [track]="track" [allTracks]="items" />
+            }
+          }
+        }
+      </div>
+    </div>
+    <mat-paginator
+      (page)="paginationEvent($event, type.toLowerCase())"
+      [length]="search.total"
+      [pageSize]="search.limit || 21"
+      [disabled]="search.total === 0"
+      [showFirstLastButtons]="true"
+      [pageSizeOptions]="calculatePageSizesOptions(search.total)"
+      [hidePageSize]="search.total <= 21"
+      [pageIndex]="search.offset / search.limit"
+      aria-label="Select page"
+    >
+    </mat-paginator>
+  </div>
+</ng-template>

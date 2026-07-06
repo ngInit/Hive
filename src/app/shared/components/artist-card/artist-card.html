@@ -1,0 +1,20 @@
+<div class="artist-card-wrapper">
+  <button class="artist-card-top" aria-label="Page of the artist {{ artist().name }}" (click)="goToArtist(artist().id)">
+    <div class="artist-card-cover">
+      <img
+        class="artist-cover"
+        src="{{ artist().image || 'https://picsum.photos/id/39/200.webp?blur=2' }}"
+        alt="Album cover"
+        width="200"
+        height="200"
+      />
+    </div>
+  </button>
+  <button
+    class="artist-card-button"
+    aria-label="Page of the artist {{ artist().name }}"
+    (click)="goToArtist(artist().id)"
+  >
+    {{ artist().name }}
+  </button>
+</div>

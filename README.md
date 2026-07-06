@@ -3,6 +3,12 @@
 &#160;&#160;&#160;&#160; Hive is a music streaming service clone where the user can search for tracks and artists, listen to music, build playlists, and maintain a favorites library.
 The application uses the Jamendo API v3.0, which provides access to over 500,000+ freely licensed tracks, along with metadata for artists, albums, and audio streaming links.
 
+## 🎞️ Videos
+  - ### For Sprint 4 the [link](https://youtu.be/3tfRaZ3Fg_I) to a short video ~1 min demonstrating the 404, loading, and error states
+
+## 🌎 Deployment 
+  - ### The [link](https://hive-eta-fawn.vercel.app/) to the deployed application on Vercel
+
 ## 📚 Technology Stack
 <p>
     <img src="https://raw.githubusercontent.com/ngInit/ngInit/ec0fcb7041549fd2edb085c89cf567afd14d5258/ICONS/Angular_R.svg" alt="Angular" width="40" height="40"/>
@@ -24,7 +30,7 @@ The application uses the Jamendo API v3.0, which provides access to over 500,000
     - HttpClient
     - RxJS
     - Firebase (Authentication, Firestore)
-    - Angular Testing Utilities (Jasmine / Karma)
+    - Vitest + jsdom + Angular Testing Utilities (TestBed)
 
 ## 📚 Tools
 <p>
@@ -37,7 +43,8 @@ The application uses the Jamendo API v3.0, which provides access to over 500,000
 </p>
 
 ## 🥷 Team Members
-- Aleksei — [ngInit](https://github.com/nginit)
+- Aleksei Hancharevich (role: Mentor) — [aliaksei-sl](https://github.com/aliaksei-sl)
+- Aleksei Nikolaev (role: All in one) — [ngInit](https://github.com/nginit)
 
 ## 🎚️ Local Setup
   - <img src="https://raw.githubusercontent.com/ngInit/ngInit/ec0fcb7041549fd2edb085c89cf567afd14d5258/ICONS/NPM_R.svg" alt="NPM" width="32" height="32"/>10.9.7
@@ -50,18 +57,15 @@ The application uses the Jamendo API v3.0, which provides access to over 500,000
      npm install
      ```
 
-  - ### 🏹 Local starts
+  - ### 🏹 Local start
      ```bash
      npm start
      ```
 
-  - 🔗 Open by link: [Open in browser](http://localhost:4200)
+  - 🔗 Open by link: [Open in browser](http://localhost:4200) or `http://localhost:4200`
 
   - ### Additional Scripts
-    - `npm run test` — Run unit tests
-    - `npm run lint` — Run ESLint
-    - `npm run format` — Run Prettier (check mode)
-    - `npm run build` — Build the project
-
-
-## 🌎 Deployment [link](https://hive-eta-fawn.vercel.app/)
+    - ➦`npm run test` — Run all the unit tests
+    - ➦`npm run lint:check` — Run ESLint (check mode)
+    - ➦`npm run format:check` — Run Prettier (check mode)
+    - ➦`npm run build` — Build the Hive application

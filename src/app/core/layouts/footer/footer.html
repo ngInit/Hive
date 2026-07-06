@@ -1,1 +1,5 @@
-<p class="footer-copyright">{{ copyrightText }}</p>
+@if (isPlayerVisible()) {
+  <hive-player></hive-player>
+} @else {
+  <p class="footer-copyright">{{ copyrightText }}</p>
+}
