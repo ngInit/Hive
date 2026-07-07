@@ -11,6 +11,7 @@ import {
 } from '@angular/core';
 import { MatActionList, MatListItem } from '@angular/material/list';
 import { RouterLink } from '@angular/router';
+import { NavigationService } from '@core/services/navigation.service';
 
 @Component({
   selector: 'hive-popup',
@@ -20,6 +21,7 @@ import { RouterLink } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Popup {
+  protected readonly navigationService = inject(NavigationService);
   readonly open = model.required<boolean>();
   readonly userStatus = input.required<boolean>();
   readonly document = inject(DOCUMENT);
