@@ -11,6 +11,10 @@ export class NavigationService {
     await this.router.navigate(['/']);
   }
 
+  async goToSign(): Promise<void> {
+    await this.router.navigate(['/sign']);
+  }
+
   async goToProfile(): Promise<void> {
     await this.router.navigate(['/user']);
   }
