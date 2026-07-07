@@ -1,8 +1,14 @@
-import { Routes } from '@angular/router';
+import { Routes, Route } from '@angular/router';
 import { MainLayout } from '@core/layouts/main-layout/main-layout';
 import { LandingPage } from '@pages/landing-page/landing-page';
 import { HomePage } from '@pages/home-page/home-page';
 import { guestGuard, userGuard } from '@core/guards/auth-guard';
+
+const errorPageRoute: Route = {
+  path: '**',
+  loadComponent: () => import('@pages/error-page/error-page').then((page) => page.ErrorPage),
+  title: 'Error',
+};
 
 export const routes: Routes = [
   {
@@ -15,6 +21,7 @@ export const routes: Routes = [
         path: '',
         loadComponent: () => import('@pages/sign-page/sign-page').then((page) => page.SignPage),
       },
+      errorPageRoute,
     ],
   },
   {
@@ -75,11 +82,7 @@ export const routes: Routes = [
         loadComponent: () => import('@pages/search-page/search-page').then((page) => page.SearchPage),
         title: 'Search',
       },
-      {
-        path: '**',
-        loadComponent: () => import('@pages/error-page/error-page').then((page) => page.ErrorPage),
-        title: 'Error',
-      },
+      errorPageRoute,
     ],
   },
 ];
