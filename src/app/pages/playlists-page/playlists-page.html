@@ -1,1 +1,11 @@
-<p>playlists-page works!</p>
+<h1 class="playlists-title">Playlists</h1>
+<div class="playlists-container">
+  <div role="presentation" class="liked-tracks-card" (click)="showLikedTracks()">
+    <div class="liked-tracks-card-icons">
+      <mat-icon class="liked-tracks-card-icon-one">favorite</mat-icon>
+      <mat-icon class="liked-tracks-card-icon-two">favorite</mat-icon>
+      <span class="liked-tracks-counter">{{ likedTracks().length | trackPlaysShort }}</span>
+    </div>
+    <h3 class="liked-tracks-card-title">Liked tracks</h3>
+  </div>
+</div>

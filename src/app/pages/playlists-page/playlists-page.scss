@@ -1,0 +1,85 @@
+:host {
+  position: relative;
+  display: block;
+
+  .playlists-title {
+    padding: 1rem 0;
+  }
+
+  .playlists-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 3rem;
+  }
+
+  .liked-tracks-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: fit-content;
+    height: fit-content;
+  }
+
+  .liked-tracks-card-icons {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+    height: 200px;
+    border-radius: var(--mat-sys-corner-small);
+    border: 1px solid var(--mat-sys-outline-variant);
+    background-color: rgb(240 248 255 / 0.02);
+    cursor: pointer;
+  }
+
+  .liked-tracks-card-icon-one,
+  .liked-tracks-card-icon-two {
+    position: absolute;
+    left: calc(50% - 8px);
+    transform: translateX(-50%);
+    display: block;
+    width: fit-content;
+    height: fit-content;
+    font-size: 96px;
+    font-weight: 100;
+    color: var(--mat-sys-error-container);
+  }
+
+  .liked-tracks-card-icon-two {
+    left: calc(50% + 8px);
+    color: var(--mat-sys-secondary);
+  }
+
+  .liked-tracks-counter {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 24px;
+    height: 24px;
+
+    width: -webkit-fill-available;
+    backdrop-filter: blur(14px);
+    background: linear-gradient(180deg, rgb(0 0 0 / 0.15) 0%, rgb(0 0 0) 100%);
+    mask: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.75) 30%, rgb(0, 0, 0) 55%, rgb(0, 0, 0) 100%);
+    border-bottom-left-radius: var(--mat-sys-corner-small);
+    border-bottom-right-radius: var(--mat-sys-corner-small);
+
+    padding: 24px 16px 8px 16px;
+    text-align: left;
+  }
+
+  .liked-tracks-card-title {
+    margin: 8px 0 0 4px;
+    font: var(--mat-sys-title-large);
+  }
+}
