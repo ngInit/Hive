@@ -67,9 +67,7 @@ export class Header {
 
   async signOut(): Promise<void> {
     await this.firebaseService.signOut();
-    if (this.router.url === '/user') {
-      await this.navigationService.goHome();
-    }
+    await this.navigationService.goHome();
   }
 
   openPopup() {

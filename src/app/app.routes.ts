@@ -45,6 +45,12 @@ export const routes: Routes = [
         data: { pageTitle: 'Profile' },
       },
       {
+        path: 'playlists',
+        loadComponent: () => import('@pages/playlists-page/playlists-page').then((page) => page.PlaylistsPage),
+        title: 'Playlists',
+        canActivate: [userGuard],
+      },
+      {
         path: 'about',
         loadComponent: () => import('@pages/about-page/about-page').then((page) => page.AboutPage),
         title: 'About',
