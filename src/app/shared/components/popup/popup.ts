@@ -10,12 +10,11 @@ import {
   effect,
 } from '@angular/core';
 import { MatActionList, MatListItem } from '@angular/material/list';
-import { RouterLink } from '@angular/router';
 import { NavigationService } from '@core/services/navigation.service';
 
 @Component({
   selector: 'hive-popup',
-  imports: [MatActionList, MatListItem, RouterLink],
+  imports: [MatActionList, MatListItem],
   templateUrl: './popup.html',
   styleUrl: './popup.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
