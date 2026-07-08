@@ -1,9 +1,8 @@
 import { Injectable, signal } from '@angular/core';
 import { FirebaseRepository } from '@core/repositories/firebase/firebase.repository';
-import { environment } from '@env/environment';
-import { FirebaseApp, initializeApp } from 'firebase/app';
+import { firebaseApp, firestoreDb } from '@core/firebase/firebase-app';
 import { Auth, getAuth } from 'firebase/auth';
-import { Firestore, getFirestore, doc, setDoc } from 'firebase/firestore';
+import { doc, setDoc } from 'firebase/firestore';
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -15,12 +14,10 @@ import {
   deleteUser,
 } from 'firebase/auth';
 import { SignInData, SignUpData, UpdateData } from '@core/models/auth.model';
-import { UserAuth, userConverter } from '@core/models/user.model';
+import { UserAuth } from '@core/models/user.model';
 import { throwFirebaseAuthError } from '@core/errors/firebase-auth.error';
 
-const fbApp: FirebaseApp = initializeApp(environment.firebase);
-const auth: Auth = getAuth(fbApp);
-const db: Firestore = getFirestore(fbApp);
+const auth: Auth = getAuth(firebaseApp);
 
 interface fbData {
   uid: string;
@@ -56,7 +53,11 @@ export class FirebaseAuthRepository implements FirebaseRepository {
   }
 
   private async saveToFirestore(user: UserAuth): Promise<void> {
-    await setDoc(doc(db, 'users', user.uid).withConverter(userConverter), user);
+    await setDoc(doc(firestoreDb, 'users', user.uid), {
+      uid: user.uid,
+      nickname: user.nickname,
+      email: user.email,
+    });
   }
 
   async signUp(data: SignUpData): Promise<UserAuth> {
