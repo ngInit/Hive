@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, DestroyRef, inject, signal } from '@angular/core';
-import { Router, RouterLink, isActive } from '@angular/router';
+import { Router, isActive } from '@angular/router';
 import { NavigationService } from '@core/services/navigation.service';
 import { FirebaseService } from '@core/services/firebase.service';
 import { JamendoService } from '@core/services/jamendo.service';
@@ -16,14 +16,14 @@ import { Track } from '@core/models/jamendo/tracks.model';
 
 @Component({
   selector: 'hive-header',
-  imports: [RouterLink, NgTemplateOutlet, FormsModule, MatButton, MatIconButton, MatIcon, Popup],
+  imports: [NgTemplateOutlet, FormsModule, MatButton, MatIconButton, MatIcon, Popup],
   templateUrl: './header.html',
   styleUrl: './header.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Header {
   private readonly router = inject(Router);
-  private readonly navigationService = inject(NavigationService);
+  protected readonly navigationService = inject(NavigationService);
   protected readonly firebaseService = inject(FirebaseService);
   private readonly jamendoService = inject(JamendoService);
   private readonly destroyRef = inject(DestroyRef);
@@ -67,9 +67,7 @@ export class Header {
 
   async signOut(): Promise<void> {
     await this.firebaseService.signOut();
-    if (this.router.url === '/user') {
-      await this.navigationService.goHome();
-    }
+    await this.navigationService.goHome();
   }
 
   openPopup() {

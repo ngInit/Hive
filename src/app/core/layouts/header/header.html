@@ -1,5 +1,8 @@
 <div class="header-container">
-  <button routerLink="/" class="header-logo-button">H<span class="header-app-name">ive</span></button>
+  <button class="header-logo-button" aria-label="Logo button" (click)="navigationService.goHome()">
+    H
+    <span class="header-app-name">ive</span>
+  </button>
   @if (!isSign()) {
     <div class="header-search">
       <div class="header-search-field">
@@ -53,7 +56,7 @@
         <button matIconButton aria-label="Menu button" (click)="openPopup()">
           <mat-icon>more_vert</mat-icon>
         </button>
-        <button routerLink="/sign" matButton="filled" aria-label="Sign In button">Sign In</button>
+        <button matButton="filled" aria-label="Sign In button" (click)="navigationService.goToSign()">Sign In</button>
       </div>
     }
   }
