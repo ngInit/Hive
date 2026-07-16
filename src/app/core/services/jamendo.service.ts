@@ -1,7 +1,16 @@
 import { JAMENDO_REPOSITORY } from '@core/repositories/jamendo/jamendo.repository';
 import { Injectable, inject } from '@angular/core';
 import { getDateRangeFromToday } from '@utils/dateRange';
-import { EndPoint, isJamendoSuccess, JamendoResponse, JamendoSearchResponse } from '@core/models/jamendo/jamendo.model';
+import {
+  EndPoint,
+  hasResults,
+  isJamendoSuccess,
+  JamendoResponse,
+  JamendoRequestParams,
+  JamendoSearchResponse,
+  JamendoEndpointResponse,
+} from '@core/models/jamendo/jamendo.model';
+import { delay } from '@utils/delay';
 import { Artist } from '@core/models/jamendo/artists.model';
 import { Album } from '@core/models/jamendo/albums.model';
 import { Track } from '@core/models/jamendo/tracks.model';
@@ -11,6 +20,26 @@ import { Track } from '@core/models/jamendo/tracks.model';
 })
 export class JamendoService {
   private readonly repository = inject(JAMENDO_REPOSITORY);
+
+  private async requestWithRetry<T extends EndPoint>(
+    endpoint: T,
+    params: JamendoRequestParams<T>
+  ): Promise<JamendoEndpointResponse[T]> {
+    const maxAttempts = 2;
+    const delayMs = 400;
+    let response = await this.repository.createRequest(endpoint, params);
+    if (hasResults(response)) {
+      return response;
+    }
+    for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+      await delay(delayMs * attempt);
+      response = await this.repository.createRequest(endpoint, params);
+      if (hasResults(response)) {
+        return response;
+      }
+    }
+    return response;
+  }
 
   private getPaginated<T>(
     inputResponse: JamendoResponse<T>,
@@ -45,9 +74,9 @@ export class JamendoService {
     }
     const common = { namesearch: searchString, limit: '3' };
     const [artistsResponse, albumsResponse, tracksResponse] = await Promise.all([
-      this.repository.createRequest('artists', common),
-      this.repository.createRequest('albums', common),
-      this.repository.createRequest('tracks', common),
+      this.requestWithRetry('artists', common),
+      this.requestWithRetry('albums', common),
+      this.requestWithRetry('tracks', common),
     ]);
     return {
       artists: isJamendoSuccess(artistsResponse) ? artistsResponse.results : [],
@@ -70,15 +99,15 @@ export class JamendoService {
 
     switch (entity) {
       case 'artists': {
-        const artistsResponse = await this.repository.createRequest('artists', common);
+        const artistsResponse = await this.requestWithRetry('artists', common);
         return this.getPaginated(artistsResponse, offset, limit);
       }
       case 'albums': {
-        const albumsResponse = await this.repository.createRequest('albums', common);
+        const albumsResponse = await this.requestWithRetry('albums', common);
         return this.getPaginated(albumsResponse, offset, limit);
       }
       case 'tracks': {
-        const tracksResponse = await this.repository.createRequest('tracks', { ...common, include: ['stats'] });
+        const tracksResponse = await this.requestWithRetry('tracks', { ...common, include: ['stats'] });
         return this.getPaginated(tracksResponse, offset, limit);
       }
     }
@@ -86,18 +115,18 @@ export class JamendoService {
 
   async getLandingPage(): Promise<{ popularSongs: Track[]; newReleases: Track[]; newAlbums: Album[] }> {
     const [popularSongsResponse, newReleasesResponse, newAlbumsResponse] = await Promise.all([
-      this.repository.createRequest('tracks', {
+      this.requestWithRetry('tracks', {
         limit: '10',
         boost: 'popularity_month',
         include: ['stats'],
       }),
-      this.repository.createRequest('tracks', {
+      this.requestWithRetry('tracks', {
         limit: '10',
         datebetween: getDateRangeFromToday(30),
         order: ['releasedate'],
         include: ['stats'],
       }),
-      this.repository.createRequest('albums', {
+      this.requestWithRetry('albums', {
         limit: '10',
         datebetween: getDateRangeFromToday(30),
         order: ['releasedate'],
@@ -121,17 +150,17 @@ export class JamendoService {
 
   async getArtistPage(id: string): Promise<{ artist: Artist; albums: Album[]; tracks: Track[] }> {
     const [artistResponse, albumsResponse, tracksResponse] = await Promise.all([
-      this.repository.createRequest('artists', {
+      this.requestWithRetry('artists', {
         id: [Number(id)],
         limit: '1',
       }),
-      this.repository.createRequest('albums', {
+      this.requestWithRetry('albums', {
         artist_id: [id],
-        limit: '10',
+        limit: 'all',
       }),
-      this.repository.createRequest('tracks', {
+      this.requestWithRetry('tracks', {
         artist_id: [id],
-        limit: '10',
+        limit: 'all',
         include: ['stats'],
       }),
     ]);
@@ -153,11 +182,11 @@ export class JamendoService {
 
   async getAlbumPage(id: string): Promise<{ album: Album; tracks: Track[] }> {
     const [albumResponse, tracksResponse] = await Promise.all([
-      this.repository.createRequest('albums', {
+      this.requestWithRetry('albums', {
         id: [Number(id)],
         limit: '1',
       }),
-      this.repository.createRequest('tracks', {
+      this.requestWithRetry('tracks', {
         album_id: [id],
         limit: 'all',
         include: ['stats'],
@@ -177,8 +206,9 @@ export class JamendoService {
       tracks: tracksResponse.results,
     };
   }
+
   async getTrackPage(id: string): Promise<{ track: Track }> {
-    const trackResponse = await this.repository.createRequest('tracks', {
+    const trackResponse = await this.requestWithRetry('tracks', {
       id: [Number(id)],
       limit: '1',
       include: ['musicinfo', 'stats', 'lyrics'],
@@ -202,7 +232,7 @@ export class JamendoService {
     offset = 0,
     limit = 25
   ): Promise<{ items: Track[]; total: number; offset: number; limit: number }> {
-    const tracksResponse = await this.repository.createRequest('tracks', {
+    const tracksResponse = await this.requestWithRetry('tracks', {
       tags: tags,
       limit: String(limit),
       offset: offset,
