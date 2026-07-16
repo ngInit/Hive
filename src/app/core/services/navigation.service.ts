@@ -11,6 +11,22 @@ export class NavigationService {
     await this.router.navigate(['/']);
   }
 
+  async goToSign(): Promise<void> {
+    await this.router.navigate(['/sign']);
+  }
+
+  async goToProfile(): Promise<void> {
+    await this.router.navigate(['/user']);
+  }
+
+  async goToPlaylists(): Promise<void> {
+    await this.router.navigate(['/playlists']);
+  }
+
+  async goToAbout(): Promise<void> {
+    await this.router.navigate(['/about']);
+  }
+
   async goToSearch(query: string): Promise<void> {
     await this.router.navigate(['/search'], { queryParams: { q: query } });
   }

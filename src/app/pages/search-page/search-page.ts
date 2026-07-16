@@ -122,7 +122,9 @@ export class SearchPage {
   }
 
   calculatePageSizesOptions(total: number): number[] {
-    const sizes = [21, 42, 84, 168, total];
+    const maxLimit = INITIAL_SEARCH.limit * 8 < 200 ? 200 : INITIAL_SEARCH.limit * 8;
+    const maxSize = maxLimit > total ? total : maxLimit;
+    const sizes = [INITIAL_SEARCH.limit, INITIAL_SEARCH.limit * 2, INITIAL_SEARCH.limit * 4, maxSize];
     if (total > 21) {
       return sizes.filter((size) => {
         return size <= total;

@@ -23,7 +23,7 @@
     }
   </mat-form-field>
   <mat-form-field class="profile-form-field">
-    <mat-label>Password</mat-label>
+    <mat-label>New password</mat-label>
     <input matInput formControlName="password" #upPwd="hiveShowPassword" hiveShowPassword autocomplete="new-password" />
     <button matSuffix matIconButton type="button" aria-label="Show match update password" (click)="upPwd.toggle()">
       <mat-icon>{{ upPwd.visible ? "visibility" : "visibility_off" }}</mat-icon>
@@ -37,7 +37,7 @@
     }
   </mat-form-field>
   <mat-form-field class="profile-form-field">
-    <mat-label>Repeat password</mat-label>
+    <mat-label>Repeat new password</mat-label>
     <input
       matInput
       formControlName="repeatPassword"

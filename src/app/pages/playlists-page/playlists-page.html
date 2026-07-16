@@ -1,0 +1,24 @@
+<h1 class="playlists-title">Playlists</h1>
+<div class="playlists-container">
+  <div role="presentation" class="liked-tracks-card" (click)="showTracklist()">
+    <div class="liked-tracks-card-icons">
+      <mat-icon class="liked-tracks-card-icon-one">favorite</mat-icon>
+      <mat-icon class="liked-tracks-card-icon-two">favorite</mat-icon>
+      <span class="liked-tracks-counter">{{ likedTracks().length | trackPlaysShort }}</span>
+    </div>
+    <h3 class="liked-tracks-card-title">Liked tracks</h3>
+  </div>
+</div>
+<div class="tracklist-container" [class.tracklist-hidden]="tracklist().length === 0">
+  @for (track of tracklist(); track track.id) {
+    <ng-container [ngTemplateOutlet]="playlistCard" [ngTemplateOutletContext]="{ track: track }" />
+  }
+</div>
+
+@for (playlist of lists(); track playlist.name) {
+  <p>{{ playlist.name }} - ID: {{ playlist.id }}</p>
+}
+
+<ng-template #playlistCard let-track="track">
+  <hive-track-card [track]="track" [allTracks]="tracklist()" />
+</ng-template>
