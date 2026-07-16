@@ -15,6 +15,10 @@
   }
 </div>
 
+@for (playlist of lists(); track playlist.name) {
+  <p>{{ playlist.name }} - ID: {{ playlist.id }}</p>
+}
+
 <ng-template #playlistCard let-track="track">
   <hive-track-card [track]="track" [allTracks]="tracklist()" />
 </ng-template>
