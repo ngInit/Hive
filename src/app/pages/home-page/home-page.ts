@@ -28,9 +28,15 @@ export class HomePage implements OnInit {
         this.popularTracks.set(response.popularSongs);
         this.newReleases.set(response.newReleases);
         this.newAlbums.set(response.newAlbums);
-        this.isLoading.set(false);
       })
-      .then(() => {
+      .catch((error: unknown) => {
+        if (error instanceof Error) {
+          console.error(error.message);
+        } else {
+          console.error('Unknown home page error');
+        }
+      })
+      .finally(() => {
         this.isLoading.set(false);
       });
   }
