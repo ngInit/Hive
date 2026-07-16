@@ -36,6 +36,8 @@ interface JamendoFailedResponse {
   results: [];
 }
 
+export type JamendoRequestParams<T extends EndPoint> = Omit<JamendoEndpointRequest[T], 'client_id' | 'format'>;
+
 export type JamendoResponse<T> = JamendoSuccessResponse<T> | JamendoFailedResponse;
 
 export interface JamendoSearchResponse {
@@ -47,4 +49,8 @@ export interface JamendoSearchResponse {
 
 export function isJamendoSuccess<T>(response: JamendoResponse<T>): response is JamendoSuccessResponse<T> {
   return response.headers.status === 'success';
+}
+
+export function hasResults(response: JamendoEndpointResponse[EndPoint]): boolean {
+  return response.headers.status === 'success' && response.results.length > 0;
 }
