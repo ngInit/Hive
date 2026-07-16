@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, signal } from '@angular/core';
 import { FirebaseService } from '@core/services/firebase.service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatError, MatFormField, MatInput, MatLabel, MatSuffix } from '@angular/material/input';
@@ -46,6 +46,16 @@ export class UserPage {
   public readonly errorMessage = signal<string | null>(null);
   public readonly isUpdating = this.authService.isLoading;
   public readonly isDeleting = signal(false);
+
+  constructor() {
+    effect(() => {
+      const user = this.user();
+      this.profileForm.patchValue({
+        nickname: user?.nickname,
+        email: user?.email,
+      });
+    });
+  }
 
   profileForm = new FormGroup<UpdateGroup>(
     {
