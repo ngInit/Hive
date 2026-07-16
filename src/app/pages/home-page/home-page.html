@@ -1,15 +1,15 @@
 <div class="carousels-container">
-  <hive-carousel carouselTitle="Popular tracks" [isLoading]="isLoading()" [isEmpty]="false">
+  <hive-carousel carouselTitle="Popular tracks" [isLoading]="isLoading()" [isEmpty]="popularTracks().length === 0">
     @for (popularTrack of popularTracks(); track popularTrack.id) {
       <hive-track-card [track]="popularTrack" [allTracks]="popularTracks()" />
     }
   </hive-carousel>
-  <hive-carousel carouselTitle="New releases" [isLoading]="isLoading()" [isEmpty]="false">
+  <hive-carousel carouselTitle="New releases" [isLoading]="isLoading()" [isEmpty]="newReleases().length === 0">
     @for (newRelease of newReleases(); track newRelease.id) {
       <hive-track-card [track]="newRelease" [allTracks]="newReleases()" />
     }
   </hive-carousel>
-  <hive-carousel carouselTitle="New albums" [isLoading]="isLoading()" [isEmpty]="false">
+  <hive-carousel carouselTitle="New albums" [isLoading]="isLoading()" [isEmpty]="newAlbums().length === 0">
     @for (newAlbum of newAlbums(); track newAlbum.id) {
       <hive-album-card [album]="newAlbum" />
     }
